@@ -1,13 +1,9 @@
 /* =========================================
-   SK Voyage — Global Styles
+   SK Voyage — Global Styles (Pure CSS)
    ========================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
-@import '../styles/variables.css';
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap");
+@import "../styles/variables.css";
 
 /* ─── Base Reset ───────────────────────────── */
 *,
@@ -46,7 +42,6 @@ a {
 
 /* ─── Typography ───────────────────────────── */
 
-/* Display / Hero — 48px */
 .text-display {
   font-family: var(--font-heading);
   font-size: var(--text-display);
@@ -55,8 +50,8 @@ a {
   letter-spacing: var(--tracking-tight);
 }
 
-/* H1 — 42px */
-h1, .h1 {
+h1,
+.h1 {
   font-family: var(--font-heading);
   font-size: var(--text-3xl);
   font-weight: var(--font-bold);
@@ -64,8 +59,8 @@ h1, .h1 {
   letter-spacing: var(--tracking-tight);
 }
 
-/* H2 — 36px */
-h2, .h2 {
+h2,
+.h2 {
   font-family: var(--font-heading);
   font-size: var(--text-2xl);
   font-weight: var(--font-bold);
@@ -73,30 +68,32 @@ h2, .h2 {
   letter-spacing: var(--tracking-tight);
 }
 
-/* H3 — 30px */
-h3, .h3 {
+h3,
+.h3 {
   font-family: var(--font-heading);
   font-size: var(--text-xl);
   font-weight: var(--font-semibold);
   line-height: var(--leading-snug);
 }
 
-/* H4 — 22px */
-h4, .h4 {
+h4,
+.h4 {
   font-family: var(--font-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-semibold);
   line-height: var(--leading-snug);
 }
 
-h5, .h5 {
+h5,
+.h5 {
   font-family: var(--font-heading);
   font-size: var(--text-md);
   font-weight: var(--font-semibold);
   line-height: var(--leading-normal);
 }
 
-h6, .h6 {
+h6,
+.h6 {
   font-family: var(--font-sans);
   font-size: var(--text-base);
   font-weight: var(--font-semibold);
@@ -140,7 +137,6 @@ section {
   user-select: none;
 }
 
-/* Primary — Orange */
 .btn-primary {
   background-color: var(--color-primary);
   color: var(--color-white);
@@ -158,7 +154,6 @@ section {
   box-shadow: var(--shadow-sm);
 }
 
-/* Secondary — Outlined Orange */
 .btn-secondary {
   background-color: transparent;
   color: var(--color-primary);
@@ -168,7 +163,6 @@ section {
   background-color: var(--color-primary-50);
 }
 
-/* Ghost — Minimal */
 .btn-ghost {
   background-color: transparent;
   color: var(--color-gray-700);
@@ -179,7 +173,6 @@ section {
   color: var(--color-gray-900);
 }
 
-/* Danger — Red */
 .btn-danger {
   background-color: var(--color-error);
   color: var(--color-white);
@@ -191,7 +184,6 @@ section {
   transform: translateY(-1px);
 }
 
-/* Size modifiers */
 .btn-sm {
   padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
@@ -204,17 +196,28 @@ section {
 }
 
 /* ─── Utility Classes ───────────────────────── */
+.text-primary {
+  color: var(--color-primary);
+}
+.text-muted {
+  color: var(--color-gray-500);
+}
+.text-dark {
+  color: var(--color-gray-900);
+}
 
-/* Text colors */
-.text-primary   { color: var(--color-primary); }
-.text-muted     { color: var(--color-gray-500); }
-.text-dark      { color: var(--color-gray-900); }
-
-/* Background utilities */
-.bg-primary     { background-color: var(--color-primary); }
-.bg-primary-50  { background-color: var(--color-primary-50); }
-.bg-dark        { background-color: var(--color-gray-900); }
-.bg-light       { background-color: var(--color-gray-50); }
+.bg-primary {
+  background-color: var(--color-primary);
+}
+.bg-primary-50 {
+  background-color: var(--color-primary-50);
+}
+.bg-dark {
+  background-color: var(--color-gray-900);
+}
+.bg-light {
+  background-color: var(--color-gray-50);
+}
 
 /* Section header */
 .section-header {
@@ -234,7 +237,7 @@ section {
 
 /* ─── Scrollbar ─────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
@@ -248,13 +251,11 @@ section {
   background: var(--color-primary);
 }
 
-/* ─── Selection ─────────────────────────────── */
 ::selection {
   background-color: var(--color-primary);
   color: var(--color-white);
 }
 
-/* ─── Focus Ring ────────────────────────────── */
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 3px;

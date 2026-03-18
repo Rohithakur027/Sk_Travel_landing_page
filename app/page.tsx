@@ -1,23 +1,25 @@
-import HeroSection from '@/components/sections/HeroSection';
-import StatsSection from '@/components/sections/StatsSection';
-import FeaturesSection from '@/components/sections/FeaturesSection';
-import FleetSection from '@/components/sections/FleetSection';
-import AboutSection from '@/components/sections/AboutSection';
-import ServicesSection from '@/components/sections/ServicesSection';
-import CTASection from '@/components/sections/CTASection';
-import ContactSection from '@/components/sections/ContactSection';
+import HeroSection from '@/components/home/HeroSection';
+import StatsSection from '@/components/home/StatsSection';
+import ExperienceSection from '@/components/home/ExperienceSection';
+import FleetSection from '@/components/home/FleetSection';
+import CorporateSection from '@/components/home/CorporateSection';
+import ServicesSection from '@/components/home/ServicesSection';
+import CTASection from '@/components/home/CTASection';
+import ContactSection from '@/components/home/ContactSection';
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <StatsSection />
-      <FeaturesSection />
-      <FleetSection />
-      <AboutSection />
-      <ServicesSection />
-      <CTASection />
-      <ContactSection />
+      <div style={{ paddingTop: '5rem', paddingBottom: '5rem' }}>
+        <StatsSection />
+        <ExperienceSection />
+        <FleetSection />
+        <CorporateSection />
+        <ServicesSection />
+        <CTASection />
+        <ContactSection />
+      </div>
     </>
   );
 }

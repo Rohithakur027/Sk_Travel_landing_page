@@ -1,31 +1,97 @@
-import Link from 'next/link';
-import { NAV_LINKS } from '@/constants/navLinks';
+'use client';
+
+import { useState } from 'react';
+import Link from "next/link";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
+import styles from "./Navbar.module.css";
+
+const NAV_LINKS = [
+  { label: "Home", href: "/"},
+  { label: "About", href: "/#about"},
+  { label: "Services", href: "/#services"},
+  { label: "Features", href: "/#features"},
+  { label: "Contact", href: "/#contact"},
+];
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        <Link href="/" className="text-xl font-bold text-blue-600">
-          SK Travel
+    <header className={styles.header}>
+      <div className={styles.inner}>
+        {/* Logo */}
+        <Link href="/" className={styles.logo}>
+          <Image
+            src="/icons/SKlogo.svg"
+            alt="SK Travel Logo"
+            width={140}
+            height={48}
+            className={styles.logoImg}
+            priority
+          />
         </Link>
-        <nav className="hidden md:flex items-center gap-8">
+
+        {/* Center Navigation Pills (Desktop) */}
+        <nav className={styles.navDesktop}>
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200"
+              className={`${styles.navLink} ${styles.navLinkBg}`}
             >
               {link.label}
             </Link>
           ))}
         </nav>
-        <Link
-          href="/booking"
-          className="hidden md:inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors duration-200"
-        >
-          Book Now
-        </Link>
+
+        {/* Right side */}
+        <div className={styles.rightGroup}>
+          {/* Authentication Buttons (Desktop) */}
+          <div className={styles.authButtons}>
+            <Link href="/login" className={styles.loginBtn}>
+              Log in
+            </Link>
+            <Link href="/signup" className={styles.signupBtn}>
+              Sign up
+            </Link>
+          </div>
+
+          <button 
+            className={styles.mobileMenuBtn} 
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Nav Overlay */}
+      {isOpen && (
+        <div className={styles.mobileNav}>
+          <nav className={styles.mobileNavLinks}>
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={styles.mobileNavLink}
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <div className={styles.mobileAuth}>
+            <Link href="/login" className={styles.loginBtn} onClick={() => setIsOpen(false)}>
+              Log in
+            </Link>
+            <Link href="/signup" className={styles.signupBtn} onClick={() => setIsOpen(false)}>
+              Sign up
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
