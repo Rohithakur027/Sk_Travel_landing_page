@@ -1,0 +1,278 @@
+.section {
+  padding: 6rem 0;
+  background-color: #ffffff;
+}
+
+.section :global(.container) {
+  max-width: 100%;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .section :global(.container) {
+    padding-inline: 8rem;
+  }
+}
+
+.bentoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .bentoGrid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto auto;
+  }
+  
+  .premiumComfort { grid-column: span 8; height: 44rem; }
+  .rightStack { grid-column: span 4; display: flex; flex-direction: column; gap: 1.5rem; height: 44rem; }
+  
+  .cities25 { grid-column: span 4; height: 48rem; }
+  .fullyInsured { grid-column: span 4; height: 48rem; }
+  .airportTransfers { grid-column: span 4; height: 48rem; }
+  
+  .builtForTeams { grid-column: span 6; height: 28rem; }
+  .premiumFleet { grid-column: span 3; height: 28rem; }
+  .always247 { grid-column: span 3; height: 28rem; }
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  background-color: #1f2937;
+  min-height: 24rem;
+}
+
+.bgImg {
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.card:hover .bgImg {
+  transform: scale(1.04);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.85) 100%);
+  pointer-events: none;
+}
+
+.overlayOrange {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to bottom, transparent 30%, rgba(217, 119, 6, 0.85) 100%);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  padding: 2rem;
+  color: #fff;
+}
+
+.content h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.content p {
+  color: #d1d5db;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  max-width: 90%;
+}
+
+.centerContent {
+  position: relative;
+  z-index: 10;
+  padding: 2rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.centerContent h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.centerContent p {
+  color: #fde68a;
+  font-size: 1.2rem;
+}
+
+.shieldBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  background-color: rgba(251, 191, 36, 0.3);
+  backdrop-filter: blur(8px);
+  border-radius: 0.75rem;
+  color: #fbbf24;
+  margin-bottom: 1rem;
+}
+
+.yellowCard {
+  background-color: #fbbf24;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-evenly;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  color: #111827;
+}
+
+.scoreRow {
+  display: flex;
+  align-items: center;
+}
+
+.starBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111827;
+  color: #fbbf24;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.75rem;
+  margin-right: 1.25rem;
+}
+
+.scoreText {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.yellowCard h4 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.yellowCard p {
+  font-size: 1rem;
+  color: #374151;
+}
+
+.darkCard {
+  background-color: #1f2229;
+  height: 100%;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  color: #fff;
+}
+
+.clockBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 2px solid #fbbf24;
+  color: #fbbf24;
+  border-radius: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.darkScore {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.darkSubtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.darkText {
+  color: #9ca3af;
+  font-size: 1.1rem;
+}
+
+.learnMoreBtn {
+  margin-top: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background-color: #fbbf24;
+  color: #111827;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.learnMoreBtn:hover {
+  background-color: #f59e0b;
+}
+
+/* rightStack: Expert Drivers = 60%, Customer Satisfaction = 40% */
+.rightStack .card {
+  height: 100%;
+  flex: 3; /* 60% */
+}
+
+.rightStack .yellowCard {
+  flex: 2; /* 40% */
+}
+
+/* Inlined SectionHeader Styles */
+.sectionHeader {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.sectionTitle {
+  font-family: var(--font-heading);
+  font-size: 2.875rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .sectionTitle {
+    font-size: 3.5rem;
+  }
+}
+
+.sectionSubtitle {
+  font-size: 1.25rem;
+  color: #6b7280;
+  max-width: 42rem;
+  margin-inline: auto;
+  line-height: 1.5;
+}
