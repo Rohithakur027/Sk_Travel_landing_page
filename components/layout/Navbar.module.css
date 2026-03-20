@@ -1,5 +1,5 @@
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -7,6 +7,13 @@
   background-color: rgb(255, 255, 255);
   border-bottom: 1px solid #f1f3f5;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.headerHidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .inner {
