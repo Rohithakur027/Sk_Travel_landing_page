@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <div style={{ paddingTop: '5rem', paddingBottom: '5rem' }}>
+      <div style={{ paddingBottom: '5rem' }}>
         <StatsSection />
         <ExperienceSection />
         <FleetSection />
