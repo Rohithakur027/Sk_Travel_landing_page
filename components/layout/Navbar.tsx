@@ -9,8 +9,8 @@ import styles from "./Navbar.module.css";
 const NAV_LINKS = [
   { label: "Home", href: "/"},
   { label: "About", href: "/about"},
-  { label: "Services", href: "/#services"},
-  { label: "Features", href: "/#features"},
+  { label: "Services", href: "/services"},
+  { label: "Features", href: "/features"},
   { label: "Contact", href: "/#contact"},
 ];
 
