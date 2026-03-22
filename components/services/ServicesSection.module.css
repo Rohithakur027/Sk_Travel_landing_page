@@ -1,0 +1,347 @@
+/* ═══════════════════════════════════════════════════════════════
+   ServicesSection — matches the Comprehensive Transportation
+   Solutions design
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Styles for the Services page — component lives in components/services/ */
+
+/* ─── Section Wrapper ─────────────────────────────────────────── */
+.section {
+  background-color: #ffffff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.lowerBand {
+  background-color: #f9f9f9;
+  padding-bottom: 4rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ─── Header ──────────────────────────────────────────────────── */
+.header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  padding-top: 5rem;
+}
+
+.pillImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #111827;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.headingGold {
+  color: #FFC107;
+}
+
+.subheading {
+  font-size: 1rem;
+  color: #6b7280;
+  line-height: 1.7;
+  max-width: 680px;
+  margin: 0 auto;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Main 2×2 Grid ───────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 0;
+  padding-bottom: 4.5rem;
+  max-width: 1060px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 510px));
+    gap: 2rem;
+    justify-content: center;
+  }
+}
+
+/* ─── Card ────────────────────────────────────────────────────── */
+.card {
+  background: #ffffff;
+  border-radius: 32px;
+  overflow: hidden;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+/* ─── Image Wrapper ───────────────────────────────────────────── */
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.04);
+}
+
+/* Icon badge below the image, inside card body */
+.iconBadge {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, rgba(255, 210, 63, 0.15) 0%, rgba(255, 210, 63, 0.08) 100%);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  margin-bottom: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* ─── Card Body ───────────────────────────────────────────────── */
+.body {
+  padding: 1.5rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cardTitle {
+  max-width: 100%;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.65rem;
+  line-height: 1.35;
+}
+
+.cardDesc {
+  max-width: 100%;
+  font-size: 0.92rem;
+  color: #6b7280;
+  line-height: 1.65;
+  margin-bottom: 1.1rem;
+}
+
+/* ─── Feature List ────────────────────────────────────────────── */
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 100%;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.checkIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  background: #fef3c7;
+  color: #d97706;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ─── Get Quote Button ────────────────────────────────────────── */
+.quoteBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 146.03px;
+  height: 46.5px;
+  background: linear-gradient(135deg, #FFD23F 0%, #FFA726 100%);
+  color: #1a1a1a;
+  font-size: 0.92rem;
+  font-weight: 700;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(255, 210, 63, 0.4);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+  margin-top: auto;
+}
+
+.quoteBtn:hover {
+  box-shadow: 0 12px 32px rgba(255, 210, 63, 0.55);
+  transform: translateY(-2px);
+}
+
+/* ─── Additional Services Block ───────────────────────────────── */
+.additionalWrapper {
+  padding: 3.5rem 0 1rem;
+  text-align: center;
+}
+
+.additionalTitle {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 0.6rem;
+}
+
+.additionalSub {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 2.5rem;
+}
+
+.additionalGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .additionalGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .additionalGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.additionalCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.75rem 1.5rem;
+  border-radius: 16px;
+  background: #ffffff;
+  border: none;
+  box-shadow: none;
+  transition: transform 0.2s ease;
+}
+
+.additionalCard:hover {
+  transform: translateY(-2px);
+}
+
+.additionalIcon {
+  width: 2.75rem;
+  height: 2.75rem;
+  background: #fef3c7;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d97706;
+  margin-bottom: 1.1rem;
+}
+
+.additionalCardTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.4rem;
+}
+
+.additionalCardDesc {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ─── CTA Box ─────────────────────────────────────────────────── */
+.ctaBox {
+  text-align: center;
+  background: transparent;
+  border: none;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+}
+
+.ctaTitle {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 0.75rem;
+}
+
+.ctaSub {
+  font-size: 0.97rem;
+  color: #6b7280;
+  max-width: 30rem;
+  margin: 0 auto 1.75rem;
+  line-height: 1.6;
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.75rem 2.5rem;
+  background: linear-gradient(135deg, #FFD23F 0%, #FFA726 100%);
+  color: #1a1a1a;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 20px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(255, 210, 63, 0.4);
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.ctaBtn:hover {
+  box-shadow: 0 12px 32px rgba(255, 210, 63, 0.55);
+  transform: translateY(-2px);
+}
