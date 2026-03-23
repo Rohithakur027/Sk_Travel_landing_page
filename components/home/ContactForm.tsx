@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 import { contactApi, type ContactFormData } from '@/lib/contact.api';
 import styles from './ContactForm.module.css';
 
@@ -144,7 +145,14 @@ export default function ContactForm() {
       <button type="submit" disabled={isLoading} className={styles.btnPrimary}>
         {isLoading ? 'Sending...' : (
           <>
-            Send Message <span className={styles.btnArrow}>&gt;</span>
+            Send Message 
+            <Image 
+              src="/icons/SendIcon.svg" 
+              alt="Send icon" 
+              width={20} 
+              height={20} 
+              className={styles.sendIcon} 
+            />
           </>
         )}
       </button>
