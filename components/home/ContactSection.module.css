@@ -1,6 +1,12 @@
 .section {
-  padding: 5rem 0;
+  padding: 4rem 0;
   background-color: rgb(254,253,248);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 0;
+  }
 }
 
 .sectionHeader {
@@ -9,7 +15,7 @@
 }
 
 .sectionHeader h2 {
-  font-family: var(--font-heading);
+  font-family: var(--font-sans);
   font-size: 3rem;
   font-weight: 800;
   color: #1F2937;
@@ -52,7 +58,7 @@
 }
 
 .formHeading {
-  font-family: var(--font-heading);
+  font-family: var(--font-sans);
   font-size: 1.5rem;
   font-weight: 800;
   color: #1F2937;
@@ -123,7 +129,8 @@
   width: 4.5rem;
   height: 4.5rem;
   border-radius: 1rem;
-  background-color: #FFF9E6;
+  border: 1.5px solid rgba(255, 210, 63, 0.3);
+  background: linear-gradient(135deg, rgba(255, 210, 63, 0.15) 0%, rgba(255, 210, 63, 0.08) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,7 +152,7 @@
 }
 
 .infoValue {
-  font-family: var(--font-heading);
+  font-family: var(--font-sans);
   font-size: 1.25rem;
   font-weight: 800;
   color: #1F2937;

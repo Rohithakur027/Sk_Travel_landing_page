@@ -1,18 +1,17 @@
-/* ═══════════════════════════════════════════════════════════════
-   ServicesSection — matches the Comprehensive Transportation
-   Solutions design
-   ═══════════════════════════════════════════════════════════════ */
-
-/* ─── Section Wrapper ─────────────────────────────────────────── */
 .section {
-  padding: 5rem 0 4rem;
-  background-color: #f9f9f7;
+  padding: 4rem 0;
+  background-color: rgb(253, 252, 248);
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+@media (min-width: 1024px) {
+  .section {
+    padding: 6rem 0;
+  }
+  
+  .section :global(.container) {
+    max-width: 1750px;
+    padding: 0 2rem;
+  }
 }
 
 /* ─── Header ──────────────────────────────────────────────────── */
@@ -56,13 +55,21 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  margin-bottom: 4.5rem;
 }
 
 @media (min-width: 700px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    width: 100%;
+    margin: 0 auto;
   }
 }
 
@@ -92,6 +99,12 @@
   flex-shrink: 0;
 }
 
+@media (min-width: 1024px) {
+  .imageWrapper {
+    height: 340px;
+  }
+}
+
 .image {
   object-fit: cover;
   transition: transform 0.4s ease;
@@ -118,26 +131,20 @@
   z-index: 2;
 }
 
-/* ─── Card Body ───────────────────────────────────────────────── */
-.body {
-  padding: 1.5rem 1.5rem 1.75rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+.badgePopular {
+  background-color: rgba(255, 210, 63, 1);
+  color:rgba(45, 49, 66, 1);
+;
 }
 
-.cardTitle {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 0.65rem;
+.badgeBestValue {
+  background-color: rgba(255, 210, 63, 1);
+  color: rgba(45, 49, 66, 1);
 }
 
-.cardDesc {
-  font-size: 0.92rem;
-  color: #6b7280;
-  line-height: 1.65;
-  margin-bottom: 1.1rem;
+.badgePremium {
+  background-color: rgba(255, 210, 63, 1);
+  color: rgba(45, 49, 66, 1);
 }
 
 /* ─── Feature List ────────────────────────────────────────────── */
@@ -187,9 +194,15 @@
   transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
-.quoteBtn:hover {
-  background-color: #d97706;
-  transform: translateY(-1px);
+/* ─── Body ────────────────────────────────────────────────────── */
+.body {
+  padding: 2rem 1.75rem 1.75rem;
+}
+
+@media (min-width: 1024px) {
+  .body {
+    padding: 2rem 2.25rem 2.25rem;
+  }
 }
 
 /* ─── Additional Services Block ───────────────────────────────── */
@@ -206,54 +219,15 @@
   margin-bottom: 0.6rem;
 }
 
-.additionalSub {
-  font-size: 0.95rem;
-  color: #6b7280;
-  margin-bottom: 2.5rem;
-}
-
-.additionalGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  text-align: left;
-}
-
-@media (min-width: 640px) {
-  .additionalGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (min-width: 1024px) {
-  .additionalGrid {
-    grid-template-columns: repeat(3, 1fr);
+  .desc {
+    font-size: var(--text-md);
   }
 }
 
-.additionalCard {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 1.75rem 1.5rem;
-  border-radius: 14px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.additionalCard:hover {
-  box-shadow: 0 6px 20px rgba(0,0,0,0.09);
-  transform: translateY(-3px);
-}
-
-.additionalIcon {
-  width: 2.75rem;
-  height: 2.75rem;
-  background: #fef3c7;
-  border-radius: 10px;
-  display: flex;
+/* ─── Learn More Link ─────────────────────────────────────────── */
+.link {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   color: #d97706;

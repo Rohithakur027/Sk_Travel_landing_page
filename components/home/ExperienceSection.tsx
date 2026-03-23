@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Star, Shield, Clock, ArrowRight } from 'lucide-react';
+import { Star, Clock, ArrowRight } from 'lucide-react';
 import styles from './ExperienceSection.module.css';
 
 export default function ExperienceSection() {
@@ -39,7 +39,7 @@ export default function ExperienceSection() {
             <div className={styles.yellowCard}>
               <div className={styles.scoreRow}>
                 <div className={styles.starBox}>
-                  <Star fill="currentColor" size={28} />
+                  <Star fill="rgba(45,49,66,1)" size={32} />
                 </div>
                 <span className={styles.scoreText}>4.9/5</span>
               </div>
@@ -65,10 +65,9 @@ export default function ExperienceSection() {
           <div className={styles.fullyInsured}>
             <div className={styles.card}>
               <Image src="/images/fullyensured.png" alt="Fully Insured" fill className={styles.bgImg} />
-              <div className={styles.overlayOrange} />
               <div className={styles.centerContent}>
                 <div className={styles.shieldBox}>
-                  <Shield fill="currentColor" size={32} color="#111827" />
+                  <Image src="/icons/SecurityIcon.svg" alt="Security" width={40} height={40} />
                 </div>
                 <h3>Fully Insured</h3>
                 <p>Complete protection for peace of mind</p>

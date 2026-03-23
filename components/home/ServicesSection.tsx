@@ -1,104 +1,34 @@
 import React from "react";
 import Image from "next/image";
-import {
-  Bus,
-  Briefcase,
-  CalendarCheck,
-  Plane,
-  MapPin,
-  Radio,
-  Settings,
-  ShieldCheck,
-  CreditCard,
-  Headphones,
-} from "lucide-react";
 import styles from "./ServicesSection.module.css";
 
 const MAIN_SERVICES = [
   {
     title: "Employee Shuttle Service",
     description:
-      "Provide your employees with a reliable and comfortable daily commute. Our shuttle services are designed to maximize productivity and employee satisfaction.",
-    icon: <Bus size={28} />,
-    image: "/ImageWithFallback.png",
-    features: [
-      "Fixed route scheduling",
-      "GPS tracked vehicles",
-      "Professional drivers",
-      "Employee app access",
-    ],
+      "Reliable pickup and drop-off services for all major airports. Track flights in real-time and meet your team on schedule.",
+    icon: "/icons/airportservice.icon.svg",
+    image: "/images/airportservice.png",
+    badge: "Popular",
+    badgeClass: styles.badgePopular,
   },
   {
     title: "Executive Transportation",
     description:
-      "Premium transportation for executives and VIP clients. Enjoy a first-class experience with our luxury fleet and highly trained chauffeurs.",
-    icon: <Briefcase size={28} />,
-    image: "/ImageWithFallback (1).png",
-    features: [
-      "Luxury fleet vehicles",
-      "Certified chauffeurs",
-      "Priority scheduling",
-      "Amenity packages",
-    ],
+      "Daily commute solutions for your employees with scheduled routes, dedicated vehicles, and professional drivers.",
+    icon: "/icons/corporateservice.icon (1).svg",
+    image: "/images/corporateshuttles.png",
+    badge: "Best Value",
+    badgeClass: styles.badgeBestValue,
   },
   {
     title: "Event Transportation",
     description:
-      "Seamless group transportation for conferences, corporate events, and special occasions. We coordinate every detail to ensure your event runs smoothly.",
-    icon: <CalendarCheck size={28} />,
-    image: "/Container.png",
-    features: [
-      "Group capacity planning",
-      "Event day coordination",
-      "Multiple pick-up points",
-      "Flexible scheduling",
-    ],
-  },
-  {
-    title: "Airport Transfers",
-    description:
-      "Never miss a flight again. Our airport transfer service provides punctual, stress-free transportation with real-time flight tracking.",
-    icon: <Plane size={28} />,
-    image: "/Container (1).png",
-    features: [
-      "Flight tracking",
-      "Meet & greet service",
-      "24/7 availability",
-      "Luggage assistance",
-    ],
-  },
-];
-
-const ADDITIONAL_SERVICES = [
-  {
-    icon: <MapPin size={22} />,
-    title: "Route Optimization",
-    description: "AI-powered routing to minimize travel time and operational costs for your fleet.",
-  },
-  {
-    icon: <Radio size={22} />,
-    title: "Real Time Tracking",
-    description: "Live GPS monitoring gives you full visibility over every vehicle in your fleet.",
-  },
-  {
-    icon: <Settings size={22} />,
-    title: "Customized Solutions",
-    description: "Tailored transportation programs built around your unique business requirements.",
-  },
-  {
-    icon: <ShieldCheck size={22} />,
-    title: "Safety Protocols",
-    description: "Rigorous driver vetting, vehicle inspections, and compliance reporting.",
-  },
-  {
-    icon: <CreditCard size={22} />,
-    title: "Flexible Billing",
-    description: "Consolidated monthly invoicing, cost centers, and custom billing structures.",
-  },
-  {
-    icon: <Headphones size={22} />,
-    title: "24/7 Support",
-    description: "Round-the-clock customer support to handle any transportation need or issue.",
+      "Premium transportation for corporate events, conferences, and special occasions with flexible group booking options.",
+    icon: "/icons/eventservice.svg",
+    image: "/images/eventtransportation.png",
+    badge: "Premium",
+    badgeClass: styles.badgePremium,
   },
 ];
 
@@ -127,7 +57,19 @@ export default function ServicesSection() {
                   className={styles.image}
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className={styles.iconBadge}>{service.icon}</div>
+                {/* Badge */}
+                <span className={`${styles.badge} ${service.badgeClass}`}>
+                  {service.badge}
+                </span>
+                {/* Icon box — sits at bottom-left, overlapping the image */}
+                <div className={styles.iconBox}>
+                  <Image
+                    src={service.icon}
+                    alt={`${service.title} icon`}
+                    width={32}
+                    height={32}
+                  />
+                </div>
               </div>
               <div className={styles.body}>
                 <h3 className={styles.cardTitle}>{service.title}</h3>

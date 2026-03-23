@@ -1,9 +1,15 @@
 .section {
   position: relative;
   width: 100%;
-  min-height: 900px;
+  min-height: 950px;
   background-color: #000000;
   isolation: isolate;
+}
+
+@media (max-width: 768px) {
+  .section {
+    min-height: 850px;
+  }
 }
 
 .bg {
@@ -16,7 +22,6 @@
   opacity: 1;
 }
 
-
 .content {
   position: relative;
   z-index: 10;
@@ -24,7 +29,7 @@
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding-inline: var(--container-padding);
-  padding-top: 5rem;
+  padding-top: 6rem;
   padding-bottom: 16rem;
   display: flex;
   flex-direction: column;
@@ -35,8 +40,8 @@
 
 @media (max-width: 768px) {
   .content {
-    padding-top: 2rem;
-    padding-bottom: 8rem;
+    padding-top: 6rem;
+    padding-bottom: 25rem;
   }
 }
 
@@ -48,7 +53,11 @@
   border-radius: 9999px;
   border: 1.5px solid rgba(255, 210, 63, 0.3);
   backdrop-filter: blur(12px);
-  background: linear-gradient(135deg, rgba(255, 210, 63, 0.15) 0%, rgba(255, 210, 63, 0.08) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 210, 63, 0.15) 0%,
+    rgba(255, 210, 63, 0.08) 100%
+  );
   font-size: 1rem;
   font-weight: 800;
   color: #fff;
@@ -118,5 +127,11 @@
   right: 0;
   transform: translateY(50%);
   z-index: 20;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .formWrapper {
+    transform: translateY(45%); /* Bleed more into next section to clear hero text */
+  }
 }
