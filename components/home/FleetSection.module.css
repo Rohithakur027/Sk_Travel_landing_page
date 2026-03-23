@@ -3,44 +3,22 @@
   background-color: #ffffff;
 }
 
+/* Default padding for mobile */
 .section :global(.container) {
   max-width: 100%;
   padding-inline: 1.5rem;
 }
 
-@media (min-width: 1024px) {
-  .section :global(.container) {
-    padding-inline: 8rem;
-  }
-}
-
 .bentoGrid {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
-@media (min-width: 1024px) {
-  .bentoGrid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .leftCol {
-    height: 100%;
-  }
-  
-  .rightStack {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    height: 100%;
-  }
-
-  .rightStack > div {
-    flex: 1;
-    min-height: 22rem;
-  }
+.rightStack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .card {
@@ -70,7 +48,11 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.85) 100%);
+  background: linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
   pointer-events: none;
 }
 
@@ -87,7 +69,7 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #FBBF24;
+  color: #fbbf24;
   margin-bottom: 0.75rem;
 }
 
@@ -124,7 +106,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background-color: #fbbf24;
+  background-color: rgba(255, 210, 63, 1);
   color: #111827;
   font-weight: 700;
   font-size: 1rem;
@@ -152,16 +134,67 @@
   margin-bottom: 1rem;
 }
 
-@media (min-width: 768px) {
-  .sectionTitle {
-    font-size: 3.5rem;
-  }
-}
-
 .sectionSubtitle {
   font-size: 1.25rem;
   color: #6b7280;
   max-width: 42rem;
   margin-inline: auto;
   line-height: 1.5;
+}
+
+/* --- MEDIA QUERIES AT THE END --- */
+
+@media (min-width: 768px) {
+  .sectionTitle {
+    font-size: 3.5rem;
+  }
+}
+
+/* Tablet / Small Desktop padding */
+@media (min-width: 1024px) {
+  .section :global(.container) {
+    padding-inline: 3rem;
+  }
+
+  .bentoGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    height: 60rem;
+  }
+
+  .leftCol {
+    height: 100%;
+  }
+
+  .rightStack {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100%;
+  }
+
+  .rightStack > div {
+    flex: 1;
+  }
+  
+  /* Tablet text scaling */
+  .content h3 { font-size: 2rem; }
+  .rightCardContent h3 { font-size: 1.5rem; }
+}
+
+/* Large Desktop padding */
+@media (min-width: 1440px) {
+  .section :global(.container) {
+    padding-inline: 8rem;
+  }
+
+  .bentoGrid {
+    gap: 3rem;
+    height: 72rem;
+  }
+  .rightStack { gap: 3rem; }
+  
+  .content h3 { font-size: 2.5rem; }
+  .rightCardContent h3 { font-size: 2rem; }
 }

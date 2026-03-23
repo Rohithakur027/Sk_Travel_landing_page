@@ -8,13 +8,13 @@
 
 .formGrid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
 }
 
 @media (min-width: 640px) {
   .formGrid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
 }
 
@@ -62,26 +62,37 @@
   justify-content: center;
   width: 100%;
   padding: 1.25rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   font-size: 1.125rem;
-  font-weight: 800;
-  transition: all 0.2s ease;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   border: none;
-  gap: 0.5rem;
-  background-color: #FBBF24;
-  color: #111827;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #FFD23F 0%, #FFA726 100%);
+  color:rgba(45, 49, 66, 1);
   margin-top: auto;
+  box-shadow: 0 10px 15px -3px rgba(255, 210, 63, 0.2);
 }
 
 .btnPrimary:hover {
-  background-color: #F59E0B;
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #FFD23F 0%, #FFB74D 100%);
+  box-shadow: 0 8px 20px 1px rgba(125, 125, 125, 0.35);
 }
 
-.btnArrow {
-  font-size: 1.125rem;
-  font-family: inherit;
-  font-weight: 800;
+.btnPrimary:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 10px -3px rgba(255, 167, 38, 0.2);
+}
+
+
+.sendIcon {
+  transition: transform 0.3s ease;
+}
+
+.btnPrimary:hover .sendIcon {
+  transform: translateX(4px);
 }
 
 .errorBox {

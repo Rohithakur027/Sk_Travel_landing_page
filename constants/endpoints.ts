@@ -1,7 +1,7 @@
 // API endpoint constants
 // Values are populated from environment variables
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
 
 export const ENDPOINTS = {
   // Booking
@@ -20,8 +20,8 @@ export const ENDPOINTS = {
     GET_AVAILABLE: `${BASE_URL}/fleet/available`,
   },
 
-  // Contact
+  // Contact / Enquiry
   CONTACT: {
-    SEND: `${BASE_URL}/contact`,
+    SEND: `${BASE_URL}/enquiries/company`,
   },
 } as const;

@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Image from 'next/image';
 import { contactApi, type ContactFormData } from '@/lib/contact.api';
 import styles from './ContactForm.module.css';
 
@@ -44,10 +45,11 @@ export default function ContactForm() {
     setError(null);
     try {
       const payload: ContactFormData = {
-        name: `${formData.firstName} ${formData.lastName}`.trim(),
-        email: formData.email,
-        phone: formData.phone,
-        subject: formData.company || 'New Inquiry',
+        contact_first_name: formData.firstName,
+        contact_last_name: formData.lastName,
+        company_name: formData.company,
+        contact_email: formData.email,
+        contact_phone: formData.phone,
         message: formData.message,
       };
       await contactApi.send(payload);
@@ -144,7 +146,14 @@ export default function ContactForm() {
       <button type="submit" disabled={isLoading} className={styles.btnPrimary}>
         {isLoading ? 'Sending...' : (
           <>
-            Send Message <span className={styles.btnArrow}>&gt;</span>
+            Send Message 
+            <Image 
+              src="/icons/SendIcon.svg" 
+              alt="Send icon" 
+              width={20} 
+              height={20} 
+              className={styles.sendIcon} 
+            />
           </>
         )}
       </button>

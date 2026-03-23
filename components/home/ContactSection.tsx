@@ -43,7 +43,7 @@ export default function ContactSection() {
 
             <div className={styles.infoCard}>
               <div className={styles.infoIcon}>
-                <Phone size={20} />
+                <Phone size={30} />
               </div>
               <div className={styles.infoTextGroup}>
                 <p className={styles.infoLabel}>Call Us</p>
@@ -54,7 +54,7 @@ export default function ContactSection() {
 
             <div className={styles.infoCard}>
               <div className={styles.infoIcon}>
-                <Mail size={20} />
+                <Mail size={30} />
               </div>
               <div className={styles.infoTextGroup}>
                 <p className={styles.infoLabel}>Email Us</p>
@@ -65,7 +65,7 @@ export default function ContactSection() {
 
             <div className={styles.infoCard}>
               <div className={styles.infoIcon}>
-                <MapPin size={20} />
+                <MapPin size={30} />
               </div>
               <div className={styles.infoTextGroup}>
                 <p className={styles.infoLabel}>Visit Us</p>
