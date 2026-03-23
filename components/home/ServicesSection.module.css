@@ -11,11 +11,14 @@
 }
 
 .pill {
-  display: inline-block;
-  padding: 0.4rem 1.1rem;
-  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 10px;
   border: 1.5px solid var(--color-gray-300);
-  background: linear-gradient(135deg, rgba(255, 210, 63, 0.15) 0%, rgba(255, 210, 63, 0.08) 100%);
+  background: linear-gradient(135deg, rgba(255,210,63,0.15) 0%, rgba(255,210,63,0.08) 100%);
 
   font-size: var(--text-sm);
   font-weight: var(--font-medium);

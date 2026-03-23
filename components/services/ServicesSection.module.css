@@ -13,7 +13,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 
 .lowerBand {
@@ -30,7 +30,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2rem;
 }
 
 /* ─── Header ──────────────────────────────────────────────────── */
@@ -80,16 +80,15 @@
   gap: 2rem;
   margin-bottom: 0;
   padding-bottom: 4.5rem;
-  max-width: 1060px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }
 
 @media (min-width: 700px) {
   .grid {
-    grid-template-columns: repeat(2, minmax(0, 510px));
+    grid-template-columns: repeat(2, minmax(0, 560px));
     gap: 2rem;
-    justify-content: center;
   }
 }
 
@@ -309,14 +308,19 @@
 
 /* ─── CTA Box ─────────────────────────────────────────────────── */
 .ctaBox {
-  text-align: center;
+  width: 100%;
+  max-width: 1052px;
+  height: 352.5px;
+  margin: 0 auto;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 32px;
-  padding: 5rem 4rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-  max-width: 1052px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 48px;
 }
 
 .ctaTitle {
