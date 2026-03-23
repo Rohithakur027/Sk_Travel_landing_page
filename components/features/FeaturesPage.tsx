@@ -43,10 +43,42 @@ export default function FeaturesPage() {
             <p className={styles.heroDesc}>Our advanced GPS tracking system allows you to monitor all your vehicles in real-time. Know exactly where your employees are and when they'll arrive at their destination.</p>
 
             <ul className={styles.checkList}>
-              <li>Live GPS Tracking</li>
-              <li>ETA Updates</li>
-              <li>Route History</li>
-              <li>Driver Details</li>
+              <li>
+                <span className={styles.checkImg}>
+                  <Image src={'/Container (34).png'} alt="Live GPS" width={40} height={40} />
+                </span>
+                <div>
+                  <div className={styles.checkTitle}>Live GPS Tracking</div>
+                  <div className={styles.checkDesc}>Monitor vehicle locations on an interactive map</div>
+                </div>
+              </li>
+              <li>
+                <span className={styles.checkImg}>
+                  <Image src={'/Container (34).png'} alt="ETA" width={40} height={40} />
+                </span>
+                <div>
+                  <div className={styles.checkTitle}>ETA Updates</div>
+                  <div className={styles.checkDesc}>Accurate arrival time estimates with traffic considerations</div>
+                </div>
+              </li>
+              <li>
+                <span className={styles.checkImg}>
+                  <Image src={'/Container (34).png'} alt="Route History" width={40} height={40} />
+                </span>
+                <div>
+                  <div className={styles.checkTitle}>Route History</div>
+                  <div className={styles.checkDesc}>Complete journey logs and historical route data</div>
+                </div>
+              </li>
+              <li>
+                <span className={styles.checkImg}>
+                  <Image src={'/Container (34).png'} alt="Driver Details" width={40} height={40} />
+                </span>
+                <div>
+                  <div className={styles.checkTitle}>Driver Details</div>
+                  <div className={styles.checkDesc}>View driver information and contact details</div>
+                </div>
+              </li>
             </ul>
           </div>
 
@@ -94,7 +126,7 @@ export default function FeaturesPage() {
 
             <div className={styles.stackCards}>
               <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (29).png'} alt="Background Verified Drivers" width={48} height={48} /></div>
+                <div className={styles.stackIcon}><Image src={'/Container (30).png'} alt="Background Verified Drivers" width={48} height={48} /></div>
                 <div>
                   <h4 className={styles.stackTitle}>Background Verified Drivers</h4>
                   <p className={styles.stackDesc}>Every driver undergoes thorough police verification and background checks</p>
@@ -102,7 +134,7 @@ export default function FeaturesPage() {
               </div>
 
               <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (29).png'} alt="Regular Vehicle Maintenance" width={48} height={48} /></div>
+                <div className={styles.stackIcon}><Image src={'/Container (31).png'} alt="Regular Vehicle Maintenance" width={48} height={48} /></div>
                 <div>
                   <h4 className={styles.stackTitle}>Regular Vehicle Maintenance</h4>
                   <p className={styles.stackDesc}>All vehicles undergo regular inspections and maintenance checks</p>
@@ -110,7 +142,7 @@ export default function FeaturesPage() {
               </div>
 
               <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (29).png'} alt="24/7 Emergency Support" width={48} height={48} /></div>
+                <div className={styles.stackIcon}><Image src={'/Container (32).png'} alt="24/7 Emergency Support" width={48} height={48} /></div>
                 <div>
                   <h4 className={styles.stackTitle}>24/7 Emergency Support</h4>
                   <p className={styles.stackDesc}>Round-the-clock support team available for any emergency situations</p>
@@ -118,7 +150,7 @@ export default function FeaturesPage() {
               </div>
 
               <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (29).png'} alt="Real-Time Ride Sharing" width={48} height={48} /></div>
+                <div className={styles.stackIcon}><Image src={'/Container (33).png'} alt="Real-Time Ride Sharing" width={48} height={48} /></div>
                 <div>
                   <h4 className={styles.stackTitle}>Real-Time Ride Sharing</h4>
                   <p className={styles.stackDesc}>Share your trip details with family or colleagues for added security</p>

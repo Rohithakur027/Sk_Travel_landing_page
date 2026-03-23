@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -10,15 +10,24 @@ const NAV_LINKS = [
   { label: "Home", href: "/"},
   { label: "About", href: "/about"},
   { label: "Services", href: "/services"},
-  { label: "Features", href: "/#features"},
+  { label: "Features", href: "/features"},
   { label: "Contact", href: "/#contact"},
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHidden(window.scrollY > 0);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${hidden ? styles.headerHidden : ''}`}>
       <div className={styles.inner}>
         {/* Logo */}
         <Link href="/" className={styles.logo}>
