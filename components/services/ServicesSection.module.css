@@ -11,7 +11,7 @@
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 2000px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -309,8 +309,7 @@
 /* ─── CTA Box ─────────────────────────────────────────────────── */
 .ctaBox {
   width: 100%;
-  max-width: 1052px;
-  height: 352.5px;
+  max-width: 1100px;
   margin: 0 auto;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -320,7 +319,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 48px;
+  padding: 48px 48px;
 }
 
 .ctaTitle {
@@ -333,9 +332,18 @@
 .ctaSub {
   font-size: 0.97rem;
   color: #6b7280;
-  max-width: 30rem;
-  margin: 0 auto 1.75rem;
+  max-width: 40rem;
+  margin: 0 auto 1rem;
   line-height: 1.6;
+  text-align: center;
+}
+
+.ctaSubHighlight {
+  display: block;
+  text-align: center;
+  margin-top: 0.35rem;
+  font-weight: 400;
+  color: #6b7280;
 }
 
 .ctaBtn {

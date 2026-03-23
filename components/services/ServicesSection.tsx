@@ -177,10 +177,11 @@ export default function ServicesSection() {
     
     {/* ── CTA Section (separate) ─────────────────────────────── */}
     <section id="cta" className={styles.ctaSection}>
-      <div className={styles.ctaBox}>
+        <div className={styles.ctaBox}>
         <h3 className={styles.ctaTitle}>Ready to Get Started?</h3>
         <p className={styles.ctaSub}>
-          Contact us today to discuss your corporate transportation needs and get a customized quote
+          Contact us today to discuss your corporate transportation needs and
+          <span className={styles.ctaSubHighlight}>get a customized quote</span>
         </p>
         <a href="#booking" className={styles.ctaBtn}>Request a Quote →</a>
       </div>
