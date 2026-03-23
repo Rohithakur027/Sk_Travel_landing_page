@@ -39,7 +39,7 @@ export default function FeaturesPage() {
         <div className={styles.heroRow}>
           <div className={styles.heroText}>
             <div className={styles.smallPill}>Real-Time Intelligence</div>
-            <h2 className={styles.heroTitle}>Track Every Journey in Real-Time</h2>
+            <h2 className={styles.heroTitle}>Track Every Journey in<br/>Real-Time</h2>
             <p className={styles.heroDesc}>Our advanced GPS tracking system allows you to monitor all your vehicles in real-time. Know exactly where your employees are and when they'll arrive at their destination.</p>
 
             <ul className={styles.checkList}>
@@ -94,7 +94,7 @@ export default function FeaturesPage() {
 
             <div className={styles.stackCards}>
               <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (23).png'} alt="Background Verified Drivers" width={80} height={80} /></div>
+                <div className={styles.stackIcon}><Image src={'/Container (29).png'} alt="Background Verified Drivers" width={48} height={48} /></div>
                 <div>
                   <h4 className={styles.stackTitle}>Background Verified Drivers</h4>
                   <p className={styles.stackDesc}>Every driver undergoes thorough police verification and background checks</p>
@@ -102,7 +102,7 @@ export default function FeaturesPage() {
               </div>
 
               <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (24).png'} alt="Regular Vehicle Maintenance" width={80} height={80} /></div>
+                <div className={styles.stackIcon}><Image src={'/Container (29).png'} alt="Regular Vehicle Maintenance" width={48} height={48} /></div>
                 <div>
                   <h4 className={styles.stackTitle}>Regular Vehicle Maintenance</h4>
                   <p className={styles.stackDesc}>All vehicles undergo regular inspections and maintenance checks</p>
@@ -110,7 +110,7 @@ export default function FeaturesPage() {
               </div>
 
               <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (25).png'} alt="24/7 Emergency Support" width={80} height={80} /></div>
+                <div className={styles.stackIcon}><Image src={'/Container (29).png'} alt="24/7 Emergency Support" width={48} height={48} /></div>
                 <div>
                   <h4 className={styles.stackTitle}>24/7 Emergency Support</h4>
                   <p className={styles.stackDesc}>Round-the-clock support team available for any emergency situations</p>
@@ -118,7 +118,7 @@ export default function FeaturesPage() {
               </div>
 
               <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (26).png'} alt="Real-Time Ride Sharing" width={80} height={80} /></div>
+                <div className={styles.stackIcon}><Image src={'/Container (29).png'} alt="Real-Time Ride Sharing" width={48} height={48} /></div>
                 <div>
                   <h4 className={styles.stackTitle}>Real-Time Ride Sharing</h4>
                   <p className={styles.stackDesc}>Share your trip details with family or colleagues for added security</p>
@@ -136,20 +136,24 @@ export default function FeaturesPage() {
 
           <div className={styles.poweredGrid}>
             <div className={styles.poweredItem}>
-              <div className={styles.poweredIcon}><Image src={'/Container (23).png'} alt="Cloud Infrastructure" width={48} height={48} /></div>
+              <div className={styles.poweredIcon}><Image src={'/Container (30).png'} alt="Cloud Infrastructure" width={64} height={64} /></div>
               <div className={styles.poweredLabel}>Cloud Infrastructure</div>
+              <div className={styles.poweredSubLabel}>99.9% uptime guaranteed</div>
             </div>
             <div className={styles.poweredItem}>
-              <div className={styles.poweredIcon}><Image src={'/Container (23).png'} alt="AI Routing" width={48} height={48} /></div>
+              <div className={styles.poweredIcon}><Image src={'/Container (31).png'} alt="AI Routing" width={64} height={64} /></div>
               <div className={styles.poweredLabel}>AI Routing</div>
+              <div className={styles.poweredSubLabel}>Smart traffic prediction</div>
             </div>
             <div className={styles.poweredItem}>
-              <div className={styles.poweredIcon}><Image src={'/Container (23).png'} alt="Mobile First" width={48} height={48} /></div>
+              <div className={styles.poweredIcon}><Image src={'/Container (32).png'} alt="Mobile First" width={64} height={64} /></div>
               <div className={styles.poweredLabel}>Mobile First</div>
+              <div className={styles.poweredSubLabel}>iOS & Android apps</div>
             </div>
             <div className={styles.poweredItem}>
-              <div className={styles.poweredIcon}><Image src={'/Container (23).png'} alt="Data Security" width={48} height={48} /></div>
+              <div className={styles.poweredIcon}><Image src={'/Container (33).png'} alt="Data Security" width={64} height={64} /></div>
               <div className={styles.poweredLabel}>Data Security</div>
+              <div className={styles.poweredSubLabel}>Bank-level encryption</div>
             </div>
           </div>
         </div>

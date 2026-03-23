@@ -22,12 +22,12 @@
 
 .heroRow { display: flex; gap: 2rem; align-items: center; margin-top: 2.5rem; margin-bottom: 3rem; }
 .heroText { flex: 1; }
-.smallPill { display:inline-flex; align-items:center; justify-content:center; margin-bottom: .75rem; }
+.smallPill { display:inline-flex; align-items:center; justify-content:center; margin-bottom: .75rem; height:48px; padding:0 16px; background: linear-gradient(135deg, rgba(255,210,63,0.15), rgba(255,210,63,0.06)); border-radius:12px; color:#374151; font-weight:700; font-size:16px; }
 .heroTitle { font-size: 2.5rem; color:#111827; margin:0 0 .75rem 0; }
 .heroDesc { color:#6b7280; max-width: 520px; }
 .stackCards { display:flex; flex-direction:column; gap:24px; margin-top:1.25rem; }
 .stackCard { display:flex; gap:20px; align-items:flex-start; background:#ffffff; border-radius:18px; padding:18px; box-shadow: 0 18px 40px rgba(2,6,23,0.06); }
-.stackIcon { width:80px; height:80px; flex:0 0 80px; display:flex; align-items:center; justify-content:center; border-radius:12px; background: linear-gradient(135deg, rgba(255,210,63,0.12), rgba(255,210,63,0.06)); }
+.stackIcon { width:48px; height:48px; flex:0 0 48px; display:flex; align-items:center; justify-content:center; border-radius:12px; background: linear-gradient(135deg, rgba(255,210,63,0.12), rgba(255,210,63,0.06)); overflow:hidden; }
 .stackTitle { margin:0 0 6px 0; font-size:1rem; font-weight:700; color:#111827; }
 .stackDesc { margin:0; color:#6b7280; line-height:1.5; }
 .heroImage { flex: 0 0 494px; display:flex; justify-content:center; }
@@ -49,11 +49,12 @@
 .poweredLead { color: rgba(255,255,255,0.75); margin:0 0 32px; }
 .poweredGrid { display:grid; grid-template-columns: repeat(4,1fr); gap:32px; align-items:center; }
 .poweredItem { display:flex; flex-direction:column; align-items:center; gap:12px; }
-.poweredIcon { width:80px; height:80px; border-radius:20px; background: linear-gradient(135deg, rgba(255,210,63,0.15), rgba(255,210,63,0.06)); display:flex; align-items:center; justify-content:center; }
+.poweredIcon { width:64px; height:64px; border-radius:12px; background: linear-gradient(135deg, rgba(255,210,63,0.15), rgba(255,210,63,0.06)); display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .poweredLabel { color:#fff; font-weight:700; }
+.poweredSubLabel { color: rgba(255,255,255,0.75); font-weight:400; font-size:14px; margin-top:6px; }
 
 .sectionTitleWrap { text-align:center; margin: 3.5rem 0; }
-.sectionTitle { font-size: 48px; font-weight:900; color:#111827; margin:0 0 0.75rem 0; line-height:1.05; }
+.sectionTitle { font-size: 42px; font-weight:800; color:#111827; margin:0 0 0.75rem 0; line-height:1.05; }
 .sectionLead { color:#6b7280; max-width:680px; margin:0 auto; height:60px; display:flex; align-items:center; justify-content:center; }
 
 /* CTA box for "Experience These Features" */
@@ -63,7 +64,7 @@
 .cardsGrid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 1052px; margin: 0 auto 0; }
 .featureCard { background:#ffffff; border-radius:24px; padding: 28px; box-shadow: 0 12px 32px rgba(0,0,0,0.06); min-height: 254px; display:flex; flex-direction:column; }
 .cardIcon { width:56px; height:56px; border-radius:14px; background: linear-gradient(135deg, rgba(255,210,63,0.15), rgba(255,210,63,0.08)); display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
-.cardTitle { font-size:1.05rem; font-weight:700; color:#111827; margin-bottom:8px; }
+.cardTitle { font-family: var(--font-heading); font-size:1.05rem; font-weight:800; color:#111827; margin-bottom:8px; }
 .cardDesc { color:#6b7280; line-height:1.6; margin:0; }
 
 @media (max-width: 900px) { .heroRow { flex-direction:column } .cardsGrid { grid-template-columns: repeat(2, 1fr); } .poweredGrid { grid-template-columns: repeat(2,1fr); } }
