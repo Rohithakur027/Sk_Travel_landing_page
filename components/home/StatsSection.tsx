@@ -1,22 +1,37 @@
 import React from 'react';
-import { BadgeCheck, Star, CarFront } from 'lucide-react';
+import Image from 'next/image';
+import { Star } from 'lucide-react';
 import styles from './StatsSection.module.css';
 
 const STATS = [
   {
     label: 'Corporate Clients',
     value: '500+',
-    icon: <BadgeCheck size={36} color="#FFB02F" strokeWidth={2.5} />,
+    icon: (
+      <Image 
+        src="/icons/tick.svg" 
+        alt="Tick" 
+        width={36} 
+        height={36} 
+      />
+    ),
   },
   {
     label: 'Average Rating',
     value: '4.9/5',
-    icon: <Star size={36} color="#FFB02F" fill="#FFB02F" strokeWidth={0} />,
+    icon: <Star size={36} color="#FFD23F" fill="#FFD23F" strokeWidth={0} />,
   },
   {
     label: 'Completed Rides',
     value: '50K+',
-    icon: <CarFront size={36} color="#FFB02F" strokeWidth={2} />,
+    icon: (
+      <Image 
+        src="/icons/car.svg" 
+        alt="Car" 
+        width={36} 
+        height={36} 
+      />
+    ),
   },
 ];
 

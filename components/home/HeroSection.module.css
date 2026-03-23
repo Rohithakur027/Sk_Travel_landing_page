@@ -1,7 +1,7 @@
 .section {
   position: relative;
   width: 100%;
-  min-height: 900px;
+  min-height: 950px;
   background-color: #000000;
   isolation: isolate;
 }
@@ -29,7 +29,7 @@
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding-inline: var(--container-padding);
-  padding-top: 5rem;
+  padding-top: 6rem;
   padding-bottom: 16rem;
   display: flex;
   flex-direction: column;
