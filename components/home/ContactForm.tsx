@@ -44,10 +44,11 @@ export default function ContactForm() {
     setError(null);
     try {
       const payload: ContactFormData = {
-        name: `${formData.firstName} ${formData.lastName}`.trim(),
-        email: formData.email,
-        phone: formData.phone,
-        subject: formData.company || 'New Inquiry',
+        contact_first_name: formData.firstName,
+        contact_last_name: formData.lastName,
+        company_name: formData.company,
+        contact_email: formData.email,
+        contact_phone: formData.phone,
         message: formData.message,
       };
       await contactApi.send(payload);
