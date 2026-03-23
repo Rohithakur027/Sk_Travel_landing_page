@@ -2,8 +2,8 @@
 .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 .header { text-align: center; padding-top: 5rem; padding-bottom: 2rem; }
 .pillImage { display:flex; justify-content:center; margin-bottom:1rem; }
-.title { font-family: var(--font-heading); font-size: 64px; font-weight: 900; color: #111827; margin: 0; line-height: 76px; letter-spacing: -0.02em; }
-.titleGold { color: #FFB31A; display: block; font-size: 64px; line-height: 76px; }
+.title { font-family: var(--font-heading); font-size: 64px; font-weight: 900; color: #2D3142; margin: 0; line-height: 76px; letter-spacing: -0.02em; }
+.titleGold { display: block; font-size: 64px; line-height: 76px; background: linear-gradient(90deg, #FFD23F 0%, #FFA726 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .lead { max-width: 680px; margin: 1rem auto 0; color: #6b7280; line-height: 1.6; height: 60px; display:flex; align-items:center; justify-content:center; }
 
 /* Cream card bands for header and the "Everything You Need" block */
@@ -39,11 +39,14 @@
 .imageCard > span > img { width: 100% !important; height: 100% !important; object-fit: cover !important; border-radius: 24px !important; display: block; }
 
 .checkList { list-style:none; padding:0; margin-top:1.25rem; }
-.checkList li { margin-bottom:.75rem; padding-left:1.6rem; position:relative; color:#374151; }
-.checkList li:before { content:'\2022'; position:absolute; left:0; top:0; color:#FFD23F; font-weight:700; }
+.checkList li { display:flex; gap:12px; align-items:flex-start; margin-bottom:1.25rem; color:#374151; }
+
+.checkImg { width:40px; height:40px; flex:0 0 40px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; background: linear-gradient(135deg, rgba(255,210,63,0.15), rgba(255,210,63,0.06)); overflow:hidden; }
+.checkTitle { font-family: var(--font-sans); font-weight:700; font-size:16px; line-height:24px; color:#2D3142; margin-bottom:6px; }
+.checkDesc { font-size:14px; line-height:20px; color:#6b7280; }
 
 /* Powered band */
-.poweredBand { background:#2D3142; color: #fff; padding: 80px 0 48px; }
+.poweredBand { background:#2D3142; color: #fff; padding: 80px 0 100px; }
 .poweredInner { max-width:1052px; margin:0 auto; padding:0 1.5rem; text-align:center; }
 .poweredTitle { font-size:32px; font-weight:800; margin:0 0 12px; }
 .poweredLead { color: rgba(255,255,255,0.75); margin:0 0 32px; }
