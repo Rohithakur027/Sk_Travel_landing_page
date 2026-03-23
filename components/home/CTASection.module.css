@@ -3,6 +3,12 @@
   background-color: #ffffff;
 }
 
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 0;
+  }
+}
+
 .card {
   position: relative;
   border-radius: 2.5rem;
