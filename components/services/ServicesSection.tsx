@@ -100,6 +100,7 @@ const ADDITIONAL_SERVICES = [
 
 export default function ServicesSection() {
   return (
+    <>
     <section id="services" className={styles.section}>
       {/* ── White top zone: Header + 4 Cards ─────────────────── */}
       <div className={styles.container}>
@@ -170,16 +171,20 @@ export default function ServicesSection() {
             </div>
           </div>
 
-          {/* Ready to Get Started CTA */}
-          <div className={styles.ctaBox}>
-            <h3 className={styles.ctaTitle}>Ready to Get Started?</h3>
-            <p className={styles.ctaSub}>
-              Contact us today to discuss your corporate transportation needs and get a customized quote
-            </p>
-            <a href="#booking" className={styles.ctaBtn}>Request a Quote →</a>
-          </div>
         </div>
       </div>
     </section>
+    
+    {/* ── CTA Section (separate) ─────────────────────────────── */}
+    <section id="cta" className={styles.ctaSection}>
+      <div className={styles.ctaBox}>
+        <h3 className={styles.ctaTitle}>Ready to Get Started?</h3>
+        <p className={styles.ctaSub}>
+          Contact us today to discuss your corporate transportation needs and get a customized quote
+        </p>
+        <a href="#booking" className={styles.ctaBtn}>Request a Quote →</a>
+      </div>
+    </section>
+    </>
   );
 }

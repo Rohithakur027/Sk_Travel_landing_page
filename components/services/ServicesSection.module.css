@@ -18,7 +18,13 @@
 
 .lowerBand {
   background-color: #f9f9f9;
-  padding-bottom: 4rem;
+  padding-bottom: 0; /* remove gap below additional services */
+}
+
+.ctaSection {
+  background-color: #ffffff; /* make CTA section white */
+  padding: 0 6rem 5rem; /* remove top padding to eliminate gap */
+  margin-top: 0;
 }
 
 .container {
@@ -304,10 +310,13 @@
 /* ─── CTA Box ─────────────────────────────────────────────────── */
 .ctaBox {
   text-align: center;
-  background: transparent;
-  border: none;
-  border-radius: 16px;
-  padding: 3rem 2rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 32px;
+  padding: 5rem 4rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  max-width: 1052px;
+  margin: 0 auto;
 }
 
 .ctaTitle {
