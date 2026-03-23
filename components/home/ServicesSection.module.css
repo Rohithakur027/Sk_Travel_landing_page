@@ -1,11 +1,16 @@
 .section {
-  padding: var(--space-24) 0;
+  padding: 4rem 0;
   background-color: rgb(253, 252, 248);
 }
 
-@media (max-width: 768px) {
+@media (min-width: 1024px) {
   .section {
-    padding: 4rem 0;
+    padding: 6rem 0;
+  }
+  
+  .section :global(.container) {
+    max-width: 1750px;
+    padding: 0 4rem;
   }
 }
 
@@ -63,7 +68,9 @@
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
+    gap: 8rem;
+    width: 100%;
+    margin: 0 auto;
   }
 }
 
@@ -93,6 +100,12 @@
   border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
 }
 
+@media (min-width: 1024px) {
+  .imageWrapper {
+    height: 340px;
+  }
+}
+
 .image {
   object-fit: cover;
   transition: transform var(--transition-slow);
@@ -116,18 +129,19 @@
 }
 
 .badgePopular {
-  background-color: #f59e0b;
-  color: var(--color-white);
+  background-color: rgba(255, 210, 63, 1);
+  color:rgba(45, 49, 66, 1);
+;
 }
 
 .badgeBestValue {
-  background-color: #f59e0b;
-  color: var(--color-white);
+  background-color: rgba(255, 210, 63, 1);
+  color: rgba(45, 49, 66, 1);
 }
 
 .badgePremium {
-  background-color: #f59e0b;
-  color: var(--color-white);
+  background-color: rgba(255, 210, 63, 1);
+  color: rgba(45, 49, 66, 1);
 }
 
 /* ─── Icon Box (overlaps bottom of image) ─────────────────────── */
@@ -157,7 +171,13 @@
 
 /* ─── Body ────────────────────────────────────────────────────── */
 .body {
-  padding: 2.25rem 1.75rem 1.75rem;
+  padding: 2rem 1.75rem 1.75rem;
+}
+
+@media (min-width: 1024px) {
+  .body {
+    padding: 2rem 2.25rem 2.25rem;
+  }
 }
 
 .title {
@@ -173,6 +193,12 @@
   color: var(--color-gray-500);
   line-height: var(--leading-relaxed);
   margin-bottom: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .desc {
+    font-size: var(--text-md);
+  }
 }
 
 /* ─── Learn More Link ─────────────────────────────────────────── */

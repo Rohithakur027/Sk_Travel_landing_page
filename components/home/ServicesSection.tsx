@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { Plane, LayoutGrid, CalendarCheck } from "lucide-react";
 import styles from "./ServicesSection.module.css";
 
 const SERVICES = [
@@ -8,7 +7,7 @@ const SERVICES = [
     title: "Airport Transfers",
     description:
       "Reliable pickup and drop-off services for all major airports. Track flights in real-time and meet your team on schedule.",
-    icon: <Plane size={32} />,
+    icon: "/icons/airportservice.icon.svg",
     image: "/images/airportservice.png",
     badge: "Popular",
     badgeClass: styles.badgePopular,
@@ -17,7 +16,7 @@ const SERVICES = [
     title: "Corporate Shuttles",
     description:
       "Daily commute solutions for your employees with scheduled routes, dedicated vehicles, and professional drivers.",
-    icon: <LayoutGrid size={32} />,
+    icon: "/icons/corporateservice.icon (1).svg",
     image: "/images/corporateshuttles.png",
     badge: "Best Value",
     badgeClass: styles.badgeBestValue,
@@ -26,7 +25,7 @@ const SERVICES = [
     title: "Event Transportation",
     description:
       "Premium transportation for corporate events, conferences, and special occasions with flexible group booking options.",
-    icon: <CalendarCheck size={32} />,
+    icon: "/icons/eventservice.svg",
     image: "/images/eventtransportation.png",
     badge: "Premium",
     badgeClass: styles.badgePremium,
@@ -69,7 +68,14 @@ export default function ServicesSection() {
                   {service.badge}
                 </span>
                 {/* Icon box — sits at bottom-left, overlapping the image */}
-                <div className={styles.iconBox}>{service.icon}</div>
+                <div className={styles.iconBox}>
+                  <Image
+                    src={service.icon}
+                    alt={`${service.title} icon`}
+                    width={32}
+                    height={32}
+                  />
+                </div>
               </div>
 
               {/* Text content */}

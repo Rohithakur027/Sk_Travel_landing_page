@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { MapPin, Calendar, Clock, Car, Users, ArrowRight } from 'lucide-react';
 import styles from './BookingForm.module.css';
 
 // Local sub-components to reduce dependencies
@@ -161,7 +162,7 @@ export default function BookingForm() {
 
       {/* Footer Text */}
       <div className={styles.footer}>
-        <Sparkles size={16} color="#fbbf24" />
+        <Image src="/icons/spark.svg" alt="Spark" width={16} height={16} />
         <span>Loved from 500K users</span>
       </div>
     </div>
