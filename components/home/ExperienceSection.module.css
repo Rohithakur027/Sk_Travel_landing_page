@@ -8,35 +8,16 @@
   padding-inline: 1.5rem;
 }
 
-@media (min-width: 1024px) {
-  .section :global(.container) {
-    padding-inline: 8rem;
-  }
-}
-
 .bentoGrid {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
-@media (min-width: 1024px) {
-  .bentoGrid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto auto auto;
-  }
-  
-  .premiumComfort { grid-column: span 8; height: 44rem; }
-  .rightStack { grid-column: span 4; display: flex; flex-direction: column; gap: 1.5rem; height: 44rem; }
-  
-  .cities25 { grid-column: span 4; height: 48rem; }
-  .fullyInsured { grid-column: span 4; height: 48rem; }
-  .airportTransfers { grid-column: span 4; height: 48rem; }
-  
-  .builtForTeams { grid-column: span 6; height: 28rem; }
-  .premiumFleet { grid-column: span 3; height: 28rem; }
-  .always247 { grid-column: span 3; height: 28rem; }
+.rightStack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .card {
@@ -66,7 +47,11 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.85) 100%);
+  background: linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
   pointer-events: none;
 }
 
@@ -74,7 +59,11 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(to bottom, transparent 30%, rgba(217, 119, 6, 0.85) 100%);
+  background: linear-gradient(
+    to bottom,
+    transparent 30%,
+    rgba(217, 119, 6, 0.85) 100%
+  );
   pointer-events: none;
 }
 
@@ -138,7 +127,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   padding: 2rem;
   border-radius: 1.5rem;
   color: #111827;
@@ -239,16 +228,6 @@
   background-color: #f59e0b;
 }
 
-/* rightStack: Expert Drivers = 60%, Customer Satisfaction = 40% */
-.rightStack .card {
-  height: 100%;
-  flex: 3; /* 60% */
-}
-
-.rightStack .yellowCard {
-  flex: 2; /* 40% */
-}
-
 /* Inlined SectionHeader Styles */
 .sectionHeader {
   margin-bottom: 3rem;
@@ -263,16 +242,109 @@
   margin-bottom: 1rem;
 }
 
-@media (min-width: 768px) {
-  .sectionTitle {
-    font-size: 3.5rem;
-  }
-}
-
 .sectionSubtitle {
   font-size: 1.25rem;
   color: #6b7280;
   max-width: 42rem;
   margin-inline: auto;
   line-height: 1.5;
+}
+
+/* --- MEDIA QUERIES AT THE END --- */
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .sectionTitle {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section :global(.container) {
+    padding-inline: 3rem;
+  }
+
+  .bentoGrid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 2rem;
+  }
+
+  .premiumComfort {
+    grid-column: span 8;
+    height: 40rem;
+  }
+  .rightStack {
+    grid-column: span 4;
+    gap: 2rem;
+    height: 40rem;
+    position: relative;
+    z-index: 5;
+    flex-grow: 1;
+  }
+
+  .cities25 {
+    grid-column: span 4;
+    height: 38rem;
+  }
+  .fullyInsured {
+    grid-column: span 4;
+    height: 38rem;
+  }
+  .airportTransfers {
+    grid-column: span 4;
+    height: 38rem;
+  }
+
+  .builtForTeams {
+    grid-column: span 6;
+    height: 24rem;
+  }
+  .premiumFleet {
+    grid-column: span 3;
+    height: 24rem;
+  }
+  .always247 {
+    grid-column: span 3;
+    height: 24rem;
+  }
+
+  /* Tablet-specific text scaling for dense cards */
+  .scoreText { font-size: 2.25rem; }
+  .yellowCard h4 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+  .yellowCard p { font-size: 0.85rem; line-height: 1.3; }
+  /* Override global padding inside this media query */
+  .rightStack .yellowCard { padding: 1.5rem; flex: 1; }
+  .rightStack .card { flex: 1; }
+  .starBox { width: 2.75rem; height: 2.75rem; margin-right: 0.75rem; }
+}
+
+@media (min-width: 1440px) {
+  .section :global(.container) {
+    padding-inline: 8rem;
+  }
+
+  .bentoGrid {
+    gap: 3rem;
+  }
+
+  .premiumComfort, .rightStack { height: 44rem; }
+  .rightStack { gap: 3rem; }
+  .cities25, .fullyInsured, .airportTransfers { height: 48rem; }
+  .builtForTeams, .premiumFleet, .always247 { height: 28rem; }
+  
+  .scoreText { font-size: 3.5rem; }
+  .yellowCard h4 { font-size: 2.5rem; }
+  .yellowCard p { font-size: 1rem; }
+  .starBox { width: 3.5rem; height: 3.5rem; margin-right: 1.25rem; }
+
+  /* 60/40 split on large desktop */
+  .rightStack .card { flex: 3; }
+  .rightStack .yellowCard { flex: 2; padding: 2rem; }
 }

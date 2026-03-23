@@ -1,9 +1,20 @@
+'use client';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, ChevronDown } from 'lucide-react';
 import styles from './Footer.module.css';
 
 export default function Footer() {
+  const [openSection, setOpenSection] = useState<string | null>(null);
+
+  const toggleSection = (section: string) => {
+    // Only toggle on mobile screens (less than 768px wide)
+    if (window.innerWidth < 768) {
+      setOpenSection(openSection === section ? null : section);
+    }
+  };
+
   return (
     <footer className={styles.footer}>
       <div className="container">
@@ -31,8 +42,14 @@ export default function Footer() {
 
           {/* Services Column */}
           <div>
-            <h4 className={styles.colHeading}>Services</h4>
-            <ul className={styles.linkList}>
+            <h4 
+              className={styles.colHeading} 
+              onClick={() => toggleSection('services')}
+            >
+              Services
+              <ChevronDown className={`${styles.chevron} ${openSection === 'services' ? styles.chevronOpen : ''}`} size={18} />
+            </h4>
+            <ul className={`${styles.linkList} ${openSection === 'services' ? styles.linkListOpen : ''}`}>
               <li><Link href="#">Daily Commute</Link></li>
               <li><Link href="#">Corporate Events</Link></li>
               <li><Link href="#">Airport Transfers</Link></li>
@@ -43,8 +60,14 @@ export default function Footer() {
 
           {/* Company Column */}
           <div>
-            <h4 className={styles.colHeading}>Company</h4>
-            <ul className={styles.linkList}>
+            <h4 
+              className={styles.colHeading} 
+              onClick={() => toggleSection('company')}
+            >
+              Company
+              <ChevronDown className={`${styles.chevron} ${openSection === 'company' ? styles.chevronOpen : ''}`} size={18} />
+            </h4>
+            <ul className={`${styles.linkList} ${openSection === 'company' ? styles.linkListOpen : ''}`}>
               <li><Link href="#">About Us</Link></li>
               <li><Link href="#">Careers</Link></li>
               <li><Link href="#">Blog</Link></li>
@@ -55,8 +78,14 @@ export default function Footer() {
 
           {/* Support Column */}
           <div>
-            <h4 className={styles.colHeading}>Support</h4>
-            <ul className={styles.linkList}>
+            <h4 
+              className={styles.colHeading} 
+              onClick={() => toggleSection('support')}
+            >
+              Support
+              <ChevronDown className={`${styles.chevron} ${openSection === 'support' ? styles.chevronOpen : ''}`} size={18} />
+            </h4>
+            <ul className={`${styles.linkList} ${openSection === 'support' ? styles.linkListOpen : ''}`}>
               <li><Link href="#">Help Center</Link></li>
               <li><Link href="#">Safety</Link></li>
               <li><Link href="#">Terms of Service</Link></li>
