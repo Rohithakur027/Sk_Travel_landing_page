@@ -21,9 +21,13 @@ const Input = ({ id, error, ...props }: InputProps) => (
 const INITIAL = {
   firstName: '',
   lastName: '',
-  company: '',
+  userType: 'company',
   email: '',
   phone: '',
+  company: '',
+  numEmployees: '',
+  vehicleManufacturer: '',
+  vehicleModel: '',
   message: '',
 };
 
@@ -34,7 +38,7 @@ export default function ContactForm() {
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -47,7 +51,11 @@ export default function ContactForm() {
       const payload: ContactFormData = {
         contact_first_name: formData.firstName,
         contact_last_name: formData.lastName,
-        company_name: formData.company,
+        user_type: formData.userType,
+        company_name: formData.userType === 'company' ? formData.company : '',
+        num_employees: formData.userType === 'company' ? formData.numEmployees : '',
+        vehicle_manufacturer: formData.userType === 'driver' ? formData.vehicleManufacturer : '',
+        vehicle_model: formData.userType === 'driver' ? formData.vehicleModel : '',
         contact_email: formData.email,
         contact_phone: formData.phone,
         message: formData.message,
@@ -96,15 +104,22 @@ export default function ContactForm() {
         />
       </div>
       <div className={styles.formGridSingle}>
-        <Input
-          id="company"
-          name="company"
-          placeholder="Company Name"
-          value={formData.company}
-          onChange={handleChange}
-        />
+        <div className={styles.inputWrapper}>
+          <select
+            id="userType"
+            name="userType"
+            className={styles.input}
+            value={formData.userType}
+            onChange={handleChange}
+            required
+          >
+            <option value="company">As Company</option>
+            <option value="driver">As Driver</option>
+          </select>
+        </div>
       </div>
-      <div className={styles.formGridSingle}>
+
+      <div className={styles.formGrid}>
         <Input
           id="email"
           name="email"
@@ -114,8 +129,6 @@ export default function ContactForm() {
           onChange={handleChange}
           required
         />
-      </div>
-      <div className={styles.formGridSingle}>
         <Input
           id="phone"
           name="phone"
@@ -126,6 +139,47 @@ export default function ContactForm() {
           required
         />
       </div>
+
+      {formData.userType === 'company' ? (
+        <div className={styles.formGrid}>
+          <Input
+            id="company"
+            name="company"
+            placeholder="Company Name *"
+            value={formData.company}
+            onChange={handleChange}
+            required
+          />
+          <Input
+            id="numEmployees"
+            name="numEmployees"
+            type="number"
+            placeholder="No. of Employees *"
+            value={formData.numEmployees}
+            onChange={handleChange}
+            required
+          />
+        </div>
+      ) : (
+        <div className={styles.formGrid}>
+          <Input
+            id="vehicleManufacturer"
+            name="vehicleManufacturer"
+            placeholder="Vehicle Manufacturer *"
+            value={formData.vehicleManufacturer}
+            onChange={handleChange}
+            required
+          />
+          <Input
+            id="vehicleModel"
+            name="vehicleModel"
+            placeholder="Vehicle Model *"
+            value={formData.vehicleModel}
+            onChange={handleChange}
+            required
+          />
+        </div>
+      )}
       <div className={styles.textareaWrapper}>
         <textarea
           id="message"

@@ -10,6 +10,13 @@
 
 @media (min-width: 1024px) {
   .section :global(.container) {
+    padding-inline: 4rem;
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .section :global(.container) {
     padding-inline: 8rem;
     max-width: 1800px;
   }
@@ -25,6 +32,12 @@
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .grid {
     gap: 6rem;
   }
 }
