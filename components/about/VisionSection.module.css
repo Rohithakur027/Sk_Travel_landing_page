@@ -11,6 +11,13 @@
 
 @media (min-width: 1024px) {
   .section :global(.container) {
+    padding-inline: 4rem;
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .section :global(.container) {
     padding-inline: 8rem;
     max-width: 1800px;
   }
@@ -39,7 +46,8 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  max-width: 90rem;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 

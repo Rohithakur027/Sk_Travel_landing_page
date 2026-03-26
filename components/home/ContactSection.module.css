@@ -5,7 +5,11 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 4rem 0;
+    padding: 3rem 0;
+  }
+
+  .sectionHeader h2 {
+    font-size: 2.25rem;
   }
 }
 
@@ -26,6 +30,8 @@
   font-size: 1rem;
   color: #6B7280;
   line-height: 1.6;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .grid {
@@ -136,6 +142,27 @@
   justify-content: center;
   flex-shrink: 0;
   color: #FBBF24;
+}
+
+@media (max-width: 640px) {
+  .infoCard {
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+
+  .infoIcon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  
+  .infoIcon svg {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .infoValue {
+    font-size: 1.125rem;
+  }
 }
 
 .infoTextGroup {

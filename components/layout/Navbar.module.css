@@ -1,19 +1,21 @@
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  z-index: 50;
-  background-color: rgb(255, 255, 255);
-  border-bottom: 1px solid #f1f3f5;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  width: 100%;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 1); /* Slightly transparent */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(241, 243, 245, 0.5);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  transition: all 0.3s ease;
 }
 
-.headerHidden {
-  transform: translateY(-100%);
-  opacity: 0;
-  pointer-events: none;
+.headerScrolled {
+  background-color: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+  padding-block: 0.1rem; /* Shrink slightly on scroll */
 }
 
 .inner {
@@ -25,6 +27,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  position: relative;
 }
 
 @media (min-width: 768px) {
@@ -37,6 +40,12 @@
   .inner {
     padding: 0 4rem;
   }
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
 }
 
 .logo {
@@ -66,17 +75,22 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
 .navLink {
-  padding: 0.5rem 1.25rem;
+  padding: 0.5rem 1rem; /* Slightly reduced padding to allow min-width to take control */
   border-radius: 0.5rem;
   font-size: 1.08rem;
   font-weight: 600;
   white-space: nowrap;
   text-decoration: none;
   transition: all 0.2s ease;
+  min-width: 120px;
+  text-align: center;
 }
 
 .navLinkBg {
@@ -93,6 +107,8 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 .authButtons {

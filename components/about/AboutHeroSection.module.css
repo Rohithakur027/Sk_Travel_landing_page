@@ -46,12 +46,14 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 5rem 0 4rem;
+    padding: 7rem 1.5rem 4rem; /* Added padding to clear fixed navbar and horizontal edges */
   }
   .heading {
-    font-size: 2.75rem;
+    font-size: 2.7rem; /* Slightly smaller for mobile flow */
+    line-height: 1.2;
   }
   .subtitle {
-    font-size: 1.125rem;
+    font-size: 1rem;
+    line-height: 1.5;
   }
 }

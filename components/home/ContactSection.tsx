@@ -11,8 +11,7 @@ export default function ContactSection() {
         <div className={styles.sectionHeader}>
           <h2>Get in Touch</h2>
           <p>
-            Have questions? Our team is ready to help you with your<br />
-            transportation needs
+            Have questions? Our team is ready to help you with your transportation needs
           </p>
         </div>
         <div className={styles.grid}>

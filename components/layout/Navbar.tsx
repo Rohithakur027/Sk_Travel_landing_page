@@ -16,30 +16,32 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setHidden(window.scrollY > 0);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header className={`${styles.header} ${hidden ? styles.headerHidden : ''}`}>
+    <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ''}`}>
       <div className={styles.inner}>
         {/* Logo */}
-        <Link href="/" className={styles.logo}>
-          <Image
-            src="/icons/SKlogo.svg"
-            alt="SK Travel Logo"
-            width={140}
-            height={48}
-            className={styles.logoImg}
-            priority
-          />
-        </Link>
+        <div className={styles.logoWrapper}>
+          <Link href="/" className={styles.logo}>
+            <Image
+              src="/icons/SKlogo.svg"
+              alt="SK Travel Logo"
+              width={140}
+              height={48}
+              className={styles.logoImg}
+              priority
+            />
+          </Link>
+        </div>
 
         {/* Center Navigation Pills (Desktop) */}
         <nav className={styles.navDesktop}>
@@ -58,11 +60,8 @@ export default function Navbar() {
         <div className={styles.rightGroup}>
           {/* Authentication Buttons (Desktop) */}
           <div className={styles.authButtons}>
-            <Link href="/login" className={styles.loginBtn}>
-              Log in
-            </Link>
-            <Link href="/signup" className={styles.signupBtn}>
-              Sign up
+            <Link href="/#cta" className={styles.signupBtn}>
+              Get Started
             </Link>
           </div>
 
@@ -92,11 +91,8 @@ export default function Navbar() {
             ))}
           </nav>
           <div className={styles.mobileAuth}>
-            <Link href="/login" className={styles.loginBtn} onClick={() => setIsOpen(false)}>
-              Log in
-            </Link>
-            <Link href="/signup" className={styles.signupBtn} onClick={() => setIsOpen(false)}>
-              Sign up
+            <Link href="/#cta" className={styles.signupBtn} onClick={() => setIsOpen(false)}>
+              Get Started
             </Link>
           </div>
         </div>

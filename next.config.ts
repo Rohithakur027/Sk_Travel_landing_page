@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    // Other experimental features if any
+  },
+  // @ts-ignore - Next.js 16/15 Turbopack root config
+  turbopack: {
+    root: process.cwd(), 
+  },
 };
 
 export default nextConfig;
