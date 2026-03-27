@@ -26,27 +26,34 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.7rem;
   margin-bottom: 1.5rem;
   text-decoration: none;
+  line-height: normal; /* Fixes potential vertical offset from inherited line-height */
 }
 
 .logoBox {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 2.5rem; /* Match logo height for perfect centering box */
 }
 
 .logoImg {
   width: auto;
   height: 2.5rem;
+  display: block;
 }
 
 .brandName {
   font-family: var(--font-heading);
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5.5px;
+  line-height: 1;
 }
 
 .brandText {

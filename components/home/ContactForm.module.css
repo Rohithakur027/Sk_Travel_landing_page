@@ -152,3 +152,17 @@ select.input {
   color: #d97706;
 }
 
+@media (max-width: 400px) {
+  .formContainer {
+    gap: 0.75rem;
+  }
+  .input, .textarea {
+    padding: 1rem;
+    font-size: 0.95rem;
+  }
+  .btnPrimary {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
+

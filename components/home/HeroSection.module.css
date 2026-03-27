@@ -4,6 +4,7 @@
   min-height: 950px;
   background-color: #000000;
   isolation: isolate;
+  margin-bottom: 16rem;
 }
 
 @media (max-width: 768px) {
