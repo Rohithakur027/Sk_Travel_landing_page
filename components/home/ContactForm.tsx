@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { contactApi, type ContactFormData } from '@/lib/contact.api';
 import styles from './ContactForm.module.css';
@@ -7,6 +7,49 @@ import styles from './ContactForm.module.css';
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
+
+const BRANDS = [
+  'Maruti Suzuki',
+  'Hyundai',
+  'Honda',
+  'Tata',
+  'Toyota',
+  'Kia',
+  'Mahindra',
+  'Renault',
+  'Force',
+];
+
+const MODELS = [
+  'Dzire (Tour S)',
+  'Innova Crysta',
+  'Aura',
+  'Traveller',
+  'WagonR',
+  'Swift',
+  'Alto',
+  'Ertiga',
+  'Eeco',
+  'Innova Hycross',
+  'Xcent Prime',
+  'Creta',
+  'Venue',
+  'Tiago',
+  'Zest',
+  'Tigor',
+  'Nexon',
+  'Indigo',
+  'Marazzo',
+  'Bolero Neo',
+  'Scorpio',
+  'XUV700',
+  'Carens',
+  'Carnival',
+  'Amaze',
+  'City',
+  'Triber',
+  'Duster',
+];
 
 const Input = ({ id, error, ...props }: InputProps) => (
   <div className={styles.inputWrapper}>
@@ -36,6 +79,45 @@ export default function ContactForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showModelSuggestions, setShowModelSuggestions] = useState(false);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
+  const modelSuggestionsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+      if (modelSuggestionsRef.current && !modelSuggestionsRef.current.contains(event.target as Node)) {
+        setShowModelSuggestions(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredBrands = formData.vehicleManufacturer
+    ? BRANDS.filter((b) =>
+        b.toLowerCase().includes(formData.vehicleManufacturer.toLowerCase())
+      )
+    : BRANDS.slice(0, 4);
+
+  const filteredModels = formData.vehicleModel
+    ? MODELS.filter((m) =>
+        m.toLowerCase().includes(formData.vehicleModel.toLowerCase())
+      )
+    : MODELS.slice(0, 4);
+
+  const handleBrandSelect = (brand: string) => {
+    setFormData((prev) => ({ ...prev, vehicleManufacturer: brand }));
+    setShowSuggestions(false);
+  };
+
+  const handleModelSelect = (model: string) => {
+    setFormData((prev) => ({ ...prev, vehicleModel: model }));
+    setShowModelSuggestions(false);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -174,22 +256,66 @@ export default function ContactForm() {
         </div>
       ) : (
         <div className={styles.formGrid}>
-          <Input
-            id="vehicleManufacturer"
-            name="vehicleManufacturer"
-            placeholder="Vehicle Manufacturer *"
-            value={formData.vehicleManufacturer}
-            onChange={handleChange}
-            required
-          />
-          <Input
-            id="vehicleModel"
-            name="vehicleModel"
-            placeholder="Vehicle Model *"
-            value={formData.vehicleModel}
-            onChange={handleChange}
-            required
-          />
+          <div className={styles.suggestionsContainer} ref={suggestionsRef}>
+            <Input
+              id="vehicleManufacturer"
+              name="vehicleManufacturer"
+              placeholder="Vehicle Manufacturer *"
+              value={formData.vehicleManufacturer}
+              onChange={handleChange}
+              onFocus={() => setShowSuggestions(true)}
+              autoComplete="off"
+              required
+            />
+            {showSuggestions && (
+              <ul className={styles.suggestionsList}>
+                {filteredBrands.map((brand) => (
+                  <li
+                    key={brand}
+                    className={styles.suggestionItem}
+                    onMouseDown={() => handleBrandSelect(brand)}
+                  >
+                    {brand}
+                  </li>
+                ))}
+                {filteredBrands.length === 0 && (
+                   <li className={styles.suggestionItem} style={{ cursor: 'default', color: '#9CA3AF' }}>
+                    No brands found
+                   </li>
+                )}
+              </ul>
+            )}
+          </div>
+          <div className={styles.suggestionsContainer} ref={modelSuggestionsRef}>
+            <Input
+              id="vehicleModel"
+              name="vehicleModel"
+              placeholder="Vehicle Model *"
+              value={formData.vehicleModel}
+              onChange={handleChange}
+              onFocus={() => setShowModelSuggestions(true)}
+              autoComplete="off"
+              required
+            />
+             {showModelSuggestions && (
+              <ul className={styles.suggestionsList}>
+                {filteredModels.map((model) => (
+                  <li
+                    key={model}
+                    className={styles.suggestionItem}
+                    onMouseDown={() => handleModelSelect(model)}
+                  >
+                    {model}
+                  </li>
+                ))}
+                {filteredModels.length === 0 && (
+                   <li className={styles.suggestionItem} style={{ cursor: 'default', color: '#9CA3AF' }}>
+                    No models found
+                   </li>
+                )}
+              </ul>
+            )}
+          </div>
         </div>
       )}
       <div className={styles.textareaWrapper}>
