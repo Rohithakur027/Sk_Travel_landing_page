@@ -85,6 +85,33 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
+      {/* User Type Toggle */}
+      <div className={styles.toggle}>
+        <div 
+          className={`${styles.slider} ${
+            formData.userType === 'company' ? styles.companyActive : styles.driverActive
+          }`}
+        />
+        <button
+          type="button"
+          onClick={() => setFormData(prev => ({ ...prev, userType: 'company' }))}
+          className={`${styles.toggleBtn} ${
+            formData.userType === 'company' ? styles.toggleBtnActive : ""
+          }`}
+        >
+          As Company
+        </button>
+        <button
+          type="button"
+          onClick={() => setFormData(prev => ({ ...prev, userType: 'driver' }))}
+          className={`${styles.toggleBtn} ${
+            formData.userType === 'driver' ? styles.toggleBtnActive : ""
+          }`}
+        >
+          As Driver
+        </button>
+      </div>
+
       <div className={styles.formGrid}>
         <Input
           id="firstName"
@@ -102,21 +129,6 @@ export default function ContactForm() {
           onChange={handleChange}
           required
         />
-      </div>
-      <div className={styles.formGridSingle}>
-        <div className={styles.inputWrapper}>
-          <select
-            id="userType"
-            name="userType"
-            className={styles.input}
-            value={formData.userType}
-            onChange={handleChange}
-            required
-          >
-            <option value="company">As Company</option>
-            <option value="driver">As Driver</option>
-          </select>
-        </div>
       </div>
 
       <div className={styles.formGrid}>
