@@ -28,23 +28,15 @@
 }
 
 .pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-  padding: 0 12px;
-  border-radius: 10px;
-  border: 1.5px solid var(--color-gray-300);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 210, 63, 0.15) 0%,
-    rgba(255, 210, 63, 0.08) 100%
-  );
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--color-gray-700);
-  letter-spacing: var(--tracking-wide);
-  margin-bottom: 1.25rem;
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  background-color: #FFF9E6;
+  border: 1px solid #FDE68A;
+  color: #1F2937;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
 }
 
 .heading {
@@ -159,31 +151,6 @@
 .badgePremium {
   background-color: rgba(255, 210, 63, 1);
   color: rgba(45, 49, 66, 1);
-}
-
-/* ─── Icon Box (overlaps bottom of image) ─────────────────────── */
-.iconBox {
-  position: absolute;
-  bottom: 0.85rem;
-  left: 1.25rem;
-  width: 3.5rem;
-  height: 3.5rem;
-  background-color: var(--color-white);
-  border-radius: var(--radius-xl);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #f59e0b;
-  box-shadow: var(--shadow-md);
-  z-index: 3;
-  transition:
-    transform var(--transition-spring),
-    background-color var(--transition-fast);
-}
-
-.card:hover .iconBox {
-  transform: scale(1.1);
-  background-color: #fef3c7;
 }
 
 /* ─── Body ────────────────────────────────────────────────────── */

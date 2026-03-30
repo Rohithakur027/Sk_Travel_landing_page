@@ -32,13 +32,13 @@
   font-family: var(--font-heading);
   font-size: 3rem;
   font-weight: 800;
-  color: #1F2937;
+  color: #1f2937;
   margin-bottom: 1rem;
 }
 
 .subheading {
   font-size: 1.125rem;
-  color: #6B7280;
+  color: #6b7280;
   line-height: 1.6;
 }
 
@@ -69,7 +69,7 @@
   background-color: #ffffff;
   border-radius: 1.5rem;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
 }
@@ -93,13 +93,13 @@
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 800;
-  color: #1F2937;
+  color: #1f2937;
   margin-bottom: 0.5rem;
 }
 
 .role {
   font-size: 1.125rem;
-  color: #9CA3AF;
+  color: #9ca3af;
   font-weight: 500;
 }
 

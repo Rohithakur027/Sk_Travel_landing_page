@@ -1,5 +1,5 @@
 import HeroSection from '@/components/home/HeroSection';
-import StatsSection from '@/components/home/StatsSection';
+// import StatsSection from '@/components/home/StatsSection';
 import ExperienceSection from '@/components/home/ExperienceSection';
 import FleetSection from '@/components/home/FleetSection';
 import CorporateSection from '@/components/home/CorporateSection';
@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <HeroSection />
       <div>
-        <StatsSection />
+        {/* <StatsSection /> */}
         <ExperienceSection />
         <FleetSection />
         <CorporateSection />

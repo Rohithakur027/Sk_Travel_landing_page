@@ -4,6 +4,7 @@
   min-height: 950px;
   background-color: #000000;
   isolation: isolate;
+  margin-bottom: 16rem;
 }
 
 @media (max-width: 768px) {
@@ -30,7 +31,7 @@
   margin: 0 auto;
   padding-inline: var(--container-padding);
   padding-top: 4rem;
-  padding-bottom: 16rem;
+  padding-bottom: 20rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +42,7 @@
 @media (max-width: 768px) {
   .content {
     padding-top: 4rem;
-    padding-bottom: 25rem;
+    padding-bottom: 16rem;
   }
 }
 
