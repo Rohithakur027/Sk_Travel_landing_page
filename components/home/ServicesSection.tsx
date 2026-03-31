@@ -78,7 +78,7 @@ export default function ServicesSection() {
                   {service.features.map((f, i) => (
                     <li key={i} className={styles.featureItem}>
                       <span className={styles.checkIcon}>✓</span>
-                      {f}
+                      <span className={styles.featureText}>{f}</span>
                     </li>
                   ))}
                 </ul>

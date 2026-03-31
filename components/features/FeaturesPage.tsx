@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from './FeaturesPage.module.css'
 
 const FEATURE_CARDS = [
@@ -21,7 +22,10 @@ export default function FeaturesPage() {
         <div className={styles.container}>
           <div className={styles.header}>
             <div className={styles.pillImage}>
-              <Image src={'/Container (10).png'} alt="Platform Features" width={164} height={46} />
+              <span className={styles.pillInner}>Platform Features</span>
+            </div>
+            <div className={styles.pillImageMobile}>
+              <span className={styles.pillInner}>Platform Features</span>
             </div>
             <h1 className={styles.title}>
               <span>Advanced Features for</span>
@@ -38,8 +42,13 @@ export default function FeaturesPage() {
       <div className={styles.container}>
         <div className={styles.heroRow}>
           <div className={styles.heroText}>
-            <div className={styles.smallPill}>Real-Time Intelligence</div>
-            <h2 className={styles.heroTitle}>Track Every Journey in<br/>Real-Time</h2>
+            <div className={styles.pillImageDesktop}>
+              <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Real-Time Intelligence</span>
+            </div>
+            <div className={styles.pillImageMobile}>
+              <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Real-Time Intelligence</span>
+            </div>
+            <h2 className={styles.heroTitle}>Track Every Journey <span className={styles.breakOnDesktop}>in Real-Time</span></h2>
             <p className={styles.heroDesc}>Our advanced GPS tracking system allows you to monitor all your vehicles in real-time. Know exactly where your employees are and when they'll arrive at their destination.</p>
 
             <ul className={styles.checkList}>
@@ -84,7 +93,9 @@ export default function FeaturesPage() {
 
           <div className={styles.heroImage}>
             <div className={styles.imageCard}>
-              <Image src={'/Container (11).png'} alt="Traffic" fill className={styles.innerImage} priority />
+              <div className={styles.imageWrapper}>
+                <Image src={'/Container (1).png'} alt="Traffic" fill className={styles.innerImage} priority />
+              </div>
             </div>
           </div>
         </div>
@@ -93,16 +104,18 @@ export default function FeaturesPage() {
       <div className={styles.sectionTitleBand}>
         <div className={styles.container}>
           <div className={styles.sectionTitleWrap}>
-            <h2 className={styles.sectionTitle}>Everything You Need</h2>
-            <p className={styles.sectionLead}>Comprehensive features designed to make corporate transportation<br/>effortless</p>
-          </div>
+              <h2 className={styles.sectionTitle}>Everything You Need</h2>
+              <p className={styles.sectionLead}>Comprehensive features designed to make corporate transportation <span className={styles.splitWord}>effortless</span></p>
+            </div>
 
           <div className={styles.cardsGrid}>
             {FEATURE_CARDS.map((c, i) => (
               <div key={i} className={styles.featureCard}>
                 <div className={styles.cardIcon}><Image src={c.icon} alt={c.title} width={56} height={56} /></div>
-                <h3 className={styles.cardTitle}>{c.title}</h3>
-                <p className={styles.cardDesc}>{c.desc}</p>
+                <div className={styles.cardBody}>
+                  <h3 className={styles.cardTitle}>{c.title}</h3>
+                  <p className={styles.cardDesc}>{c.desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -113,13 +126,18 @@ export default function FeaturesPage() {
         <div className={styles.heroRow}>
           <div className={styles.heroImage}>
             <div className={styles.imageCard}>
-              <Image src={'/Container (21).png'} alt="Car" fill className={styles.innerImage} priority />
+              <div className={styles.imageWrapper}>
+                <Image src={'/Container (1).png'} alt="Car" fill className={styles.innerImage} priority />
+              </div>
             </div>
           </div>
 
           <div className={styles.heroText}>
-            <div className={styles.smallPill}>
-              <Image src={'/Container (22).png'} alt="Safety First" width={104} height={36} />
+            <div className={styles.pillImageDesktop}>
+              <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Safety First</span>
+            </div>
+            <div className={`${styles.pillImageMobile} ${styles.pillImageMobileDown}`}>
+              <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Safety First</span>
             </div>
             <h2 className={styles.heroTitle}>Your Safety is Our Priority</h2>
             <p className={styles.heroDesc}>We implement comprehensive safety measures to ensure every journey is secure and comfortable for your employees.</p>
@@ -170,7 +188,8 @@ export default function FeaturesPage() {
             <div className={styles.poweredItem}>
               <div className={styles.poweredIcon}><Image src={'/Container (30).png'} alt="Cloud Infrastructure" width={64} height={64} /></div>
               <div className={styles.poweredLabel}>Cloud Infrastructure</div>
-              <div className={styles.poweredSubLabel}>99.9% uptime guaranteed</div>
+              <div className={`${styles.poweredSubLabel} ${styles.poweredSubLabelDesktop}`}>99.9% uptime guaranteed</div>
+              <div className={`${styles.poweredSubLabel} ${styles.poweredSubLabelMobile}`}>99.9% uptime assured</div>
             </div>
             <div className={styles.poweredItem}>
               <div className={styles.poweredIcon}><Image src={'/Container (31).png'} alt="AI Routing" width={64} height={64} /></div>
@@ -191,11 +210,11 @@ export default function FeaturesPage() {
         </div>
       </div>
 
-      <div className={styles.ctaBox}>
+        <div className={styles.ctaBox}>
         <h3 className={styles.sectionTitle}>Experience These Features</h3>
-        <p className={styles.sectionLead}>Schedule a demo to see how our platform can transform your<br/>corporate transportation</p>
+        <p className={styles.sectionLead}>Schedule a demo to see how our platform can transform your <span className={styles.keepTogether}>corporate transportation</span></p>
         <div style={{marginTop:24}}>
-          <button className={styles.ctaBtn}>Request a Demo →</button>
+          <Link href="/contact#booking" className={styles.ctaBtn}>Request a Demo →</Link>
         </div>
       </div>
 

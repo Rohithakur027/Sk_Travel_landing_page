@@ -3,28 +3,9 @@
    Solutions design
    ═══════════════════════════════════════════════════════════════ */
 
-/* Styles for the Services page — component lives in components/services/ */
-
 /* ─── Section Wrapper ─────────────────────────────────────────── */
 .section {
   background-color: #ffffff;
-}
-
-.container {
-  max-width: 2000px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.lowerBand {
-  background-color: #f9f9f9;
-  padding-bottom: 0; /* remove gap below additional services */
-}
-
-.ctaSection {
-  background-color: #ffffff; /* make CTA section white */
-  padding: 0 6rem 5rem; /* remove top padding to eliminate gap */
-  margin-top: 0;
 }
 
 .container {
@@ -33,29 +14,82 @@
   padding: 0 2rem;
 }
 
+.lowerBand {
+  background-color: #f9f9f9;
+  padding-bottom: 0;
+}
+
+.ctaSection {
+  background-color: #ffffff;
+  padding: 1.5rem 2rem 2rem;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: auto;
+}
+
 /* ─── Header ──────────────────────────────────────────────────── */
 .header {
+  background-color: #2D3142;
   text-align: center;
   margin-bottom: 3.5rem;
   padding-top: 5rem;
+  /* align header directly under the navbar */
+  margin-top: calc(-1 * var(--navbar-height) - 2px);
 }
 
 .pillImage {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin: 0 auto 3.5rem;
+  /* match design inspector: pill dimensions and visual style */
+  width: 132.27px;
+  height: 45.5px;
+  border-radius: 100px;
+  overflow: hidden;
+  border: 1px solid rgba(255,210,63,0.3);
+  background: linear-gradient(180deg, rgba(255,210,63,0.15) 0%, rgba(255,210,63,0.08) 100%);
 }
 
-.heading {
-  font-family: var(--font-heading);
-  font-size: 3.5rem;
-  font-weight: 800;
-  line-height: 1.15;
-  color: #111827;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.02em;
+.pillImage > span,
+.pillImage > span > img,
+.pillImage img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
+
+/* HTML pill inner text (when using an HTML pill instead of an image) */
+.pillInner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13px;
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  background-color: #2D3142;
+  text-align: center;
+  min-height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  padding-bottom: 44px;
+}
+
+ .heading {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  margin-top: 0.6rem;
+ }
 
 .headingGold {
   color: #FFC107;
@@ -63,11 +97,11 @@
 
 .subheading {
   font-size: 1rem;
-  color: #6b7280;
+  color: rgba(255,255,255,0.75);
   line-height: 1.7;
   max-width: 680px;
   margin: 0 auto;
-  height: 60px;
+  margin-top: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,6 +112,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+  margin-top: 2rem;
   margin-bottom: 0;
   padding-bottom: 4.5rem;
   max-width: 1200px;
@@ -119,29 +154,43 @@
   height: 300px;
   overflow: hidden;
   flex-shrink: 0;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+  isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
-.image {
-  object-fit: cover;
-  transition: transform 0.4s ease;
+.imageWrapper > span,
+.imageWrapper > span > img,
+.imageWrapper img {
+  display: block !important;
+  border-top-left-radius: 32px !important;
+  border-top-right-radius: 32px !important;
+  background: transparent !important;
 }
 
 .card:hover .image {
   transform: scale(1.04);
 }
 
-/* Icon badge below the image, inside card body */
+/* ─── Icon Badge ──────────────────────────────────────────────── */
+/* FIX: The PNG icon already has a yellow rounded box baked into the image.
+   Setting background to transparent means only the PNG's own box is visible
+   — no more double-box effect. The img is sized to 56×56 to fill the badge. */
 .iconBadge {
   width: 56px;
   height: 56px;
-  background: linear-gradient(135deg, rgba(255, 210, 63, 0.15) 0%, rgba(255, 210, 63, 0.08) 100%);
+  background: transparent; /* ← transparent so PNG's own box shows cleanly */
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 14px;
   margin-bottom: 1.25rem;
   flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 /* ─── Card Body ───────────────────────────────────────────────── */
@@ -182,7 +231,7 @@
 
 .featureItem {
   display: flex;
-  align-items: center;
+  align-items: baseline !important;
   gap: 0.55rem;
   font-size: 0.9rem;
   color: #374151;
@@ -228,7 +277,7 @@
 
 /* ─── Additional Services Block ───────────────────────────────── */
 .additionalWrapper {
-  padding: 3.5rem 0 1rem;
+  padding: 3.5rem 0 1.5rem;
   text-align: center;
 }
 
@@ -309,17 +358,75 @@
 /* ─── CTA Box ─────────────────────────────────────────────────── */
 .ctaBox {
   width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
+  max-width: 920px;
+  margin: 24px auto 60px;
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 32px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.06);
+  padding: 32px 28px; /* desktop padding so content is centered inside the box */
+  text-align: center;
+}
+.header {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: calc(-1 * var(--navbar-height) - 2px); /* align header directly under navbar */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 48px 48px;
+  padding: 32px 28px;
+}
+
+@media (min-width: 700px) {
+  .ctaBox {
+    transform: translateY(-40px);
+  }
+}
+
+/* Responsive header min-height rules copied from Contact page to match first-section specs */
+@media (min-width: 1281px) {
+  .header { min-height: 460px; }
+}
+
+@media (max-width: 1280px) and (min-width: 1025px) {
+  .header { min-height: 390px; }
+}
+
+/* Desktop: nudge the Services pill up by 35px so its gap equals Contact/Features */
+@media (min-width: 481px) {
+  .pillImage {
+    margin-top: calc(152px - var(--navbar-height) - 35px) !important;
+    transform: translateY(-35px) !important;
+    position: relative;
+    z-index: 2;
+  }
+
+  .pillImage .pillInner {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    transform: none !important;
+    margin-top: 0 !important;
+  }
+
+  /* Reduce gap between pill and heading */
+  .pillImage { margin-bottom: 0 !important; }
+  .heading { margin-top: 0.6rem !important; }
+}
+
+@media (max-width: 1024px) and (min-width: 881px) {
+  .header { min-height: 370px; }
+}
+
+@media (max-width: 880px) and (min-width: 821px) {
+  .header { min-height: 330px; }
+}
+
+@media (max-width: 820px) {
+  .header { min-height: 290px; padding-bottom: 20px; }
 }
 
 .ctaTitle {
@@ -346,6 +453,11 @@
   color: #6b7280;
 }
 
+.ctaLine2,
+.ctaLine3 {
+  display: inline;
+}
+
 .ctaBtn {
   display: inline-flex;
   align-items: center;
@@ -365,4 +477,116 @@
 .ctaBtn:hover {
   box-shadow: 0 12px 32px rgba(255, 210, 63, 0.55);
   transform: translateY(-2px);
+}
+
+/* ─── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* reduce to zero to minimize gap under navbar on phones
+     and nudge the header up beneath the sticky navbar */
+  .header {
+    padding-top: 0;
+    margin-bottom: 0;
+    /* move header up to the top on mobile */
+    margin-top: calc(-1 * var(--navbar-height)) !important;
+    min-height: 350px;
+    padding-bottom: 40px;
+  }
+  .pillImage { margin: 0 auto 0; }
+  .heading { font-size: 28px; line-height: 1.1; }
+  .subheading { font-size: 14px; padding: 0 12px; height: auto; margin-top: 1.2rem; }
+
+  .grid { grid-template-columns: 1fr; gap: 16px; padding-bottom: 2rem; }
+  .card { border-radius: 16px; padding: 12px; }
+
+  .imageWrapper {
+    height: 200px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+
+  .imageWrapper > span,
+  .imageWrapper > span > img,
+  .imageWrapper img,
+  .image {
+    border-top-left-radius: 16px !important;
+    border-top-right-radius: 16px !important;
+  }
+
+  .iconBadge { width: 48px; height: 48px; }
+  .cardTitle { font-size: 16px; }
+  .cardDesc { font-size: 13px; }
+
+  .additionalWrapper { padding: 2rem 12px 1rem; }
+  .additionalGrid { grid-template-columns: 1fr; gap: 12px; }
+
+  .ctaSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1rem 1.5rem;
+  }
+
+  .ctaBox {
+    width: calc(100% - 32px);
+    max-width: 640px;
+    height: auto;
+    margin: 12px auto 120px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+
+  .ctaLine2,
+  .ctaLine3 {
+    display: block;
+    width: 100%;
+  }
+
+  .ctaLine3 {
+    text-align: center;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .ctaContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .ctaTitle { font-size: 20px; margin: 0; }
+  .ctaSub { font-size: 14px; margin: 6px 0 0; }
+
+  .ctaBtn {
+    flex: 0 0 auto;
+    padding: 0.6rem 1.25rem;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    margin-top: 12px;
+  }
+}
+
+/* Hide the icon badge for the top 4 service cards on mobile only */
+@media (max-width: 600px) {
+  .grid > .card:nth-child(-n+4) .iconBadge {
+    display: none;
+  }
+}
+
+/* Desktop-only: place the final CTA phrase on its own centered line */
+@media (min-width: 481px) {
+  .ctaLine3 {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 4px;
+  }
 }

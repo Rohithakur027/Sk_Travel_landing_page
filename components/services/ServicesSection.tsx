@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from 'next/link';
 import {
   MapPin,
   Radio,
@@ -101,91 +102,101 @@ const ADDITIONAL_SERVICES = [
 export default function ServicesSection() {
   return (
     <>
-    <section id="services" className={styles.section}>
-      {/* ── White top zone: Header + 4 Cards ─────────────────── */}
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <div className={styles.pillImage}>
-            <Image src="/Container (9).png" alt="Our Services" width={120} height={40} />
-          </div>
-          <h1 className={styles.heading}>
-            <span>Comprehensive</span>
-            <br />
-            <span className={styles.headingGold}>Transportation Solutions</span>
-          </h1>
-          <p className={styles.subheading}>
-            Tailored services designed to meet all your corporate transportation needs
-          </p>
-        </div>
-
-        <div className={styles.grid}>
-          {MAIN_SERVICES.map((service, idx) => (
-            <div key={idx} className={styles.card}>
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className={styles.image}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-              <div className={styles.body}>
-                <div className={styles.iconBadge}>
-                  <Image src={service.iconSrc} alt={service.title} width={28} height={28} />
-                </div>
-                <h3 className={styles.cardTitle}>{service.title}</h3>
-                <p className={styles.cardDesc}>{service.description}</p>
-                <ul className={styles.featureList}>
-                  {service.features.map((f, i) => (
-                    <li key={i} className={styles.featureItem}>
-                      <span className={styles.checkIcon}>✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="#booking" className={styles.quoteBtn}>Get Quote →</a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Cream lower band: Additional Services + CTA ──────── */}
-      <div className={styles.lowerBand}>
+      <section id="services" className={styles.section}>
+        {/* ── White top zone: Header + 4 Cards ─────────────────── */}
         <div className={styles.container}>
-          {/* Additional Services */}
-          <div className={styles.additionalWrapper}>
-            <h3 className={styles.additionalTitle}>Additional Services</h3>
-            <p className={styles.additionalSub}>
-              Extra features to enhance your transportation experience
-            </p>
-            <div className={styles.additionalGrid}>
-              {ADDITIONAL_SERVICES.map((svc, idx) => (
-                <div key={idx} className={styles.additionalCard}>
-                  <div className={styles.additionalIcon}>{svc.icon}</div>
-                  <h4 className={styles.additionalCardTitle}>{svc.title}</h4>
-                  <p className={styles.additionalCardDesc}>{svc.description}</p>
-                </div>
-              ))}
+          <div className={styles.header}>
+            <div className={styles.pillImage}>
+              <div className={styles.pillInner}>Our Services</div>
             </div>
+            <h1 className={styles.heading}>
+              <span>Comprehensive</span>
+              <br />
+              <span className={styles.headingGold}>Transportation Solutions</span>
+            </h1>
+            <p className={styles.subheading}>
+              Tailored services designed to meet all your corporate transportation needs
+            </p>
           </div>
 
+          <div className={styles.grid}>
+            {MAIN_SERVICES.map((service, idx) => (
+              <div key={idx} className={styles.card}>
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className={styles.image}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+                <div className={styles.body}>
+
+                  {/* ✅ FIX: The PNG already has a yellow rounded box baked in.
+                      Using plain <img> at full 56×56 size fills the badge exactly,
+                      and CSS background is transparent — so only ONE box shows. */}
+                  <div className={styles.iconBadge}>
+                    <img
+                      src={service.iconSrc}
+                      alt={service.title}
+                      width={56}
+                      height={56}
+                      style={{ display: "block", background: "transparent" }}
+                    />
+                  </div>
+
+                  <h3 className={styles.cardTitle}>{service.title}</h3>
+                  <p className={styles.cardDesc}>{service.description}</p>
+                  <ul className={styles.featureList}>
+                    {service.features.map((f, i) => (
+                      <li key={i} className={styles.featureItem}>
+                          <span className={styles.checkIcon}>✓</span>
+                          <span className={styles.featureText}>{f}</span>
+                        </li>
+                    ))}
+                  </ul>
+                  <Link href="/contact#booking" className={styles.quoteBtn}>Get Quote →</Link>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
-    
-    {/* ── CTA Section (separate) ─────────────────────────────── */}
-    <section id="cta" className={styles.ctaSection}>
+
+        {/* ── Cream lower band: Additional Services ────────────── */}
+        <div className={styles.lowerBand}>
+          <div className={styles.container}>
+            <div className={styles.additionalWrapper}>
+              <h3 className={styles.additionalTitle}>Additional Services</h3>
+              <p className={styles.additionalSub}>
+                Extra features to enhance your transportation experience
+              </p>
+              <div className={styles.additionalGrid}>
+                {ADDITIONAL_SERVICES.map((svc, idx) => (
+                  <div key={idx} className={styles.additionalCard}>
+                    <div className={styles.additionalIcon}>{svc.icon}</div>
+                    <h4 className={styles.additionalCardTitle}>{svc.title}</h4>
+                    <p className={styles.additionalCardDesc}>{svc.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA Section (separate) ─────────────────────────────── */}
+      <section id="cta" className={styles.ctaSection}>
         <div className={styles.ctaBox}>
-        <h3 className={styles.ctaTitle}>Ready to Get Started?</h3>
-        <p className={styles.ctaSub}>
-          Contact us today to discuss your corporate transportation needs and
-          <span className={styles.ctaSubHighlight}>get a customized quote</span>
-        </p>
-        <a href="#booking" className={styles.ctaBtn}>Request a Quote →</a>
-      </div>
-    </section>
+          <h3 className={styles.ctaTitle}>Ready to Get Started?</h3>
+          <p className={styles.ctaSub}>
+            Contact us today to discuss your corporate
+            <span className={styles.ctaLine2}> transportation needs and get a</span>
+            <span className={styles.ctaLine3}> customized quote</span>
+          </p>
+          <Link href="/contact#booking" className={styles.ctaBtn}>Request a Quote →</Link>
+        </div>
+      </section>
     </>
   );
 }

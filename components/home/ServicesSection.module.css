@@ -160,7 +160,7 @@
 
 .featureItem {
   display: flex;
-  align-items: center;
+  align-items: baseline !important;
   gap: 0.55rem;
   font-size: 0.9rem;
   color: #374151;
@@ -178,6 +178,20 @@
   font-size: 0.7rem;
   font-weight: 700;
   flex-shrink: 0;
+}
+
+@media (min-width: 481px) {
+  /* Nudge desktop icon down so its visual top aligns with first text line */
+  .featureItem .checkIcon {
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Slight smaller nudge on mobile */
+  .featureItem .checkIcon {
+    margin-top: 0 !important;
+  }
 }
 
 /* ─── Get Quote Button ────────────────────────────────────────── */
