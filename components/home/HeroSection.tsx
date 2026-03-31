@@ -23,8 +23,7 @@ export default function HeroSection() {
 
         {/* Main Heading */}
         <h1 className={styles.heading}>
-          Your Corporate<br />
-          Transportation Solution
+          Your Corporate Transportation Solution
         </h1>
 
         {/* Subheading */}

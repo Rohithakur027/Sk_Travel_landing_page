@@ -16,10 +16,12 @@ export default function VisionSection() {
         <div className={styles.grid}>
           {/* Mission Card */}
           <div className={styles.card}>
-            <div className={styles.iconWrapper}>
-              <CheckCircle2 className={styles.icon} strokeWidth={2} />
+            <div className={styles.cardHeader}>
+              <div className={styles.iconWrapper}>
+                <CheckCircle2 className={styles.icon} strokeWidth={2} />
+              </div>
+              <h3 className={styles.cardTitle}>Our Mission</h3>
             </div>
-            <h3 className={styles.cardTitle}>Our Mission</h3>
             <p className={styles.cardText}>
               To provide world-class transportation services that prioritize safety, reliability, and customer satisfaction. We aim to be the most trusted partner for corporate transportation needs, ensuring every employee reaches their destination comfortably and on time.
             </p>
@@ -27,10 +29,12 @@ export default function VisionSection() {
 
           {/* Vision Card */}
           <div className={styles.card}>
-            <div className={styles.iconWrapper}>
-              <TrendingUp className={styles.icon} strokeWidth={2} />
+            <div className={styles.cardHeader}>
+              <div className={styles.iconWrapper}>
+                <TrendingUp className={styles.icon} strokeWidth={2} />
+              </div>
+              <h3 className={styles.cardTitle}>Our Vision</h3>
             </div>
-            <h3 className={styles.cardTitle}>Our Vision</h3>
             <p className={styles.cardText}>
               To revolutionize corporate mobility across India by integrating cutting-edge technology, sustainable practices, and exceptional service standards. We envision a future where employee transportation is seamless, eco-friendly, and contributes to a better work-life balance.
             </p>

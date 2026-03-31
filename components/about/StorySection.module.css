@@ -1,5 +1,5 @@
 .section {
-  padding: 8rem 0;
+  padding: 7rem 0;
   background-color: #ffffff;
 }
 
@@ -9,6 +9,13 @@
 }
 
 @media (min-width: 1024px) {
+  .section :global(.container) {
+    padding-inline: 4rem;
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 1440px) {
   .section :global(.container) {
     padding-inline: 8rem;
     max-width: 1800px;
@@ -25,6 +32,12 @@
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .grid {
     gap: 6rem;
   }
 }
@@ -61,12 +74,13 @@
 .badge {
   display: inline-block;
   align-self: flex-start;
-  padding: 0.5rem 1.25rem;
-  border-radius: 0.75rem;
-  background-color: rgb(255, 245, 206);
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  background-color: #FFF9E6;
+  border: 1px solid #FDE68A;
   color: #1F2937;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 2rem;
 }
 
@@ -83,6 +97,14 @@
 @media (max-width: 768px) {
   .heading {
     font-size: 2.25rem;
+    text-align: center;
+  }
+  .textCol {
+    align-items: center;
+    text-align: center;
+  }
+  .badge {
+    align-self: center;
   }
 }
 
@@ -100,6 +122,6 @@
 
 @media (min-width: 1024px) {
   .paragraphs p {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
   }
 }

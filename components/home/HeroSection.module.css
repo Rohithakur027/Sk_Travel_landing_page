@@ -4,6 +4,7 @@
   min-height: 950px;
   background-color: #000000;
   isolation: isolate;
+  margin-bottom: 16rem;
 }
 
 @media (max-width: 768px) {
@@ -29,8 +30,8 @@
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding-inline: var(--container-padding);
-  padding-top: 6rem;
-  padding-bottom: 16rem;
+  padding-top: 4rem;
+  padding-bottom: 20rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,8 +41,8 @@
 
 @media (max-width: 768px) {
   .content {
-    padding-top: 6rem;
-    padding-bottom: 25rem;
+    padding-top: 4rem;
+    padding-bottom: 16rem;
   }
 }
 
@@ -79,12 +80,14 @@
 
 .heading {
   font-family: var(--font-heading);
-  font-size: 8rem;
+  font-size: 7.2rem;
   font-weight: 900;
-  line-height: 7.62rem;
-  letter-spacing: -4.28px;
+  line-height: 1.1;
+  letter-spacing: -3.5px;
   color: #ffffff;
   margin-bottom: 2.5rem;
+  max-width: 1300px;
+  margin-inline: auto;
 }
 
 @media (max-width: 1024px) {
@@ -97,10 +100,12 @@
 
 @media (max-width: 768px) {
   .heading {
-    font-size: 3.5rem;
-    line-height: 1.1;
-    letter-spacing: -1.5px;
+    font-size: 2.9rem;
+    line-height: 1.2;
+    letter-spacing: -1px;
     margin-bottom: 1.5rem;
+    text-align: center;
+    width: 100%;
   }
 }
 

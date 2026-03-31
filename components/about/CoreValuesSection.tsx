@@ -51,10 +51,12 @@ export default function CoreValuesSection() {
             const IconComponent = val.Icon;
             return (
               <div key={idx} className={styles.card}>
-                <div className={styles.iconWrapper}>
-                  <IconComponent className={styles.icon} strokeWidth={1.5} />
+                <div className={styles.cardHeader}>
+                  <div className={styles.iconWrapper}>
+                    <IconComponent className={styles.icon} strokeWidth={1.5} />
+                  </div>
+                  <h3 className={styles.cardTitle}>{val.title}</h3>
                 </div>
-                <h3 className={styles.cardTitle}>{val.title}</h3>
                 <p className={styles.cardText}>{val.description}</p>
               </div>
             );

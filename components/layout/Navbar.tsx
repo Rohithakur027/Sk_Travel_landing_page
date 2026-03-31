@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from 'next/navigation';
 import { Menu, X } from "lucide-react";
 import styles from "./Navbar.module.css";
 
@@ -16,53 +17,58 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setHidden(window.scrollY > 0);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header className={`${styles.header} ${hidden ? styles.headerHidden : ''}`}>
+    <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ''}`}>
       <div className={styles.inner}>
-        {/* Logo */}
-        <Link href="/" className={styles.logo}>
-          <Image
-            src="/icons/SKlogo.svg"
-            alt="SK Travel Logo"
-            width={140}
-            height={48}
-            className={styles.logoImg}
-            priority
-          />
-        </Link>
-
-        {/* Center Navigation Pills (Desktop) */}
-        <nav className={styles.navDesktop}>
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`${styles.navLink} ${styles.navLinkBg}`}
-            >
-              {link.label}
+        {/* Left Side: Logo + Navlinks Container */}
+        <div className={styles.leftSideGroup}>
+          <div className={styles.logoWrapper}>
+            <Link href="/" className={styles.logo}>
+              <Image
+                src="/icons/SKlogo.svg"
+                alt="SK Travel Logo"
+                width={140}
+                height={48}
+                className={styles.logoImg}
+                priority
+              />
             </Link>
-          ))}
-        </nav>
+          </div>
+
+          {/* Navlinks Container in Left Side (Desktop) */}
+          <nav className={styles.navDesktop}>
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
 
         {/* Right side */}
         <div className={styles.rightGroup}>
           {/* Authentication Buttons (Desktop) */}
           <div className={styles.authButtons}>
-            <Link href="/login" className={styles.loginBtn}>
-              Log in
-            </Link>
-            <Link href="/signup" className={styles.signupBtn}>
-              Sign up
+            <Link href="/#cta" className={styles.signupBtn}>
+              Get Started
             </Link>
           </div>
 
@@ -71,7 +77,16 @@ export default function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+            <div className={styles.iconWrapper}>
+              <Menu 
+                className={`${styles.navIcon} ${isOpen ? styles.navIconActive : ''}`} 
+                size={28} 
+              />
+              <X 
+                className={`${styles.navIcon} ${styles.closeIcon} ${isOpen ? styles.closeIconActive : ''}`} 
+                size={28} 
+              />
+            </div>
           </button>
         </div>
       </div>
@@ -92,11 +107,8 @@ export default function Navbar() {
             ))}
           </nav>
           <div className={styles.mobileAuth}>
-            <Link href="/login" className={styles.loginBtn} onClick={() => setIsOpen(false)}>
-              Log in
-            </Link>
-            <Link href="/signup" className={styles.signupBtn} onClick={() => setIsOpen(false)}>
-              Sign up
+            <Link href="/#cta" className={styles.signupBtn} onClick={() => setIsOpen(false)}>
+              Get Started
             </Link>
           </div>
         </div>

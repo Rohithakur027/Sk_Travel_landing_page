@@ -11,6 +11,13 @@
 
 @media (min-width: 1024px) {
   .section :global(.container) {
+    padding-inline: 4rem; /* Reduced from 8rem */
+    max-width: 1200px; /* More standard size for this breakpoint */
+  }
+}
+
+@media (min-width: 1440px) {
+  .section :global(.container) {
     padding-inline: 8rem;
     max-width: 1800px;
   }
@@ -20,7 +27,8 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
-  max-width: 110rem;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -33,8 +41,30 @@
 
 @media (min-width: 1024px) {
   .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+  }
+  .value {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid {
     grid-template-columns: repeat(4, 1fr);
-    gap: 6rem;
+    gap: 3rem;
+  }
+  .value {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .grid {
+    gap: 4rem;
+  }
+  .value {
+    font-size: 5rem;
   }
 }
 
