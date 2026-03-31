@@ -20,6 +20,33 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Mobile compatibility helpers (non-layout - safe to add) */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Prevent overflow from long words and improve wrapping on small screens */
+p, h1, h2, h3, h4, h5, h6 {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Better touch handling for interactive elements */
+a, button, input, label {
+  -webkit-tap-highlight-color: rgba(0,0,0,0.05);
+  touch-action: manipulation;
+}
+
+/* Ensure media elements are responsive without changing layout spacing */
+img, picture, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 body {
   font-family: var(--font-sans);
   font-size: var(--text-base);

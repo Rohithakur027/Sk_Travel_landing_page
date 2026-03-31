@@ -120,6 +120,16 @@
   background-color: #FFFFFF;
 }
 
+/* Replace global orange outline with black focus ring that respects border-radius */
+.input:focus,
+.textarea:focus,
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: none;
+  border-color: #0a0b0d; /* var(--color-black) fallback */
+  box-shadow: 0 0 0 2px #0a0b0d;
+}
+
 .inputError {
   border-color: #ef4444;
 }
