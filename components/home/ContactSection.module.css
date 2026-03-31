@@ -5,7 +5,7 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 3rem 0;
+    padding: 3rem 0.5rem;
   }
 
   .sectionHeader h2 {
@@ -38,7 +38,7 @@
   display: grid;
   grid-template-columns: 1.25fr 0.75fr;
   gap: 3.5rem;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 @media (max-width: 1024px) {
@@ -54,7 +54,7 @@
   }
   
   .sectionHeader {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     padding-inline: 1rem;
   }
 
@@ -69,7 +69,7 @@
 
   .infoList {
     order: 2;
-    gap: 1.5rem;
+    gap: 1rem;
   }
   
   .imageCard {
@@ -116,7 +116,9 @@
 .imageCard {
   position: relative;
   width: 100%;
-  height: 320px;
+  height: auto;
+  min-height: 300px;
+  flex: 1;
   border-radius: 1.5rem;
   overflow: hidden;
   margin-bottom: 0.5rem;
@@ -158,6 +160,19 @@
   gap: 1.5rem;
   align-items: center;
   box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+}
+
+@media (max-width: 768px) {
+  .infoCard {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    gap: 1rem;
+  }
+  
+  .infoTextGroup {
+    align-items: center;
+  }
 }
 
 .infoIcon {
@@ -219,6 +234,11 @@
   }
   .formWrapper {
     padding: 1.5rem 1rem;
+  }
+
+  /* Reduce global container padding for this section on very small screens */
+  .section :global(.container) {
+    padding-inline: 0.75rem;
   }
 }
 

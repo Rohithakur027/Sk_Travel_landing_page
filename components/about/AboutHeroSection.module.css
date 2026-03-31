@@ -1,6 +1,7 @@
 .section {
-  padding: 8rem 0 6rem;
-  background-color: rgb(253,252,248);
+  padding: 10rem 0 6rem;
+  background-color:rgba(45, 49, 66, 1);
+;
   text-align: center;
 }
 
@@ -16,9 +17,9 @@
   display: inline-block;
   padding: 0.5rem 1.5rem;
   border-radius: 9999px;
-  background-color: #FFF9E6;
-  border: 1px solid #FDE68A;
-  color: #1F2937;
+  background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%);
+  border: 1px solid rgba(255,210,63,0.3);
+  color: #ffffff;
   font-size: 0.875rem;
   font-weight: 700;
   margin-bottom: 2rem;
@@ -28,25 +29,30 @@
   font-family: var(--font-heading);
   font-size: 4.5rem;
   font-weight: 900;
-  color: #2D303E;
+  color: #ffffff;
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
 }
 
 .highlight {
-  color: #FBBF24;
+  background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
 }
 
 .subtitle {
   font-size: 1.25rem;
-  color: #6B7280;
+  color: rgba(255,255,255,0.5);
   line-height: 1.6;
 }
 
 @media (max-width: 768px) {
   .section {
-    padding: 7rem 1.5rem 4rem; /* Added padding to clear fixed navbar and horizontal edges */
+    padding: 9rem 1.5rem 4rem; /* Added padding to clear fixed navbar and horizontal edges */
   }
   .heading {
     font-size: 2.7rem; /* Slightly smaller for mobile flow */
