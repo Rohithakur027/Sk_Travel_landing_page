@@ -94,7 +94,7 @@ export default function FeaturesPage() {
           <div className={styles.heroImage}>
             <div className={styles.imageCard}>
               <div className={styles.imageWrapper}>
-                <Image src={'/Container (1).png'} alt="Traffic" fill className={styles.innerImage} priority />
+                <Image src={'/images/featuretop.png'} alt="Traffic" fill className={styles.innerImage} priority />
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function FeaturesPage() {
           <div className={styles.heroImage}>
             <div className={styles.imageCard}>
               <div className={styles.imageWrapper}>
-                <Image src={'/Container (1).png'} alt="Car" fill className={styles.innerImage} priority />
+                <Image src={'/images/safetyprior.png'} alt="Car" fill className={styles.innerImage} priority />
               </div>
             </div>
           </div>
