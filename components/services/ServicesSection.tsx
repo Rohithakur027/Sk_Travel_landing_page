@@ -102,21 +102,23 @@ const ADDITIONAL_SERVICES = [
 export default function ServicesSection() {
   return (
     <>
-      <section id="services" className={styles.section}>
+      <section id="services" className={styles.section} style={{ minHeight: '500px' }}>
         {/* ── White top zone: Header + 4 Cards ─────────────────── */}
         <div className={styles.container}>
-          <div className={styles.header}>
-            <div className={styles.pillImage}>
-              <div className={styles.pillInner}>Our Services</div>
+          <div className={styles.header} style={{ height: '580px', padding: '10rem 0 6rem' }}>
+            <div className={styles.content}>
+              <div className={styles.pillImage}>
+                <div className={styles.pillInner}>Our Services</div>
+              </div>
+              <h1 className={styles.heading}>
+                <span>Comprehensive</span>
+                <br />
+                <span className={styles.headingGold}>Transportation Solutions</span>
+              </h1>
+              <p className={styles.subheading}>
+                Tailored services designed to meet all your corporate transportation needs
+              </p>
             </div>
-            <h1 className={styles.heading}>
-              <span>Comprehensive</span>
-              <br />
-              <span className={styles.headingGold}>Transportation Solutions</span>
-            </h1>
-            <p className={styles.subheading}>
-              Tailored services designed to meet all your corporate transportation needs
-            </p>
           </div>
 
           <div className={styles.grid}>

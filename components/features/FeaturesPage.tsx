@@ -42,10 +42,10 @@ export default function FeaturesPage() {
       <div className={styles.container}>
         <div className={styles.heroRow}>
           <div className={styles.heroText}>
-            <div className={styles.pillImageDesktop}>
+            <div className={`${styles.pillImageDesktop} ${styles.pillImageCompact}`}>
               <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Real-Time Intelligence</span>
             </div>
-            <div className={styles.pillImageMobile}>
+            <div className={`${styles.pillImageMobile} ${styles.pillImageMobileCompact}`}>
               <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Real-Time Intelligence</span>
             </div>
             <h2 className={styles.heroTitle}>Track Every Journey <span className={styles.breakOnDesktop}>in Real-Time</span></h2>
@@ -133,10 +133,10 @@ export default function FeaturesPage() {
           </div>
 
           <div className={styles.heroText}>
-            <div className={styles.pillImageDesktop}>
+            <div className={`${styles.pillImageDesktop} ${styles.pillImageCompact}`}>
               <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Safety First</span>
             </div>
-            <div className={`${styles.pillImageMobile} ${styles.pillImageMobileDown}`}>
+            <div className={`${styles.pillImageMobile} ${styles.pillImageMobileDown} ${styles.pillImageMobileCompact}`}>
               <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Safety First</span>
             </div>
             <h2 className={styles.heroTitle}>Your Safety is Our Priority</h2>

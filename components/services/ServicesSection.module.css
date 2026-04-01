@@ -15,7 +15,7 @@
 }
 
 .lowerBand {
-  background-color: #f9f9f9;
+  background-color: #FFFBF0;
   padding-bottom: 0;
 }
 
@@ -34,32 +34,62 @@
   background-color: #2D3142;
   text-align: center;
   margin-bottom: 3.5rem;
-  padding-top: 5rem;
+  /* match About hero vertical rhythm */
+  padding: 10rem 0 6rem;
+  /* reduced visual height to be closer to About hero */
+  min-height: 460px;
+  padding-top: 8rem;
+  padding-bottom: 4rem;
   /* align header directly under the navbar */
   margin-top: calc(-1 * var(--navbar-height) - 2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
 }
 
 .pillImage {
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
   align-items: center;
-  margin: 0 auto 3.5rem;
-  /* match design inspector: pill dimensions and visual style */
-  width: 132.27px;
-  height: 45.5px;
-  border-radius: 100px;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  padding: 0.7rem 2rem;
+  border-radius: 9999px;
   overflow: hidden;
   border: 1px solid rgba(255,210,63,0.3);
-  background: linear-gradient(180deg, rgba(255,210,63,0.15) 0%, rgba(255,210,63,0.08) 100%);
+  background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%);
+  transform: translateY(5px) !important;
+  margin-top: 1.5rem !important;
 }
 
 .pillImage > span,
 .pillImage > span > img,
 .pillImage img {
   display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* Mobile: ensure pill text is centered inside the pill */
+@media (max-width: 480px) {
+  .pillImage {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.6rem 1.2rem !important;
+    min-height: 44px;
+    text-align: center !important;
+  }
+
+  .pillImage .pillInner {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
 }
 
 /* HTML pill inner text (when using an HTML pill instead of an image) */
@@ -69,37 +99,44 @@
   justify-content: center;
   color: #ffffff;
   font-weight: 700;
-  font-size: 13px;
-  width: 100%;
-  height: 100%;
+  font-size: 1rem;
 }
 
-.header {
-  background-color: #2D3142;
-  text-align: center;
-  min-height: 460px;
+.content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: visible;
-  padding-bottom: 44px;
+  max-width: 48rem;
+  margin: 0 auto;
 }
 
- .heading {
+/* .header already defined above — keep single unified header rule */
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: 4.5rem;
+  font-weight: 900;
   color: #ffffff;
-  margin-bottom: 1rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
   margin-top: 0.6rem;
- }
+}
 
 .headingGold {
-  color: #FFC107;
+  background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
 }
 
 .subheading {
-  font-size: 1rem;
-  color: rgba(255,255,255,0.75);
-  line-height: 1.7;
-  max-width: 680px;
+  font-size: 1.25rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  max-width: 450px;
   margin: 0 auto;
   margin-top: 1.2rem;
   display: flex;
@@ -127,6 +164,18 @@
   }
 }
 
+@media (max-width: 768px) {
+  .heading {
+    font-size: 2.7rem;
+    line-height: 1.2;
+  }
+  .subheading {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0 1rem;
+    max-width: 320px;
+  }
+}
 /* ─── Card ────────────────────────────────────────────────────── */
 .card {
   background: #ffffff;
@@ -263,7 +312,7 @@
   color: #1a1a1a;
   font-size: 0.92rem;
   font-weight: 700;
-  border-radius: 12px;
+  border-radius: 8px;
   text-decoration: none;
   box-shadow: 0 8px 24px rgba(255, 210, 63, 0.4);
   transition: box-shadow 0.2s ease, transform 0.15s ease;
@@ -413,7 +462,7 @@
   }
 
   /* Reduce gap between pill and heading */
-  .pillImage { margin-bottom: 0 !important; }
+  .pillImage { margin-bottom: 0 !important; margin-top: 1.5rem !important; transform: translateY(5px) !important; }
   .heading { margin-top: 0.6rem !important; }
 }
 
@@ -468,7 +517,7 @@
   color: #1a1a1a;
   font-size: 1rem;
   font-weight: 700;
-  border-radius: 20px;
+  border-radius: 8px;
   text-decoration: none;
   box-shadow: 0 8px 24px rgba(255, 210, 63, 0.4);
   transition: box-shadow 0.2s ease, transform 0.15s ease;
@@ -488,12 +537,14 @@
     margin-bottom: 0;
     /* move header up to the top on mobile */
     margin-top: calc(-1 * var(--navbar-height)) !important;
-    min-height: 350px;
-    padding-bottom: 40px;
+    min-height: 540px !important;
+    height: auto !important;
+    padding: 2rem 0 2rem !important;
   }
-  .pillImage { margin: 0 auto 0; }
-  .heading { font-size: 28px; line-height: 1.1; }
-  .subheading { font-size: 14px; padding: 0 12px; height: auto; margin-top: 1.2rem; }
+  .pillImage { margin: 0 auto 0; transform: translateY(0px) !important; padding: 0.6rem 1.7rem !important; }
+  .pillInner { font-size: 0.95rem !important; }
+  .heading { font-size: 2.7rem; line-height: 1.2; }
+  .subheading { font-size: 14px; padding: 0 12px; height: auto; margin-top: 1.2rem; max-width: 290px; }
 
   .grid { grid-template-columns: 1fr; gap: 16px; padding-bottom: 2rem; }
   .card { border-radius: 16px; padding: 12px; }
@@ -568,7 +619,7 @@
   .ctaBtn {
     flex: 0 0 auto;
     padding: 0.6rem 1.25rem;
-    border-radius: 14px;
+    border-radius: 8px;
     font-size: 0.95rem;
     margin-top: 12px;
   }
@@ -588,5 +639,29 @@
     width: 100%;
     text-align: center;
     margin-top: 4px;
+  }
+}
+
+/* Force desktop header height to requested value and override earlier rules */
+@media (min-width: 700px) {
+  .header {
+    min-height: 500px !important;
+    padding-top: 10rem !important;
+    padding-bottom: 6rem !important;
+  }
+}
+
+/* Highest-priority override for this specific page: target the #services id so
+   even site-wide `.header { ... !important }` rules are overridden. */
+#services .header {
+  min-height: 580px !important;
+  height: 580px !important;
+}
+
+/* Mobile override for height */
+@media (max-width: 480px) {
+  #services .header {
+    min-height: 230px !important;
+    height: auto !important;
   }
 }
