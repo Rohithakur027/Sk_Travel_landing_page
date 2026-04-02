@@ -6,7 +6,7 @@ const SERVICES = [
     title: "Airport Transfers",
     description:
       "Reliable pickup and drop-off services for all major airports. Track flights in real-time and meet your team on schedule.",
-    image: "/images/airportservice.png",
+    image: "/images/airpot.jpeg",
     badge: "Popular",
     badgeClass: styles.badgePopular,
   },
@@ -14,7 +14,7 @@ const SERVICES = [
     title: "Corporate Shuttles",
     description:
       "Daily commute solutions for your employees with scheduled routes, dedicated vehicles, and professional drivers.",
-    image: "/images/corporateshuttles.png",
+    image: "/images/corporateshuttles.jpeg",
     badge: "Best Value",
     badgeClass: styles.badgeBestValue,
   },
@@ -22,7 +22,7 @@ const SERVICES = [
     title: "Event Transportation",
     description:
       "Premium transportation for corporate events, conferences, and special occasions with flexible group booking options.",
-    image: "/images/eventtransportation.png",
+    image: "/images/premiumfleet.jpeg",
     badge: "Premium",
     badgeClass: styles.badgePremium,
   },

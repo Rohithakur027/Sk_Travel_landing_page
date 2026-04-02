@@ -11,7 +11,7 @@ export default function StorySection() {
           <div className={styles.imageCol}>
             <div className={styles.imageWrapper}>
               <Image 
-                src="/images/aboutstory.png"
+                src="/images/aboutstory.jpeg"
                 alt="Story Image"
                 fill
                 className={styles.image}

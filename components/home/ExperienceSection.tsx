@@ -14,10 +14,10 @@ export default function ExperienceSection() {
 
         
         <div className={styles.bentoGrid}>
-          {/* ROW 1 */}
+          {/* ROW 1-3 */}
           <div className={styles.premiumComfort}>
             <div className={styles.card}>
-              <Image src="/images/premiumcomforts.png" alt="Premium Comfort" fill className={styles.bgImg} />
+              <Image src="/images/premiumcomforts.jpeg" alt="Premium Comfort" fill className={styles.bgImg} />
               <div className={styles.overlay} />
               <div className={styles.content}>
                 <h3>Premium Comfort</h3>
@@ -26,16 +26,66 @@ export default function ExperienceSection() {
             </div>
           </div>
           
-          <div className={styles.rightStack}>
+          <div className={styles.expertDrivers}>
             <div className={styles.card}>
-              <Image src="/images/expertdrivers.png" alt="Expert Drivers" fill className={styles.bgImg} />
+              <Image src="/images/premdriver.png" alt="Expert Drivers" fill className={styles.bgImg} />
               <div className={styles.overlay} />
               <div className={styles.content}>
                 <h3>Expert Drivers</h3>
                 <p>Professionally trained chauffeurs</p>
               </div>
             </div>
-            
+          </div>
+
+          <div className={styles.airportTransfers}>
+            <div className={styles.card}>
+              <Image src="/images/airpot.jpeg" alt="Airport Transfers" fill className={styles.bgImg} />
+              <div className={styles.overlay} />
+              <div className={styles.content}>
+                <h3>Airport Transfers</h3>
+                <p>24/7 pickup & drop service</p>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.premiumFleet}>
+            <div className={styles.card}>
+              <Image src="/images/arsfl.jpeg" alt="Premium Fleet" fill className={styles.bgImg} />
+              <div className={styles.overlay} />
+              <div className={styles.content}>
+                <h3>Premium Fleet</h3>
+                <p>Latest models & luxury brands</p>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.fullyInsured}>
+            <div className={styles.card}>
+              <Image src="/images/fullensure.png" alt="Fully Insured" fill className={styles.bgImg} />
+              <div className={styles.centerContent}>
+                <div className={styles.shieldBox}>
+                  <Image src="/icons/SecurityIcon.svg" alt="Security" width={40} height={40} />
+                </div>
+                <h3>Fully Insured</h3>
+                <p>Complete protection for peace of mind</p>
+              </div>
+            </div>
+          </div>
+
+          {/* ROW 3-4 */}
+          <div className={styles.cities25}>
+            <div className={styles.card}>
+              <Image src="/images/25+citie.jpeg" alt="25+ Cities" fill className={styles.bgImg} />
+              <div className={styles.overlay} />
+              <div className={styles.content}>
+                <h3>25+ Cities</h3>
+                <p>Nationwide coverage</p>
+              </div>
+            </div>
+          </div>
+
+          {/* ROW 4 */}
+          <div className={styles.customerSatisfaction}>
             <div className={styles.yellowCard}>
               <div className={styles.scoreRow}>
                 <div className={styles.starBox}>
@@ -50,43 +100,17 @@ export default function ExperienceSection() {
             </div>
           </div>
 
-          {/* ROW 2 */}
-          <div className={styles.cities25}>
-            <div className={styles.card}>
-              <Image src="/images/25+cities.png" alt="25+ Cities" fill className={styles.bgImg} />
-              <div className={styles.overlay} />
-              <div className={styles.content}>
-                <h3>25+ Cities</h3>
-                <p>Nationwide coverage</p>
+          <div className={styles.always247}>
+            <div className={styles.darkCard}>
+              <div className={styles.clockBox}>
+                <Clock size={28} />
               </div>
+              <h3 className={styles.darkScore}>24/7</h3>
+              <h4 className={styles.darkSubtitle}>Always Available</h4>
+              <p className={styles.darkText}>Round-the-clock service for all your transportation needs</p>
             </div>
           </div>
 
-          <div className={styles.fullyInsured}>
-            <div className={styles.card}>
-              <Image src="/images/fullyensured.png" alt="Fully Insured" fill className={styles.bgImg} />
-              <div className={styles.centerContent}>
-                <div className={styles.shieldBox}>
-                  <Image src="/icons/SecurityIcon.svg" alt="Security" width={40} height={40} />
-                </div>
-                <h3>Fully Insured</h3>
-                <p>Complete protection for peace of mind</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.airportTransfers}>
-            <div className={styles.card}>
-              <Image src="/images/airporttransfers.png" alt="Airport Transfers" fill className={styles.bgImg} />
-              <div className={styles.overlay} />
-              <div className={styles.content}>
-                <h3>Airport Transfers</h3>
-                <p>24/7 pickup & drop service</p>
-              </div>
-            </div>
-          </div>
-
-          {/* ROW 3 */}
           <div className={styles.builtForTeams}>
             <div className={styles.card}>
               <Image src="/images/builtforteam.png" alt="Built for Teams" fill className={styles.bgImg} />
@@ -100,29 +124,6 @@ export default function ExperienceSection() {
               </div>
             </div>
           </div>
-
-          <div className={styles.premiumFleet}>
-            <div className={styles.card}>
-              <Image src="/images/premiumfleet.png" alt="Premium Fleet" fill className={styles.bgImg} />
-              <div className={styles.overlay} />
-              <div className={styles.content}>
-                <h3>Premium Fleet</h3>
-                <p>Latest models & luxury brands</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.always247}>
-            <div className={styles.darkCard}>
-              <div className={styles.clockBox}>
-                <Clock size={28} />
-              </div>
-              <h3 className={styles.darkScore}>24/7</h3>
-              <h4 className={styles.darkSubtitle}>Always Available</h4>
-              <p className={styles.darkText}>Round-the-clock service for all your transportation needs</p>
-            </div>
-          </div>
-          
         </div>
       </div>
     </section>

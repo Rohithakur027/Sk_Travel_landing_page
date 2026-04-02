@@ -15,11 +15,7 @@
   gap: 2rem;
 }
 
-.rightStack {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
+
 
 .card {
   position: relative;
@@ -80,21 +76,9 @@
   letter-spacing: -0.02em;
 }
 
-.rightCardContent {
-  position: relative;
-  z-index: 10;
-  padding: 2rem;
-  color: #fff;
-}
 
-.rightCardContent h3 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
 
-.content p,
-.rightCardContent p {
+.content p {
   color: #e5e7eb;
   font-size: 1rem;
   line-height: 1.5;
@@ -159,42 +143,29 @@
   .bentoGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    height: 60rem;
+    grid-auto-rows: 20rem;
+    gap: 4rem;
   }
 
-  .leftCol {
+  .card {
+    min-height: unset;
     height: 100%;
   }
 
-  .rightStack {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    height: 100%;
-  }
-
-  .rightStack > div {
-    flex: 1;
-  }
-  
   /* Tablet text scaling */
-  .content h3 { font-size: 2rem; }
-  .rightCardContent h3 { font-size: 1.5rem; }
+  .content h3 { font-size: 1.8rem; }
 }
 
 /* Large Desktop padding */
 @media (min-width: 1440px) {
   .section :global(.container) {
-    padding-inline: 8rem;
+    padding-inline: 4rem;
   }
 
   .bentoGrid {
-    gap: 3rem;
-    height: 72rem;
+    grid-auto-rows: 26rem;
+    gap: 4rem;
   }
-  .rightStack { gap: 3rem; }
   
-  .content h3 { font-size: 2.5rem; }
-  .rightCardContent h3 { font-size: 2rem; }
+  .content h3 { font-size: 2.2rem; }
 }

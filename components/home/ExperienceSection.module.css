@@ -255,13 +255,14 @@
   }
   
   .premiumComfort { order: 1; }
-  .rightStack { order: 2; }
-  .always247 { order: 3; }
-  .cities25 { order: 4; }
+  .expertDrivers { order: 2; }
+  .airportTransfers { order: 3; }
+  .premiumFleet { order: 4; }
   .fullyInsured { order: 5; }
-  .airportTransfers { order: 6; }
-  .builtForTeams { order: 7; }
-  .premiumFleet { order: 8; }
+  .cities25 { order: 6; }
+  .customerSatisfaction { order: 7; }
+  .always247 { order: 8; }
+  .builtForTeams { order: 9; }
 
   .yellowCard {
     align-items: center;
@@ -270,6 +271,10 @@
   
   .scoreRow {
     justify-content: center;
+  }
+  
+  .card, .yellowCard, .darkCard {
+    min-height: 24rem;
   }
 }
 
@@ -286,80 +291,95 @@
 
   .bentoGrid {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto auto auto;
-    gap: 2rem;
+    /* Increase widths of right-side stacked columns */
+    grid-template-columns: 1fr 1fr 1.25fr 1.25fr;
+    /* Custom row heights to proportionally adjust cards */
+    grid-template-rows: 12rem 12rem 6rem 17rem;
+    gap: 1.5rem;
   }
 
-  .premiumComfort {
-    grid-column: span 8;
-    height: 40rem;
-  }
-  .rightStack {
-    grid-column: span 4;
-    gap: 2rem;
-    height: 40rem;
-    position: relative;
-    z-index: 5;
-    flex-grow: 1;
+  .card, .yellowCard, .darkCard {
+    min-height: unset;
+    height: 100%;
   }
 
-  .cities25 {
-    grid-column: span 4;
-    height: 42rem;
+  .premiumComfort { 
+    grid-column: 1 / 3; 
+    grid-row: 1 / 4; 
   }
-  .fullyInsured {
-    grid-column: span 4;
-    height: 42rem;
+  .expertDrivers { 
+    grid-column: 3 / 4; 
+    grid-row: 1 / 2; 
   }
-  .airportTransfers {
-    grid-column: span 4;
-    height: 42rem;
+  .airportTransfers { 
+    grid-column: 4 / 5; 
+    grid-row: 1 / 2; 
   }
-
-  .builtForTeams {
-    grid-column: span 6;
-    height: 24rem;
+  .premiumFleet { 
+    grid-column: 3 / 4; 
+    grid-row: 2 / 3; 
   }
-  .premiumFleet {
-    grid-column: span 3;
-    height: 24rem;
+  .fullyInsured { 
+    grid-column: 4 / 5; 
+    grid-row: 2 / 4; 
   }
-  .always247 {
-    grid-column: span 3;
-    height: 24rem;
+  .cities25 { 
+    grid-column: 3 / 4; 
+    grid-row: 3 / 5; 
+  }
+  .customerSatisfaction { 
+    grid-column: 1 / 2; 
+    grid-row: 4 / 5; 
+  }
+  .always247 { 
+    grid-column: 2 / 3; 
+    grid-row: 4 / 5; 
+  }
+  .builtForTeams { 
+    grid-column: 4 / 5; 
+    grid-row: 4 / 5; 
   }
 
   /* Tablet-specific text scaling for dense cards */
-  .scoreText { font-size: 2.5rem; }
-  .yellowCard h4 { font-size: 1.5rem; margin-bottom: 0.25rem; }
-  .yellowCard p { font-size: 0.85rem; line-height: 1.3; }
-  /* Override global padding inside this media query */
-  .rightStack .yellowCard { padding: 1.5rem; flex: 1; }
-  .rightStack .card { flex: 1; }
-  .starBox { width: 2.75rem; height: 2.75rem; margin-right: 0.75rem; }
+  .scoreText { font-size: 2rem; }
+  .yellowCard h4 { font-size: 1.2rem; margin-bottom: 0.25rem; }
+  .yellowCard p { font-size: 0.8rem; line-height: 1.3; }
+  .starBox { width: 2.25rem; height: 2.25rem; margin-right: 0.75rem; }
+  
+  /* Dense layout tweaks to fit in shorter rows */
+  .content { padding: 1.25rem; }
+  .centerContent { padding: 1.25rem; }
+  .yellowCard, .darkCard { padding: 1.25rem; }
+  .content h3, .centerContent h3 { font-size: 1.35rem; margin-bottom: 0.25rem; }
+  .content p, .centerContent p, .darkText { font-size: 0.85rem; line-height: 1.3; }
+  .darkScore { font-size: 1.5rem; }
+  .darkSubtitle { font-size: 1.1rem; }
+  .clockBox { width: 2.5rem; height: 2.5rem; margin-bottom: 0.75rem; }
+  .shieldBox { width: 3rem; height: 3rem; margin-bottom: 0.5rem; }
 }
 
 @media (min-width: 1440px) {
   .section :global(.container) {
-    padding-inline: 8rem;
+    padding-inline: 4rem;
   }
 
   .bentoGrid {
-    gap: 3rem;
+    grid-template-rows: 14rem 14rem 7rem 21rem;
+    gap: 2rem;
   }
 
-  .premiumComfort, .rightStack { height: 44rem; }
-  .rightStack { gap: 3rem; }
-  .cities25, .fullyInsured, .airportTransfers { height: 56rem; }
-  .builtForTeams, .premiumFleet, .always247 { height: 28rem; }
-  
-  .scoreText { font-size: 3.5rem; }
-  .yellowCard h4 { font-size: 2rem; }
-  .yellowCard p { font-size: 1rem; }
-  .starBox { width: 3.5rem; height: 3.5rem; margin-right: 1.25rem; }
+  .scoreText { font-size: 2.75rem; }
+  .yellowCard h4 { font-size: 1.5rem; }
+  .yellowCard p { font-size: 0.9rem; }
+  .starBox { width: 3rem; height: 3rem; margin-right: 1.25rem; }
 
-  /* 60/40 split on large desktop */
-  .rightStack .card { flex: 3; }
-  .rightStack .yellowCard { flex: 2; padding: 2rem; }
+  .content { padding: 1.75rem; }
+  .centerContent { padding: 1.75rem; }
+  .yellowCard, .darkCard { padding: 1.75rem; }
+  .content h3, .centerContent h3 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  .content p, .centerContent p, .darkText { font-size: 1rem; line-height: 1.4; }
+  .darkScore { font-size: 2rem; }
+  .darkSubtitle { font-size: 1.35rem; }
+  .clockBox { width: 3rem; height: 3rem; margin-bottom: 1rem; }
+  .shieldBox { width: 4rem; height: 4rem; margin-bottom: 0.75rem; }
 }
