@@ -14,73 +14,68 @@ export default function FleetSection() {
 
         
         <div className={styles.bentoGrid}>
-          {/* LEFT LARGE COLUMN */}
-          <div className={styles.leftCol}>
-            <div className={styles.card}>
-              <Image 
-                src="/images/executivesedans.png" 
-                alt="Executive Sedans" 
-                fill 
-                className={styles.bgImg} 
-                priority
-              />
-              <div className={styles.overlay} />
-              <div className={styles.content}>
-                <span className={styles.featuredTag}>Featured</span>
-                <h3>Executive Sedans</h3>
-                <p>Premium comfort for 1-4 passengers</p>
-                <button className={styles.viewDetailsBtn}>
-                  View Details <ArrowRight size={18} />
-                </button>
-              </div>
+          {/* ROW 1 */}
+          <div className={styles.card}>
+            <Image 
+              src="/images/luxurysuv.jpeg" 
+              alt="Luxury SUVs" 
+              fill 
+              className={styles.bgImg} 
+            />
+            <div className={styles.overlay} />
+            <div className={styles.content}>
+              <h3>Luxury SUVs</h3>
+              <p>Spacious rides for 1-6 passengers</p>
             </div>
           </div>
           
-          {/* RIGHT STACK COLUMN */}
-          <div className={styles.rightStack}>
-            <div className={styles.card}>
-              <Image 
-                src="/images/luxurysuvs.png" 
-                alt="Luxury SUVs" 
-                fill 
-                className={styles.bgImg} 
-              />
-              <div className={styles.overlay} />
-              <div className={styles.rightCardContent}>
-                <h3>Luxury SUVs</h3>
-                <p>Spacious rides for 1-6 passengers</p>
-              </div>
-            </div>
-            
-            <div className={styles.card}>
-              <Image 
-                src="/images/corporateshuttles.png" 
-                alt="Corporate Shuttles" 
-                fill 
-                className={styles.bgImg} 
-              />
-              <div className={styles.overlay} />
-              <div className={styles.rightCardContent}>
-                <h3>Corporate Shuttles</h3>
-                <p>Group transportation solutions</p>
-              </div>
-            </div>
-            
-            <div className={styles.card}>
-              <Image 
-                src="/images/tempodrivers.png" 
-                alt="Tempo Drivers" 
-                fill 
-                className={styles.bgImg} 
-              />
-              <div className={styles.overlay} />
-              <div className={styles.rightCardContent}>
-                <h3>Tempo Drivers</h3>
-                <p>Group transportation solutions</p>
-              </div>
+          <div className={styles.card}>
+            <Image 
+              src="/images/corporateshuttles.jpeg" 
+              alt="Corporate Shuttles" 
+              fill 
+              className={styles.bgImg} 
+            />
+            <div className={styles.overlay} />
+            <div className={styles.content}>
+              <h3>Corporate Shuttles</h3>
+              <p>Group transportation solutions</p>
             </div>
           </div>
           
+          {/* ROW 2 */}
+          <div className={styles.card}>
+            <Image 
+              src="/images/expertdrivers.jpeg" 
+              alt="Tempo Drivers" 
+              fill 
+              className={styles.bgImg} 
+            />
+            <div className={styles.overlay} />
+            <div className={styles.content}>
+              <h3>Tempo Drivers</h3>
+              <p>Group transportation solutions</p>
+            </div>
+          </div>
+
+          <div className={styles.card}>
+            <Image 
+              src="/images/executivesedan.png" 
+              alt="Executive Sedans" 
+              fill 
+              className={styles.bgImg} 
+              priority
+            />
+            <div className={styles.overlay} />
+            <div className={styles.content}>
+              <span className={styles.featuredTag}>Featured</span>
+              <h3>Executive Sedans</h3>
+              <p>Premium comfort for 1-4 passengers</p>
+              <button className={styles.viewDetailsBtn}>
+                View Details <ArrowRight size={18} />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

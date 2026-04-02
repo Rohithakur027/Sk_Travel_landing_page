@@ -17,7 +17,7 @@ const MAIN_SERVICES = [
     description:
       "Provide your employees with a reliable and comfortable daily commute. Our shuttle services are designed to maximize productivity and employee satisfaction.",
     iconSrc: "/Container (5).png",
-    image: "/ImageWithFallback.png",
+    image: "/images/corporateshuttles.jpeg",
     features: [
       "Fixed route scheduling",
       "GPS tracked vehicles",
@@ -30,7 +30,7 @@ const MAIN_SERVICES = [
     description:
       "Premium transportation for executives and VIP clients. Enjoy a first-class experience with our luxury fleet and highly trained chauffeurs.",
     iconSrc: "/Container (6).png",
-    image: "/ImageWithFallback (1).png",
+    image: "/images/safetyprior.png",
     features: [
       "Luxury fleet vehicles",
       "Certified chauffeurs",
@@ -43,7 +43,7 @@ const MAIN_SERVICES = [
     description:
       "Seamless group transportation for conferences, corporate events, and special occasions. We coordinate every detail to ensure your event runs smoothly.",
     iconSrc: "/Container (8).png",
-    image: "/container.png",
+    image: "/images/premiumfleet.jpeg",
     features: [
       "Group capacity planning",
       "Event day coordination",
@@ -56,7 +56,7 @@ const MAIN_SERVICES = [
     description:
       "Never miss a flight again. Our airport transfer service provides punctual, stress-free transportation with real-time flight tracking.",
     iconSrc: "/Container (4).png",
-    image: "/Container (1).png",
+    image: "/images/airpot.jpeg",
     features: [
       "Flight tracking",
       "Meet & greet service",
@@ -134,21 +134,18 @@ export default function ServicesSection() {
                   />
                 </div>
                 <div className={styles.body}>
-
-                  {/* ✅ FIX: The PNG already has a yellow rounded box baked in.
-                      Using plain <img> at full 56×56 size fills the badge exactly,
-                      and CSS background is transparent — so only ONE box shows. */}
-                  <div className={styles.iconBadge}>
-                    <img
-                      src={service.iconSrc}
-                      alt={service.title}
-                      width={56}
-                      height={56}
-                      style={{ display: "block", background: "transparent" }}
-                    />
+                  <div className={styles.cardTitleRow}>
+                    <div className={styles.iconBadge}>
+                      <img
+                        src={service.iconSrc}
+                        alt={service.title}
+                        width={56}
+                        height={56}
+                        style={{ display: "block", background: "transparent" }}
+                      />
+                    </div>
+                    <h3 className={styles.cardTitle}>{service.title}</h3>
                   </div>
-
-                  <h3 className={styles.cardTitle}>{service.title}</h3>
                   <p className={styles.cardDesc}>{service.description}</p>
                   <ul className={styles.featureList}>
                     {service.features.map((f, i) => (

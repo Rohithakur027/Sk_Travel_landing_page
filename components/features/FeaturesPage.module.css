@@ -88,9 +88,16 @@
   .pillImageMobile { margin: 2px auto 8px; }
 
   /* Specific modifier to nudge a particular mobile pill down (e.g. Safety First) */
-  .pillImageMobileDown { transform: translateY(6px) !important; }
-  .pillImage + .heroRow { margin-top: 0.75rem; }
-  .heroRow { margin-top: 1rem; margin-bottom: 1.25rem; }
+  .pillImageMobileDown {
+    transform: translateY(6px) !important;
+  }
+  .pillImage + .heroRow {
+    margin-top: 0.75rem;
+  }
+  .heroRow {
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+  }
 }
 
 /* Responsive header min-height rules copied from Contact page to match first-section specs */
@@ -140,7 +147,7 @@
 
 /* Cream card bands for header and the "Everything You Need" block */
 .headerBand {
-  background: #2D3142;
+  background: #2d3142;
   text-align: center;
   min-height: 580px !important;
   height: 580px !important;
@@ -156,34 +163,135 @@
 }
 
 .sectionTitleBand {
-  background: #FFFBF0;
+  background: #fffbf0;
   width: 100%;
   padding: 56px 0 24px; /* reduced bottom padding so pill sits closer to previous section */
 }
 
-.heroRow { display: flex; gap: 2rem; align-items: center; margin-top: 4rem; margin-bottom: 3rem; }
-.heroText { flex: 1; }
-.smallPill { display:inline-flex; align-items:center; justify-content:center; margin-bottom: .75rem; height:48px; padding:0 16px; background: linear-gradient(135deg, rgba(255,210,63,0.15), rgba(255,210,63,0.06)); border-radius:12px; color:#374151; font-weight:700; font-size:16px; }
-.heroTitle { font-size: 2.5rem; color:#111827; margin:0 0 .75rem 0; }
-.heroDesc { color:#6b7280; max-width: 520px; }
-.stackCards { display:flex; flex-direction:column; gap:24px; margin-top:1.25rem; }
-.stackCard { display:flex; gap:20px; align-items:flex-start; background:#ffffff; border-radius:18px; padding:18px; box-shadow: 0 18px 40px rgba(2,6,23,0.06); }
-.stackIcon { width:48px; height:48px; flex:0 0 48px; display:flex; align-items:center; justify-content:center; border-radius:12px; background: linear-gradient(135deg, rgba(255,210,63,0.12), rgba(255,210,63,0.06)); overflow:hidden; }
-.stackTitle { margin:0 0 6px 0; font-size:1rem; font-weight:700; color:#111827; }
-.stackDesc { margin:0; color:#6b7280; line-height:1.5; }
+.heroRow {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+}
+.heroText {
+  flex: 1;
+}
+.smallPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  height: 48px;
+  padding: 0 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 210, 63, 0.15),
+    rgba(255, 210, 63, 0.06)
+  );
+  border-radius: 12px;
+  color: #374151;
+  font-weight: 700;
+  font-size: 16px;
+}
+.heroTitle {
+  font-size: 2.5rem;
+  color: #111827;
+  margin: 0 0 0.75rem 0;
+}
+.heroDesc {
+  color: #6b7280;
+  max-width: 520px;
+}
+.stackCards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 1.25rem;
+}
+.stackCard {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.06);
+}
+.stackIcon {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 210, 63, 0.12),
+    rgba(255, 210, 63, 0.06)
+  );
+  overflow: hidden;
+}
+.stackTitle {
+  margin: 0 0 6px 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+}
+.stackDesc {
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.5;
+}
 
 /* Align icon and text starting lines: ensure icon sits with text top */
 .stackIcon {
   align-self: flex-start;
   margin-top: 6px;
 }
-.heroImage { flex: 0 0 494px; display:flex; justify-content:center; }
-.imageCard { background: transparent; padding: 0; border-radius: 24px; box-shadow: none; overflow: hidden; width: 494px; height: 450px; position: relative; }
-.imageWrapper { position: relative; width: 100%; height: 100%; border-radius: 24px; overflow: hidden; }
-.innerImage { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; object-fit: cover; }
+.heroImage {
+  flex: 0 0 494px;
+  display: flex;
+  justify-content: center;
+}
+.imageCard {
+  background: transparent !important;
+  padding: 0;
+  border-radius: 24px;
+  box-shadow: none;
+  overflow: hidden;
+  width: 494px;
+  height: 450px;
+  position: relative;
+}
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100% !important;
+  border-radius: 24px;
+  overflow: hidden;
+  background: transparent !important;
+}
+.innerImage {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transform: scale(1.1) !important;
+  transform-origin: center !important;
+}
 
 /* iOS/Safari clipping fallback */
-.imageWrapper { -webkit-mask-image: -webkit-radial-gradient(white, black); }
+.imageWrapper {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  background: transparent !important;
+}
 
 /* Force border-radius on Next/Image generated elements and picture/img fallbacks
    This helps ensure all four corners are clipped consistently across browsers/devices */
@@ -215,26 +323,96 @@
 }
 
 /* As a final fallback, try applying radius to the absolutely-positioned inner image too */
-.innerImage { border-radius: 24px !important; }
+.innerImage {
+  border-radius: 24px !important;
+}
 
 /* Ensure Next/Image generated elements inside the wrapper are full-size and clipped */
-.imageWrapper > span { position: absolute; inset: 0; display: block; }
-.imageWrapper > span > img { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; }
-.imageWrapper img { display: block !important; width: 100% !important; height: 100% !important; object-fit: cover !important; }
+.imageWrapper > span {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.imageWrapper > span > img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transform: scale(1.1) !important;
+  transform-origin: center !important;
+}
+.imageWrapper img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  transform: scale(1.1) !important;
+  transform-origin: center !important;
+}
 
 /* Ensure Next.js Image wrapper and img have no background or extra padding */
-.imageCard > span { position: absolute; inset: 0; display: block; background: transparent; }
-.imageCard > span > img { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block; }
+.imageCard > span {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: transparent;
+}
+.imageCard > span > img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+  transform: scale(1.1) !important;
+  transform-origin: center !important;
+}
 
-.checkList { list-style:none; padding:0; margin-top:1.25rem; }
-.checkList li { display:flex; gap:12px; align-items:flex-start; margin-bottom:1.25rem; color:#374151; }
+.checkList {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.25rem;
+}
+.checkList li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  color: #374151;
+}
 
 /* Nudge the feature text block up slightly so the title's first line aligns with the icon top */
-.checkList li > div { margin-top: -8px; }
+.checkList li > div {
+  margin-top: -8px;
+}
 
-.checkImg { width:40px; height:40px; flex:0 0 40px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; background: linear-gradient(135deg, rgba(255,210,63,0.15), rgba(255,210,63,0.06)); overflow:hidden; }
-.checkTitle { font-family: var(--font-sans); font-weight:700; font-size:16px; line-height:24px; color:#2D3142; margin-bottom:6px; }
-.checkDesc { font-size:14px; line-height:20px; color:#6b7280; }
+.checkImg {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 210, 63, 0.15),
+    rgba(255, 210, 63, 0.06)
+  );
+  overflow: hidden;
+}
+.checkTitle {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #2d3142;
+  margin-bottom: 6px;
+}
+.checkDesc {
+  font-size: 14px;
+  line-height: 20px;
+  color: #6b7280;
+}
 
 /* Powered band */
 .poweredBand { background:#2D3142; color: #fff; padding: 56px 0 40px; margin-top: 0px; }
@@ -263,45 +441,139 @@
 .poweredSubLabel { color: rgba(255,255,255,0.75); font-weight:400; font-size:14px; margin-top:4px; }
 
 /* Desktop vs Mobile sublabel variants: default shows desktop text */
-.poweredSubLabelDesktop { display: block; }
-.poweredSubLabelMobile { display: none; }
+.poweredSubLabelDesktop {
+  display: block;
+}
+.poweredSubLabelMobile {
+  display: none;
+}
 
-.sectionTitleWrap { text-align:center; margin: 1.75rem 0; }
-.sectionTitle { font-size: 30px; font-weight:800; color:#111827; margin:0 0 0.5rem 0; line-height:1.12; max-width:760px; margin-left:auto; margin-right:auto; }
-.sectionLead { color:#6b7280; max-width:520px; margin:0.25rem auto 0; font-size:14px; line-height:1.4; height:auto; display:block; }
+.sectionTitleWrap {
+  text-align: center;
+  margin: 1.75rem 0;
+}
+.sectionTitle {
+  font-size: 30px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.12;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.sectionLead {
+  color: #6b7280;
+  max-width: 520px;
+  margin: 0.25rem auto 0;
+  font-size: 14px;
+  line-height: 1.4;
+  height: auto;
+  display: block;
+}
 
 /* Ensure the final word appears on its own centered line */
-.splitWord { display: block; text-align: center; margin-top: 6px; }
+.splitWord {
+  display: block;
+  text-align: center;
+  margin-top: 6px;
+}
 
 /* On small screens keep the final word inline with the previous line */
 @media (max-width: 480px) {
-  .splitWord { display: inline; text-align: inherit; margin-top: 0; }
+  .splitWord {
+    display: inline;
+    text-align: inherit;
+    margin-top: 0;
+  }
 }
 
 /* CTA box for "Experience These Features" */
 .ctaBox { background: #ffffff; border-radius: 32px; padding: 56px 48px; max-width: 1052px; margin: 40px auto 8px; box-shadow: 0 12px 32px rgba(2,6,23,0.05); text-align:center; }
 .ctaBtn { display:inline-flex; align-items:center; gap:12px; background: linear-gradient(180deg,#FFD23F,#FFA726); color:#111827; padding: 14px 28px; border-radius: 8px; box-shadow: 0 8px 24px rgba(255,210,63,0.4); font-weight:700; font-size:16px; border:none; }
 
-.cardsGrid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 1052px; margin: 0 auto 0; }
-.featureCard { background:#ffffff; border-radius:24px; padding: 28px; box-shadow: 0 12px 32px rgba(0,0,0,0.06); min-height: 254px; display:flex; flex-direction:column; }
-.cardIcon { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; overflow: hidden; padding: 0; }
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: 1052px;
+  margin: 0 auto 0;
+}
+.featureCard {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+  min-height: 254px;
+  display: flex;
+  flex-direction: column;
+}
+.cardIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  overflow: hidden;
+  padding: 0;
+}
 /* Ensure icons can fill the full rounded box when the asset includes its own background */
 .cardIcon > span,
 .cardIcon > span img,
 .cardIcon img {
   display: block !important;
 }
-.cardIcon > span { width: 100%; height: 100%; }
+.cardIcon > span {
+  width: 100%;
+  height: 100%;
+}
 .cardIcon > span img,
-.cardIcon img { width: 100% !important; height: 100% !important; object-fit: cover !important; background: transparent !important; border-radius: 12px !important; }
-.cardTitle { font-family: var(--font-heading); font-size:1.05rem; font-weight:800; color:#111827; margin-bottom:8px; }
-.cardDesc { color:#6b7280; line-height:1.6; margin:0; }
+.cardIcon img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  background: transparent !important;
+  border-radius: 12px !important;
+}
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 8px;
+}
+.cardDesc {
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0;
+}
 
 /* Body wrapper for card text so title and desc stack to the right of the icon when row layout is used */
-.cardBody { display: block; }
+.cardBody {
+  display: block;
+}
 
-@media (max-width: 900px) { .heroRow { flex-direction:column } .cardsGrid { grid-template-columns: repeat(2, 1fr); } .poweredGrid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 600px) { .cardsGrid { grid-template-columns: 1fr; } .poweredGrid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 900px) {
+  .heroRow {
+    flex-direction: column;
+  }
+  .cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .poweredGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+  .poweredGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 /* Small devices: phones */
 @media (max-width: 480px) {
@@ -310,34 +582,94 @@
   .titleGold { font-size: 32px; line-height: 40px; text-align: center; }
   .lead { font-size: 14px; padding: 0 12px; height: auto; text-align: center; }
 
-  .heroRow { gap: 16px; }
-  .heroImage { flex: 0 0 auto; width: 100%; }
-  .imageCard { width: 100%; height: 280px; }
-  .innerImage { object-fit: cover; }
+  .heroRow {
+    gap: 16px;
+  }
+  .heroImage {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  .imageCard {
+    width: 100%;
+    height: 280px;
+  }
+  .innerImage {
+    object-fit: cover;
+  }
 
   /* Slightly raise feature text on mobile so title lines align with icon */
-  .checkList li > div { margin-top: -6px; }
+  .checkList li > div {
+    margin-top: -6px;
+  }
 
-  .stackCard { padding: 14px; gap:12px; }
-  .stackIcon { width:40px; height:40px; }
-  .stackIcon { align-self: flex-start; margin-top: 4px; }
-  .stackTitle { font-family: var(--font-sans); font-size: 13px; font-weight: 700; }
+  .stackCard {
+    padding: 14px;
+    gap: 12px;
+  }
+  .stackIcon {
+    width: 40px;
+    height: 40px;
+  }
+  .stackIcon {
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+  .stackTitle {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+  }
 
-  .cardsGrid { gap: 18px; }
+  .cardsGrid {
+    gap: 18px;
+  }
   /* Make feature cards compact: icon left, text right, no extra bottom spacing */
-  .featureCard { padding: 14px; border-radius: 16px; flex-direction: row; align-items: center; min-height: auto; }
-  .cardIcon { width:48px; height:48px; margin-bottom: 0; margin-right: 12px; flex: 0 0 48px; }
+  .featureCard {
+    padding: 14px;
+    border-radius: 16px;
+    flex-direction: row;
+    align-items: center;
+    min-height: auto;
+  }
+  .cardIcon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0;
+    margin-right: 12px;
+    flex: 0 0 48px;
+  }
   /* Slightly smaller heading on mobile; keep title on its own line and description below */
-  .cardBody { display: flex; flex-direction: column; flex: 1 1 auto; }
-  .cardTitle { font-size: 14px; margin: 0 0 4px 0; line-height: 1.2; display: block; font-weight: 700; }
-  .cardDesc { margin: 0; line-height: 1.35; font-size: 13px; }
+  .cardBody {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+  .cardTitle {
+    font-size: 14px;
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+    display: block;
+    font-weight: 700;
+  }
+  .cardDesc {
+    margin: 0;
+    line-height: 1.35;
+    font-size: 13px;
+  }
 
   .ctaBox { padding: 28px 20px; margin: 40px 12px 8px; }
   .ctaBtn { padding: 12px 20px; font-size: 14px; border-radius: 8px !important; }
 
-  .poweredBand { padding: 48px 12px; }
-  .poweredGrid { grid-template-columns: repeat(2,1fr); gap: 16px; }
-  .poweredLabel { min-height: 36px; }
+  .poweredBand {
+    padding: 48px 12px;
+  }
+  .poweredGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .poweredLabel {
+    min-height: 36px;
+  }
 
   /* Mobile: tighten powered item spacing and scale icons */
   .poweredItem { gap: 6px; }
@@ -351,15 +683,30 @@
   .poweredLabel { white-space: nowrap; font-size: 14px; }
 
   /* On small screens swap the powered sublabel to the mobile-friendly text */
-  .poweredSubLabelDesktop { display: none; }
-  .poweredSubLabelMobile { display: block; }
+  .poweredSubLabelDesktop {
+    display: none;
+  }
+  .poweredSubLabelMobile {
+    display: block;
+  }
 
   /* Reduce extra space after the last feature card on mobile */
-  .sectionTitleBand { padding-bottom: 12px; padding-top: 8px; }
-  .cardsGrid { margin-bottom: 5rem; }
-  .headerBand { padding-bottom: 12px; }
-  .heroRow { margin-bottom: 32px; }
-  .sectionTitleWrap { margin-top: 0.75rem; }
+  .sectionTitleBand {
+    padding-bottom: 12px;
+    padding-top: 8px;
+  }
+  .cardsGrid {
+    margin-bottom: 5rem;
+  }
+  .headerBand {
+    padding-bottom: 12px;
+  }
+  .heroRow {
+    margin-bottom: 32px;
+  }
+  .sectionTitleWrap {
+    margin-top: 0.75rem;
+  }
 }
 
 /* Make Features first section match About hero on small screens */
@@ -380,13 +727,23 @@
 }
 
 /* Keep 'in Real-Time' together on small screens but allow a break on larger screens */
-.breakOnDesktop { display: block; }
+.breakOnDesktop {
+  display: block;
+}
 @media (max-width: 600px) {
-  .breakOnDesktop { display: inline; white-space: nowrap; }
+  .breakOnDesktop {
+    display: inline;
+    white-space: nowrap;
+  }
 }
 
 /* Keep 'corporate transportation' together on small screens only; keep desktop unchanged */
-.keepTogether { display: block; }
+.keepTogether {
+  display: block;
+}
 @media (max-width: 600px) {
-  .keepTogether { display: inline; white-space: nowrap; }
+  .keepTogether {
+    display: inline;
+    white-space: nowrap;
+  }
 }
