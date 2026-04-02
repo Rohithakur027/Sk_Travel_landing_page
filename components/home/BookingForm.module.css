@@ -86,13 +86,19 @@
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 480px) {
+  .card {
+    padding: 1.25rem 1rem;
+    border-radius: 0.75rem;
+  }
+
   .toggle {
-    padding: 0.125rem;
+    padding: 0.1rem;
+    margin-bottom: 1.25rem;
   }
 
   .toggleBtn {
-    padding: 0.6rem 0.25rem;
+    padding: 0.65rem 0.25rem;
     font-size: 0.85rem;
   }
 }
@@ -104,9 +110,13 @@
   margin-bottom: 2rem;
 }
 
-.grid > :nth-child(1),
-.grid > :nth-child(2) {
+.grid > * {
   grid-column: span 2;
+}
+@media (min-width: 1024px) {
+  .grid > * {
+    grid-column: span 1;
+  }
 }
 
 @media (min-width: 641px) and (max-width: 1023px) {
@@ -121,10 +131,35 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
+}
 
-  .grid > :nth-child(1),
-  .grid > :nth-child(2) {
-    grid-column: auto;
+.instantGrid {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+
+.instantGrid > * {
+  grid-column: span 1 !important;
+}
+
+@media (max-width: 500px) {
+  .grid, .instantGrid, .scheduledGrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .grid > *, .instantGrid > *, .scheduledGrid > * {
+    grid-column: span 2 !important;
+  }
+
+  /* Only Date/Time components share a row to keep form short, others stay full width */
+  .scheduledGrid > :nth-child(3),
+  .scheduledGrid > :nth-child(4) {
+    grid-column: span 1 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .instantGrid {
+    gap: 0.75rem;
   }
 }
 
@@ -151,6 +186,39 @@
   background: rgba(255, 190, 40, 1);
   transform: translateY(-1px);
   box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
+}
+
+@media (max-width: 640px) {
+  .input, .select {
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+  }
+
+  .hasIcon {
+    padding-left: 2.5rem;
+  }
+
+  .iconLeft {
+    padding-left: 0.85rem;
+  }
+
+  .iconLeft svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .submitBtn {
+    padding: 0.9rem;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    border-radius: 0.75rem;
+  }
+
+  .grid {
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
 }
 
 .footer {
@@ -253,4 +321,79 @@
   padding-right: 3.25rem;
   appearance: none;
   -webkit-appearance: none;
+}
+
+.counterWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  padding: 0.9rem 1.25rem;
+  padding-left: 3.25rem;
+  font-size: 1.1rem;
+  background-color: #ffffff;
+  position: relative;
+  min-height: 3.6rem;
+}
+
+.counterLabel {
+  color: #64748b;
+  flex: 1;
+  font-size: 1.05rem;
+}
+
+.counterControls {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.counterBtn {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 0.6rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1e293b;
+  transition: all 0.2s ease;
+}
+
+.counterBtn:hover {
+  background: rgba(255, 200, 57, 0.1);
+  border-color: rgba(255, 200, 57, 0.5);
+  color: #111827;
+}
+
+.counterValue {
+  font-weight: 700;
+  color: #111827;
+  min-width: 1rem;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 640px) {
+  .counterWrapper {
+    padding: 1rem 1rem;
+    padding-left: 2.5rem;
+  }
+  
+  .counterLabel {
+    font-size: 0.95rem;
+  }
+
+  .counterBtn {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 0.5rem;
+  }
+  
+  .counterValue {
+    font-size: 1rem;
+  }
 }
