@@ -69,7 +69,7 @@ export default function ServicesSection() {
               <div className={styles.body}>
                 <h3 className={styles.title}>{service.title}</h3>
                 <p className={styles.desc}>{service.description}</p>
-                <a href="#contact" className={styles.link}>
+                <a href="/services" className={styles.link}>
                   Learn More <span className={styles.arrow}>→</span>
                 </a>
               </div>

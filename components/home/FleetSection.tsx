@@ -71,9 +71,9 @@ export default function FleetSection() {
               <span className={styles.featuredTag}>Featured</span>
               <h3>Executive Sedans</h3>
               <p>Premium comfort for 1-4 passengers</p>
-              <button className={styles.viewDetailsBtn}>
+              <a href="#contact" className={styles.viewDetailsBtn}>
                 View Details <ArrowRight size={18} />
-              </button>
+              </a>
             </div>
           </div>
         </div>

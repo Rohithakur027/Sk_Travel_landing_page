@@ -1,8 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import Image from "next/image";
-import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus } from "lucide-react";
+import {
+  MapPin,
+  Calendar,
+  Clock,
+  Car,
+  Users,
+  ArrowRight,
+  Navigation,
+  Plus,
+  Minus,
+} from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import styles from "./BookingForm.module.css";
 
 // Local sub-components to reduce dependencies
@@ -10,19 +22,27 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   leftIcon?: React.ReactNode;
 }
 
-const Input = ({ id, placeholder, leftIcon, ...props }: InputProps) => (
+const Input = forwardRef<HTMLInputElement, InputProps>(({
+  id,
+  placeholder,
+  leftIcon,
+  className,
+  ...props
+}, ref) => (
   <div className={styles.inputGroup}>
     <div className={styles.inputWrapper}>
       {leftIcon && <div className={styles.iconLeft}>{leftIcon}</div>}
       <input
+        ref={ref}
         id={id}
         placeholder={placeholder}
-        className={`${styles.input} ${leftIcon ? styles.hasIcon : ""}`}
+        className={`${styles.input} ${leftIcon ? styles.hasIcon : ""} ${className || ""}`}
         {...props}
       />
     </div>
   </div>
-);
+));
+Input.displayName = "Input";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: { value: string; label: string }[];
@@ -76,8 +96,8 @@ export default function BookingForm() {
   const [bookingType, setBookingType] = useState<"instant" | "scheduled">(
     "scheduled",
   );
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [date, setDate] = useState<Date | null>(null);
+  const [time, setTime] = useState<Date | null>(null);
   const [passengers, setPassengers] = useState(1);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -90,9 +110,11 @@ export default function BookingForm() {
     <div className={styles.card}>
       {/* Toggle */}
       <div className={styles.toggle}>
-        <div 
+        <div
           className={`${styles.slider} ${
-            bookingType === "instant" ? styles.instantActive : styles.scheduledActive
+            bookingType === "instant"
+              ? styles.instantActive
+              : styles.scheduledActive
           }`}
         />
         <button
@@ -116,9 +138,13 @@ export default function BookingForm() {
       </div>
 
       <form onSubmit={handleSubmit}>
-        <div className={`${styles.grid} ${
-          bookingType === "instant" ? styles.instantGrid : styles.scheduledGrid
-        }`}>
+        <div
+          className={`${styles.grid} ${
+            bookingType === "instant"
+              ? styles.instantGrid
+              : styles.scheduledGrid
+          }`}
+        >
           {/* Row 1: Locations */}
           <Input
             id="pickup"
@@ -134,51 +160,42 @@ export default function BookingForm() {
           {/* Row 2: Date & Time - Only for Scheduled */}
           {bookingType === "scheduled" && (
             <>
-              <div style={{ position: "relative" }}>
-                <Input
-                  id="date-display"
-                  type="text"
-                  placeholder="Date"
-                  value={date}
-                  readOnly
-                  leftIcon={<Calendar size={20} />}
-                />
-                <input
-                  id="date"
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  onClick={(e) => {
-                    try {
-                      e.currentTarget.showPicker();
-                    } catch (err) {}
-                  }}
-                  className={styles.nativePicker}
-                />
-              </div>
-
-              <div style={{ position: "relative" }}>
-                <Input
-                  id="time-display"
-                  type="text"
-                  placeholder="Time"
-                  value={time}
-                  readOnly
-                  leftIcon={<Clock size={20} />}
-                />
-                <input
-                  id="time"
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  onClick={(e) => {
-                    try {
-                      e.currentTarget.showPicker();
-                    } catch (err) {}
-                  }}
-                  className={styles.nativePicker}
-                />
-              </div>
+              <DatePicker
+                selected={date}
+                onChange={(newDate: Date | null) => setDate(newDate)}
+                dateFormat="MMMM d, yyyy"
+                placeholderText="Date"
+                customInput={
+                  <Input
+                    id="date"
+                    leftIcon={<Calendar size={20} />}
+                    className={styles.dateInput}
+                  />
+                }
+                wrapperClassName={styles.datePickerWrapper}
+                portalId="root-portal"
+                popperClassName={styles.customPopper}
+              />
+              <DatePicker
+                selected={time}
+                onChange={(newTime: Date | null) => setTime(newTime)}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15}
+                timeCaption="Time"
+                dateFormat="h:mm aa"
+                placeholderText="Time"
+                customInput={
+                  <Input
+                    id="time"
+                    leftIcon={<Clock size={20} />}
+                    className={styles.timeInput}
+                  />
+                }
+                wrapperClassName={styles.datePickerWrapper}
+                portalId="root-portal"
+                popperClassName={styles.customPopper}
+              />
             </>
           )}
 
@@ -188,22 +205,24 @@ export default function BookingForm() {
             options={vehicleOptions}
             leftIcon={<Car size={20} />}
           />
-          
+
           <div className={styles.inputGroup}>
             <div className={styles.counterWrapper}>
-              <div className={styles.iconLeft}><Users size={20} /></div>
+              <div className={styles.iconLeft}>
+                <Users size={20} />
+              </div>
               <span className={styles.counterLabel}>Passengers</span>
               <div className={styles.counterControls}>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => setPassengers(Math.max(1, passengers - 1))}
                   className={styles.counterBtn}
                 >
                   <Minus size={18} />
                 </button>
                 <span className={styles.counterValue}>{passengers}</span>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => setPassengers(Math.min(10, passengers + 1))}
                   className={styles.counterBtn}
                 >

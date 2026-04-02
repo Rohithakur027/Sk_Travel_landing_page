@@ -142,11 +142,15 @@
 }
 
 @media (max-width: 500px) {
-  .grid, .instantGrid, .scheduledGrid {
+  .grid,
+  .instantGrid,
+  .scheduledGrid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  
-  .grid > *, .instantGrid > *, .scheduledGrid > * {
+
+  .grid > *,
+  .instantGrid > *,
+  .scheduledGrid > * {
     grid-column: span 2 !important;
   }
 
@@ -189,7 +193,8 @@
 }
 
 @media (max-width: 640px) {
-  .input, .select {
+  .input,
+  .select {
     padding: 0.8rem 1rem;
     font-size: 0.95rem;
     border-radius: 0.75rem;
@@ -282,18 +287,76 @@
   box-shadow: 0 0 0 2px rgba(255, 200, 57, 1);
 }
 
-.nativePicker {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
+.dateInput,
+.timeInput {
   cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  z-index: 20;
-  color-scheme: light; /* Forces standard light picker UI for visibility */
+  color: #1e293b;
+  min-height: 3.6rem;
+}
+
+.dateInput::-webkit-calendar-picker-indicator,
+.timeInput::-webkit-calendar-picker-indicator {
+  display: none; /* Hide native icon since we use lucide icons */
+}
+
+.datePickerWrapper {
+  width: 100%;
+  display: block;
+}
+
+.customPopper {
+  z-index: 9999 !important;
+}
+
+.customPopper :global(.react-datepicker) {
+  font-family: inherit;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+  padding: 12px;
+  background-color: #ffffff;
+}
+
+.customPopper :global(.react-datepicker__header) {
+  background-color: #ffffff;
+  border-bottom: none;
+  padding-bottom: 8px;
+}
+
+.customPopper :global(.react-datepicker__day),
+.customPopper :global(.react-datepicker__time-list-item) {
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.customPopper :global(.react-datepicker__day:hover),
+.customPopper :global(.react-datepicker__time-list-item:hover) {
+  background-color: #f3f4f6 !important;
+  transform: scale(1.1);
+}
+
+.customPopper :global(.react-datepicker__day--selected),
+.customPopper :global(.react-datepicker__time-list-item--selected) {
+  background-color: #111827 !important;
+  color: #FFD23F !important;
+  font-weight: 700;
+}
+
+/* Fix horizontal scroll in time picker list */
+.customPopper :global(.react-datepicker__time-container),
+.customPopper :global(.react-datepicker__time-box),
+.customPopper :global(.react-datepicker__time-list) {
+  overflow-x: hidden !important;
+  border-radius: 8px; /* ensures scroll doesn't poke out of rounded corners */
+}
+
+/* Hide the ugly standard vertical/horizontal scrollbars for a cleaner look */
+.customPopper :global(.react-datepicker__time-list)::-webkit-scrollbar {
+  width: 4px;
+}
+.customPopper :global(.react-datepicker__time-list)::-webkit-scrollbar-thumb {
+  background-color: #e2e8f0;
+  border-radius: 4px;
 }
 
 .hasIcon {
@@ -382,7 +445,7 @@
     padding: 1rem 1rem;
     padding-left: 2.5rem;
   }
-  
+
   .counterLabel {
     font-size: 0.95rem;
   }
@@ -392,7 +455,7 @@
     height: 1.8rem;
     border-radius: 0.5rem;
   }
-  
+
   .counterValue {
     font-size: 1rem;
   }

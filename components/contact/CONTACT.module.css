@@ -414,8 +414,19 @@
 
 .contactItem { display:flex; gap:20px; align-items:flex-start; padding:20px 0; }
 .contactItem:last-of-type { padding-bottom: 0; }
-.contactImageWrap { margin-top: 0px; }
-.contactImage { border-radius: 12px; display:block; width:100%; height:auto; object-fit:cover; }
+.contactImageWrap { 
+  margin-top: 0px; 
+  overflow: hidden; 
+  border-radius: 12px; 
+}
+.contactImage { 
+  display: block; 
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; 
+  transform: scale(1.1); /* Slightly more zoom to hide persistent side borders */
+  transition: transform 0.3s ease;
+}
 
 /* Mobile: match the features page gap between navbar and pill */
 @media (max-width: 480px) {

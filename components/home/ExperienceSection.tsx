@@ -118,9 +118,9 @@ export default function ExperienceSection() {
               <div className={styles.content}>
                 <h3>Built for Teams</h3>
                 <p>Seamless group transportation for corporate events and daily commutes</p>
-                <button className={styles.learnMoreBtn}>
+                <a href="#contact" className={styles.learnMoreBtn}>
                   Learn More <ArrowRight size={18} />
-                </button>
+                </a>
               </div>
             </div>
           </div>
