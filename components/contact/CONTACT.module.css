@@ -15,7 +15,7 @@
   padding: 0 16px;
 }
 
-/* Remove default top section padding so header sits flush under navbar */
+/* Keep page content flush; nudge only the pill below the navbar */
 .contactPage {
   padding-top: 0;
 }
@@ -23,12 +23,15 @@
 .header {
   background-color: #2D3142;
   text-align: center;
-  min-height: 550px;
+  /* match About hero spacing (slightly reduced height) */
+  padding: 5.5rem 0 2.5rem;
+  margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: visible; /* allow descenders to show */
-  padding-bottom: 44px; /* extra room for tighter leading */
+  overflow: visible;
+  min-height: 580px !important;
+  height: 580px !important;
 }
 
 /* header gap handled globally; no in-file spacer */
@@ -42,77 +45,113 @@
   display: flex;
   justify-content: center;
   margin-bottom: 8px; /* reduced so text sits closer to pill (pill position unchanged) */
+  margin-top: 0;
+  /* visual nudge only: translate preserves header height */
+  transform: translateY(56px);
 }
 
-.ctaImg {
-  display: block;
-  width: 130px;
-  height: 46px;
-  border-radius: 100px;
-  border: 1px solid rgba(255,210,63,0.3);
-  background: linear-gradient(180deg, rgba(255,210,63,0.15) 0%, rgba(255,210,63,0.08) 100%);
-  object-fit: cover;
-}
-
-/* When using the HTML pill, center its text and make it white */
 .ctaImg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0.24rem 0.45rem;
+  border-radius: 9999px;
+  background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%);
+  border: 1px solid rgba(255,210,63,0.3);
   color: #ffffff;
+  font-size: 1rem;
   font-weight: 700;
-  font-size: 13px;
   line-height: 1;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 5;
+  margin-top: calc(152px - var(--navbar-height) - 4px) !important;
+  transform: translateY(10px) !important;
+}
+
+@media (max-width: 480px) {
+  .ctaImg {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0rem 0.1rem !important;
+    min-height: 44px;
+    line-height: 1 !important;
+    white-space: normal !important;
+    text-align: center !important;
+    margin-top: calc(152px - var(--navbar-height) - 4px) !important;
+    transform: translateY(10px) !important;
+  }
+}
+
+@media (min-width: 481px) {
+  /* match About/Features desktop gap between navbar and badge by shifting header up */
+  .header {
+    margin-top: 0;
+  }
+  /* keep pill itself flush inside the header container */
+  .ctaImg { margin-top: 0 !important; }
 }
 
 .title {
-  margin: 28px 0 0; /* move title further down from the pill */
-  line-height: 1; /* restore safe leading */
-}
 
+/* Reapply mobile hero overrides to match Features/About mobile spacing */
+@media (max-width: 480px) {
+  .header { min-height: 520px !important; }
+  /* preserve visual pill nudge used on desktop for parity */
+  .ctaWrap { transform: translateY(80px); }
+  /* ensure heading uses the same heading font, weight and gold gradient on mobile */
+  .title, .line1, .line2 { font-family: var(--font-heading) !important; font-weight: 900 !important; }
+  .line2 {
+    background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+}
+  margin: 0 0 1.5rem 0;
+  line-height: 1;
+  text-align: center;
+  transform: translateY(-8px);
+}
 .line1 {
   display: block;
-  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  font-family: var(--font-heading);
   font-weight: 900;
-  font-size: clamp(28px, 6.5vw, 64px);
+  font-size: 4.5rem;
   color: #ffffff;
-  letter-spacing: -2px;
-  margin-top: 12px; /* move only the first line downward */
-  margin-bottom: -18px; /* tighten gap between lines */
-  line-height: 1;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+  transform: translateY(10px);
 }
-
 .line2 {
   display: block;
-  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  font-family: var(--font-heading);
   font-weight: 900;
-  font-size: clamp(28px, 6.5vw, 64px);
-  letter-spacing: -2px;
-  background: linear-gradient(90deg, #FED23F 0%, #FFA726 100%);
+  font-size: 4.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%);
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-  margin-top: 0;
-  line-height: 1; /* match first line */
   display: inline-block;
-  transform: translateY(-65px); /* pull second line closer to first line */
-  -webkit-transform: translateY(-65px);
+  transform: translateY(-8px);
 }
 
 .lead {
-  color: rgba(255,255,255,0.75);
-  margin: -15px auto 0 auto;
-  width: 671px; /* spec: 671px */
-  max-width: 100%;
-  font-size: 20px; /* spec: 20px */
-  line-height: 30px; /* spec: 30px */
-  font-weight: 400; /* spec: 400 */
+  color: rgba(255,255,255,0.5);
+  margin: 0 auto 0;
+  max-width: 48rem;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  font-weight: 400;
   text-align: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
+  /* visual nudge down without changing header height */
+  transform: translateY(-8px);
 }
 
 .leadFirst {
@@ -220,7 +259,7 @@
   margin-top: 8px;
   border: 1px solid #eef2f6;
   border-radius: 14px;
-  font-size: 14px;
+  font-size: 13px;
   background: #fbfdff;
   box-sizing: border-box;
 }
@@ -231,7 +270,7 @@
   margin-top: 8px;
   border: 1px solid #eef2f6;
   border-radius: 14px;
-  font-size: 14px;
+  font-size: 13px;
   background: #fbfdff;
   box-sizing: border-box;
   height: 48px;
@@ -244,12 +283,14 @@
 
 .form input {
   height: 48px;
+  font-size: 13px;
 }
 
 .form textarea {
   min-height: 140px;
   padding-top: 12px;
   padding-bottom: 12px;
+  font-size: 13px;
 }
 
 .formRow {
@@ -272,7 +313,7 @@
   color: #08121A;
   border: none;
   padding: 14px 20px;
-  border-radius: 28px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 800;
   box-shadow: 0 12px 30px rgba(255, 153, 51, 0.18);
@@ -324,6 +365,25 @@
   border: 1px solid rgba(2,6,23,0.04);
   align-self: flex-start; /* keep card width to content instead of stretching */
 }
+.tabCard { position: relative; }
+
+/* sliding highlight under the selected tab */
+.tabSlider {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  height: calc(100% - 12px);
+  width: 50%;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #FED23F 0%, #FFA726 100%);
+  box-shadow: 0 6px 16px rgba(249,115,22,0.12);
+  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  will-change: transform;
+  z-index: 0;
+}
+
+.formTabs { position: relative; z-index: 1; }
+.tab { position: relative; z-index: 2; }
 .tab { background: transparent; border: none; padding: 8px 14px; border-radius: 18px; font-weight:700; color:#334155; cursor:pointer; }
 .tab:hover { background:#fcfbf4; }
 .tab.active, .tab[aria-selected="true"] { background: linear-gradient(180deg, #FFD23F 0%, #FFA726 100%); color:#08121A; box-shadow: 0 6px 16px rgba(249,115,22,0.12); border-radius: 18px; }
@@ -354,20 +414,8 @@
 
 .contactItem { display:flex; gap:20px; align-items:flex-start; padding:20px 0; }
 .contactItem:last-of-type { padding-bottom: 0; }
-.contactImageWrap { 
-  margin-top: 12px; 
-  overflow: hidden; 
-  border-radius: 12px;
-}
-.contactImage { 
-  border-radius: 12px; 
-  display:block; 
-  width:100%; 
-  height:auto; 
-  object-fit:cover;
-  transform: scale(1.1);
-  transform-origin: center;
-}
+.contactImageWrap { margin-top: 0px; }
+.contactImage { border-radius: 12px; display:block; width:100%; height:auto; object-fit:cover; }
 
 /* Mobile: match the features page gap between navbar and pill */
 @media (max-width: 480px) {
@@ -376,6 +424,18 @@
     min-height: auto;
     padding-top: 0;
     margin-bottom: 0;
+
+/* Ensure mobile uses the same heading family, weight and gold gradient as desktop */
+@media (max-width: 480px) {
+  .title, .line1, .line2 { font-family: var(--font-heading) !important; font-weight: 900 !important; }
+  .line2 {
+    background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+}
     /* position header so pill sits at same visual gap as Services (adjustable) */
     margin-top: calc(-1 * var(--navbar-height) + 3rem) !important;
     padding-bottom: 1rem;
@@ -386,10 +446,29 @@
   /* Make contact items' text align to the top on small screens too */
   .contactItem > div:nth-child(2) {
     justify-content: flex-start;
+    padding-top: 0; /* avoid extra top padding on mobile so text aligns with icon */
   }
 
-  /* Nudge contact label/text down slightly so it lines up with the icon top */
-  .contactItem > div:nth-child(2) { padding-top: 6px; }
+  /* Apply desktop visual nudges on mobile as well */
+  .ctaWrap {
+    /* same visual-only nudge as desktop */
+    transform: translateY(96px);
+  }
+
+  .ctaImg { z-index: 5; }
+
+  .title { transform: translateY(56px); }
+  .line1 { transform: translateY(20px); }
+  .lead { transform: translateY(24px); }
+
+  /* Make the tab slider behave the same on mobile */
+  .tabCard { position: relative; }
+  .tabSlider { left: 6px; width: 50%; top: 6px; }
+
+  /* Use same icon offset as desktop for alignment */
+  .iconWrap { transform: translateY(6px); }
+
+  .iconWrap { transform: translateY(4px); }
 }
 
 /* Force each contact row's content block to follow design dimensions
@@ -400,6 +479,7 @@
 .contactItem {
   gap: 16px;
   padding: 12px 0; /* increase vertical spacing between contact rows */
+  align-items: flex-start; /* ensure icon and text start on same baseline */
 }
 .contactItem > div:nth-child(2) {
   display: flex;
@@ -425,6 +505,8 @@
   justify-content: center;
   box-shadow: 0 10px 28px rgba(2, 6, 23, 0.06);
   box-sizing: border-box;
+  transform: translateY(6px);
+  will-change: transform;
 }
 
 .iconWrap img {
@@ -458,26 +540,30 @@
 .officeTitle { color: #2D3142; margin: 0 0 12px; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; font-size: 36px; font-weight: 800; }
 .officeSubtitle { color: #6B7280; margin: 0; font-size: 16px; line-height: 1.5; }
 
-.officeGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 64px; }
+.officeGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 
 .officeCard {
   text-align: left;
   background: #fff;
   border: 1px solid rgba(243,244,246,1);
   border-radius: 24px;
-  padding: 28px 24px;
+  padding: 20px 18px;
   transition: transform .25s, box-shadow .25s;
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
 }
 .officeCard:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
 
 /* All office cards use the same padding so internal line gaps match Pune */
 
-.officeIconWrap { width: 56px; height: 56px; margin: 0 0 12px 0; display:flex; align-items:center; justify-content:center; border-radius:16px; background: linear-gradient(135deg,#fff9e6 0%,#fff3cc 100%); }
+.officeIconWrap { width: 56px; height: 56px; margin: 0; display:flex; align-items:center; justify-content:center; border-radius:16px; background: linear-gradient(135deg,#fff9e6 0%,#fff3cc 100%); flex-shrink: 0; padding-top: 6px; }
 .officeIconWrap svg { width: 24px; height: 24px; display:block }
 
-.officeCity { color: #2D3142; margin: 0 0 4px; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; font-size: 18px; font-weight: 700; }
-.officeAddress { color: #6B7280; margin: 0 0 4px; font-size: 14px; line-height: 1.4; }
+.officeCity { color: #2D3142; margin: 0 0 2px 0; padding-top: 0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; font-size: 18px; font-weight: 700; line-height: 1; }
+.officeAddress { color: #6B7280; margin: 0 0 2px; font-size: 14px; line-height: 1.4; }
 .officePhone {
   color: #2D3142;
   margin: 0;
@@ -490,6 +576,14 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+/* Desktop: left-aligned card layout */
+@media (min-width: 881px) {
+  .officeIconWrap { margin: 0 0 8px 0; flex-shrink: 0; }
+  .officeCity { margin: 0 0 2px 0; }
+  .officeAddress { margin: 0 0 2px 0; }
+  .officePhone { width: auto; height: auto; overflow: visible; }
 }
 
 /* FAQ styles */
@@ -582,7 +676,7 @@
 
 /* Slightly reduce hero vertical size on tablets to improve visual balance */
 @media (max-width: 1024px) {
-  .header { min-height: 460px; }
+  .header { min-height: 420px; }
 }
 
 /* Avoid 3-line split: group connector + final phrase up to slightly larger tablet widths */
@@ -619,6 +713,9 @@
   .officeCard {
     padding: 20px;
     border-radius: 16px;
+    text-align: left;
+    flex-direction: row;
+    align-items: flex-start;
   }
 
   .officeSection {
@@ -782,17 +879,17 @@
   .formTabs { width: 100%; }
 
   .formBody { gap: 12px; }
-  .form input, .form textarea { font-size: 14px; padding: 10px 12px; }
+  .form input, .form textarea { font-size: 13px; padding: 10px 12px; }
   .primaryBtn { padding: 12px 16px; font-size: 15px; }
 
   /* Aside / contact card layout adjustments */
   .aside { order: 2; }
-  .contactImageWrap { display: flex; justify-content: center; }
+  .contactImageWrap { display: flex; justify-content: center; margin-top: 0px; }
 
   /* Office grid -> single column, compact spacing */
   .officeGrid { grid-template-columns: 1fr; gap: 18px; }
   .officeCard { padding: 18px; border-radius: 16px; }
-  .officeIconWrap { width: 48px; height: 48px; margin-bottom: 12px; }
+  .officeIconWrap { width: 48px; height: 48px; margin-bottom: 12px; margin-top: -6px; }
   .officeIconWrap svg { width: 20px; height: 20px; }
 
   .officeCity { font-size: 16px; }
@@ -818,8 +915,8 @@
     align-items: start;
     padding: 18px; /* restore card vertical padding/length */
   }
-  .officeIconWrap { grid-column: 1; grid-row: 1 / span 3; margin: 0; align-self: start; }
-  .officeCity { grid-column: 2; grid-row: 1; margin: 0; }
+  .officeIconWrap { grid-column: 1; grid-row: 1 / span 3; margin: 0; align-self: start; padding-top: 6px; }
+  .officeCity { grid-column: 2; grid-row: 1; margin: -18px 0 0 0; padding-top: 0; }
   .officeAddress { grid-column: 2; grid-row: 2; margin: 0; }
   .officePhone { grid-column: 2; grid-row: 3; margin: 0; }
 
@@ -833,8 +930,8 @@
     align-items: start;
     padding: 18px;
   }
-  .officeGrid > .officeCard:nth-child(4) .officeIconWrap { grid-column: 1; grid-row: 1 / span 3; margin: 0; align-self: start; margin-top: 1px; }
-  .officeGrid > .officeCard:nth-child(4) .officeCity { grid-column: 2; grid-row: 1; margin: 0; align-self: start; }
+  .officeGrid > .officeCard:nth-child(4) .officeIconWrap { grid-column: 1; grid-row: 1 / span 3; margin: 0; align-self: start; padding-top: 6px; }
+  .officeGrid > .officeCard:nth-child(4) .officeCity { grid-column: 2; grid-row: 1; margin: -18px 0 0 0; padding-top: 0; align-self: start; }
   .officeGrid > .officeCard:nth-child(4) .officeAddress { grid-column: 2; grid-row: 2; margin: 0; }
   .officeGrid > .officeCard:nth-child(4) .officePhone { grid-column: 2; grid-row: 3; margin: 0; }
 
@@ -947,3 +1044,343 @@
     .title .line2 { transform: translateY(-18px) !important; -webkit-transform: translateY(-18px) !important; }
     .lead { margin-top: 4px !important; }
   }
+
+/* Final override: ensure Contact mobile hero exactly matches Features mobile heading/spacing */
+@media (max-width: 480px) {
+  .ctaWrap { transform: none !important; margin-bottom: 12px !important; }
+
+  .title, .line1, .line2 {
+    font-family: var(--font-heading) !important;
+    font-weight: 900 !important;
+    font-size: 32px !important;
+    line-height: 40px !important;
+    letter-spacing: -0.02em !important;
+    text-align: center !important;
+    color: #ffffff !important;
+    transform: none !important;
+    margin: 0 0 1rem 0 !important;
+    display: block !important;
+  }
+
+  .line1 { margin-bottom: 0.25rem !important; }
+  .line2 {
+    background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+    display: block !important;
+  }
+
+  .lead {
+    color: rgba(255,255,255,0.5) !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
+    transform: none !important;
+    margin-top: 8px !important;
+    max-width: 48rem !important;
+  }
+}
+
+/* Wide mobile compatibility block: use clamps and viewport scaling so the hero
+   adapts across all phone widths without overlap. This block is intentionally
+   permissive and last in the file so it wins against earlier fragmented rules. */
+@media (max-width: 600px) {
+  .header {
+    min-height: min(420px, 60vh) !important;
+    padding-top: clamp(1.5rem, 8vw, 4rem) !important;
+    padding-bottom: clamp(1rem, 4vw, 3rem) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .ctaWrap { transform: translateY(48px) !important; margin-bottom: 8px !important; padding-top: 0 !important; }
+  .ctaImg { padding: 0.7rem 2rem !important; font-size: 1rem !important; white-space: normal !important; }
+
+  /* Responsive heading that scales smoothly from small phones to large phones/tablets */
+  .title {
+    font-family: var(--font-heading) !important;
+    font-weight: 900 !important;
+    font-size: clamp(28px, 7.5vw, 48px) !important;
+    line-height: clamp(34px, 8.5vw, 56px) !important;
+    letter-spacing: var(--tracking-tight) !important;
+    text-align: center !important;
+    color: #ffffff !important;
+    transform: none !important;
+    margin: 0 0 1rem 0 !important;
+    display: block !important;
+  }
+
+  .line1, .line2 { display: block !important; }
+  .line1 { margin-bottom: 0.25rem !important; }
+  .line2 {
+    display: block !important;
+    background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+  }
+
+  .lead {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: clamp(14px, 3.6vw, 18px) !important;
+    line-height: 1.6 !important;
+    transform: none !important;
+    margin-top: 0.75rem !important;
+    max-width: 42rem !important;
+    padding: 0 12px !important;
+  }
+
+  /* Ensure icons and other minor offsets don't push lines out of place */
+  .iconWrap { transform: none !important; margin-top: 6px !important; }
+}
+
+/* Match About page pill sizing and text on mobile */
+@media (max-width: 480px) {
+  .ctaImg {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    /* keep padding unchanged — only increase font-size and explicit dimensions */
+    padding: 0.5rem 1.5rem !important; /* unchanged from About */
+    font-size: 1.125rem !important; /* 18px — increased */
+    line-height: 1 !important;
+    font-weight: 800 !important;
+    min-height: 52px !important; /* larger pill height */
+    min-width: 160px !important; /* ensure pill appears wider on mobile */
+    border: 1px solid rgba(255,210,63,0.38) !important;
+    border-radius: 9999px !important;
+    white-space: normal !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 22px rgba(2,6,23,0.07) !important;
+    margin-bottom: 2rem !important;
+    background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.18) 6.78%, rgba(255, 210, 63, 0.09) 93.22%) !important;
+    position: relative !important;
+    z-index: 60 !important;
+  }
+}
+
+/* Strong mobile override: mirror desktop first-section (hero) styles on phones */
+@media (max-width: 480px) {
+  .header {
+    background-color: #2D3142 !important;
+    padding: 4rem 0 2.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    margin-top: 0 !important;
+    min-height: 420px !important;
+  }
+
+  .ctaWrap {
+    display: flex !important;
+    justify-content: center !important;
+    transform: none !important;
+    margin-bottom: 12px !important;
+  }
+
+  .ctaImg {
+    padding: 0.7rem 2rem !important;
+    border-radius: 9999px !important;
+    background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%) !important;
+    border: 1px solid rgba(255,210,63,0.3) !important;
+    color: #ffffff !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    position: relative !important;
+    z-index: 5 !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+/* Nudge the "Get In Touch" pill up slightly across viewports.
+   This final override is placed at the end so it wins over earlier rules. */
+.contactPage .header .ctaWrap { transform: translateY(40px) !important; margin-bottom: 8px !important; }
+
+@media (max-width: 600px) {
+  .contactPage .header .ctaWrap { transform: translateY(36px) !important; }
+}
+
+@media (max-width: 480px) {
+  .contactPage .header .ctaWrap { transform: translateY(56px) !important; }
+}
+
+  .title, .line1, .line2 {
+    font-family: var(--font-heading) !important;
+    font-weight: 900 !important;
+    font-size: 32px !important;
+    line-height: 40px !important;
+    letter-spacing: -0.02em !important;
+    text-align: center !important;
+    color: #ffffff !important;
+    transform: none !important;
+    margin: 0 0 1.5rem 0 !important;
+    display: block !important;
+  }
+
+  .line1 { margin-bottom: 0.25rem !important; }
+  .line2 {
+    background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+    display: block !important;
+  }
+
+  .lead {
+    color: rgba(255,255,255,0.5) !important;
+    max-width: 48rem !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Final, high-specificity overrides for pill placement on phones */
+@media (max-width: 600px) {
+  .contactPage .header .ctaWrap,
+  section.contactPage .header .ctaWrap {
+    transform: translateY(48px) !important;
+    margin-bottom: 4px !important;
+  }
+
+  .contactPage .header .ctaImg,
+  section.contactPage .header .ctaImg {
+    margin-top: 0 !important;
+  }
+}
+
+/* Nudge heading down slightly on mobile for better visual spacing */
+@media (max-width: 480px) {
+  .contactPage .title, section.contactPage .title {
+    transform: translateY(24px) !important;
+    margin-top: 18px !important;
+  }
+}
+/* Apply About page first-section specs to Contact first section (desktop + mobile)
+   - height/spacing, heading font/size/gradient, and subtitle styles */
+section.contactPage > header,
+.contactPage > .header {
+  background-color: rgba(45, 49, 66, 1) !important;
+  text-align: center !important;
+  padding: 10rem 0 6rem !important; /* same as About .section */
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+/* Pill: ensure same baseline spacing as About */
+section.contactPage .ctaImg,
+.contactPage .ctaImg {
+  padding: 0.7rem 2rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border-radius: 9999px !important;
+  background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%) !important;
+  border: 1px solid rgba(255,210,63,0.3) !important;
+  color: #ffffff !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Heading: mirror About .heading */
+.contactPage .title,
+.contactPage .line1,
+.contactPage .line2,
+section.contactPage .title,
+section.contactPage .line1,
+section.contactPage .line2 {
+  font-family: var(--font-heading) !important;
+  font-weight: 900 !important;
+  color: #ffffff !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.contactPage .line1,
+.contactPage .line2,
+section.contactPage .line1,
+section.contactPage .line2 {
+  display: block !important;
+}
+
+.contactPage .title { margin-bottom: 1.5rem !important; }
+
+.contactPage .line1,
+.contactPage .line2,
+section.contactPage .line1,
+section.contactPage .line2 {
+  font-size: 4.5rem !important; /* desktop hero size */
+}
+
+.contactPage .line2,
+section.contactPage .line2 {
+  background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  display: inline-block !important;
+}
+
+/* Lead / subtitle: mirror About .subtitle */
+.contactPage .lead,
+section.contactPage .lead {
+  font-size: 1.25rem !important;
+  color: rgba(255,255,255,0.5) !important;
+  line-height: 1.6 !important;
+  max-width: 48rem !important;
+  margin: 0 auto !important;
+}
+
+/* Mobile adjustments matching About's mobile rules */
+@media (max-width: 768px) {
+  section.contactPage > header,
+  .contactPage > .header {
+    padding: 6rem 1.5rem 3rem !important;
+  }
+
+  .contactPage .line1,
+  .contactPage .line2,
+  section.contactPage .line1,
+  section.contactPage .line2 {
+    font-size: 2.7rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .contactPage .lead,
+  section.contactPage .lead {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/* Extra final override to nudge the Get In Touch pill further up (smaller translateY = moved up)
+   Placed at very end to ensure it overrides earlier rules. Adjust values slightly per breakpoint. */
+.contactPage .header .ctaWrap,
+section.contactPage .header .ctaWrap {
+  transform: translateY(12px) !important;
+  margin-bottom: 8px !important;
+}
+
+@media (max-width: 600px) {
+  .contactPage .header .ctaWrap,
+  section.contactPage .header .ctaWrap {
+    transform: translateY(8px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .contactPage .header .ctaWrap,
+  section.contactPage .header .ctaWrap {
+    transform: translateY(28px) !important;
+  }
+}

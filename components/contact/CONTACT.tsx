@@ -32,8 +32,13 @@ export default function CONTACT() {
       <div className={styles.container}>
         <div className={styles.grid}>
           <form id="booking" className={styles.form} onSubmit={(e) => e.preventDefault()}>
-            <div className={styles.formHeaderRow}>
+              <div className={styles.formHeaderRow}>
               <div className={styles.tabCard}>
+                <div
+                  className={styles.tabSlider}
+                  aria-hidden
+                  style={{ transform: formType === 'driver' ? 'translateX(100%)' : 'translateX(0)' }}
+                />
                 <div className={styles.formTabs} role="tablist" aria-label="Contact type">
                   <button
                     type="button"
