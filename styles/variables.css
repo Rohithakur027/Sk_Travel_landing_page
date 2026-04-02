@@ -1,0 +1,140 @@
+/* =========================================
+   SK Voyage Design System — CSS Design Tokens
+   ========================================= */
+
+:root {
+  /* ─── Primary Colors ─────────────────────
+     Orange → Golden Amber gradient palette   */
+  --color-primary: #f97316; /* Core orange */
+  --color-primary-dark: #ea6c0a; /* Deeper orange */
+  --color-primary-darker: #c2550a; /* Darkest shade */
+  --color-primary-light: #fb923c; /* Soft orange */
+  --color-primary-lighter: #fcd34d; /* Golden yellow */
+  --color-primary-50: #fff7ed; /* Tint background */
+
+  /* ─── Neutral Colors ─────────────────────
+     Cool grays → dark navy                   */
+  --color-white: #ffffff;
+  --color-gray-50: #f8f9fa;
+  --color-gray-100: #f1f3f5;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #adb5bd;
+  --color-gray-500: #868e96;
+  --color-gray-600: #495057;
+  --color-gray-700: #343a40;
+  --color-gray-800: #212529;
+  --color-gray-900: #0f1117; /* Near-black navy */
+  --color-black: #0a0b0d;
+
+  /* ─── Semantic Colors ────────────────────  */
+  --color-success: #22c55e; /* Green  */
+  --color-success-light: #dcfce7;
+  --color-error: #ef4444; /* Red    */
+  --color-error-light: #fee2e2;
+  --color-warning: #f59e0b; /* Amber  */
+  --color-warning-light: #fef3c7;
+  --color-info: #3b82f6; /* Blue   */
+  --color-info-light: #dbeafe;
+
+  /* ─── Typography ─────────────────────────  */
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-heading: "Outfit", "Inter", system-ui, sans-serif;
+  --font-mono: "Fira Code", "Courier New", monospace;
+
+  /* Type scale — matches SK Voyage spec      */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-md: 1.125rem; /* 18px */
+  --text-lg: 1.375rem; /* 22px  – H4 */
+  --text-xl: 1.875rem; /* 30px  – H3 */
+  --text-2xl: 2.25rem; /* 36px  – H2 */
+  --text-3xl: 2.625rem; /* 42px  – H1 */
+  --text-display: 3rem; /* 48px  – Display / Hero */
+
+  /* Line heights */
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  /* Font weights */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+
+  /* Letter spacing */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+
+  /* ─── Spacing ────────────────────────────  */
+  --space-1: 0.25rem; /* 4px  */
+  --space-2: 0.5rem; /* 8px  */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-7: 1.75rem; /* 28px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-14: 3.5rem; /* 56px */
+  --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
+  --space-32: 8rem; /* 128px */
+
+  /* ─── Border Radius ──────────────────────  */
+  --radius-none: 0;
+  --radius-xs: 0.125rem; /* 2px  */
+  --radius-sm: 0.25rem; /* 4px  */
+  --radius-md: 0.5rem; /* 8px  */
+  --radius-lg: 0.75rem; /* 12px */
+  --radius-xl: 1rem; /* 16px */
+  --radius-2xl: 1.5rem; /* 24px */
+  --radius-3xl: 2rem; /* 32px */
+  --radius-full: 9999px;
+
+  /* ─── Shadows ────────────────────────────  */
+  /* Normal shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* Heavy / elevated shadows */
+  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.18);
+  --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.24);
+  --shadow-3xl: 0 32px 80px rgba(0, 0, 0, 0.32);
+
+  /* Colored primary shadow (orange glow) */
+  --shadow-primary: 0 4px 16px rgba(249, 115, 22, 0.3);
+  --shadow-primary-lg: 0 8px 32px rgba(249, 115, 22, 0.4);
+
+  /* ─── Transitions ────────────────────────  */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-spring: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ─── Z-Index Scale ──────────────────────  */
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* ─── Layout ─────────────────────────────  */
+   --container-max-width: 1480px;
+   --container-padding: var(--space-6);
+   --navbar-height: 5rem;
+  --section-padding-y: var(--space-20);
+}

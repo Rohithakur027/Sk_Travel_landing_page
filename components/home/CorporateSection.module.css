@@ -1,0 +1,181 @@
+.section {
+  padding: 7rem 0;
+  background-color: rgb(253, 255, 255);
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 0;
+  }
+}
+
+.inner {
+  max-width: 100%;
+  margin: 0 auto;
+  padding-inline: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .inner {
+    grid-template-columns: 1fr;
+    padding-inline: 2rem;
+    gap: 2rem;
+  }
+}
+
+/* ── Left column ── */
+.imgCol {
+  position: relative;
+}
+
+.imgWrapper {
+  position: relative;
+  width: 100%;
+  height: 35rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .imgWrapper {
+    height: 30rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .imgWrapper {
+    height: 22rem;
+  }
+}
+
+.img {
+  object-fit: cover;
+}
+
+/* Floating "10+ Years" badge */
+.badge {
+  position: absolute;
+  top: -4rem;
+  left: 1rem;
+  background-color: #fbbf24;
+  border-radius: 1.25rem;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.4);
+}
+
+.badgeYears {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1;
+}
+
+.badgeSub {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+@media (max-width: 768px) {
+  .badge {
+    top: -2.5rem;
+    left: 0.5rem;
+    padding: 1rem 1rem;
+    border-radius: 1rem;
+    gap: 0.15rem;
+  }
+  .badgeYears {
+    font-size: 1.25rem;
+  }
+  .badgeSub {
+    font-size: 0.75rem;
+  }
+}
+
+/* ── Right column ── */
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.eyebrow {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fbbf24;
+}
+
+.heading {
+  font-family: var(--font-sans);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(45, 49, 66, 1);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 2.25rem;
+  }
+}
+
+.body {
+  font-size: 1.1rem;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Feature checklist */
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0.7rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.checkIcon {
+  flex-shrink: 0;
+}
+
+/* CTA button */
+.learnMoreBtn {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0.9rem 2rem;
+  border: 2px solid rgba(255, 210, 63, 1);
+  border-radius: 0.75rem;
+  background-color: transparent;
+  color: rgba(45, 49, 66, 1);
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.learnMoreBtn:hover {
+  background-color: rgba(255, 210, 63, 0.2);
+  color: rgba(45, 49, 66, 1);
+}
