@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { MapPin, Calendar, Clock, Car, Users, ArrowRight } from "lucide-react";
+import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus } from "lucide-react";
 import styles from "./BookingForm.module.css";
 
 // Local sub-components to reduce dependencies
@@ -69,21 +69,7 @@ const vehicleOptions = [
   { value: "sedan", label: "Sedan" },
   { value: "suv", label: "SUV" },
   { value: "luxury", label: "Luxury" },
-];
-
-const passengerOptions = [
-  { value: "", label: "Number of passengers" },
-  { value: "1", label: "1 Passenger" },
-  { value: "2", label: "2 Passengers" },
-  { value: "3", label: "3 Passengers" },
-  { value: "4", label: "4 Passengers" },
-  { value: "5", label: "5+ Passengers" },
-];
-
-const optionOptions = [
-  { value: "", label: "Select option" },
-  { value: "one-way", label: "One Way" },
-  { value: "round-trip", label: "Round Trip" },
+  { value: "traveller", label: "Traveller" },
 ];
 
 export default function BookingForm() {
@@ -92,11 +78,12 @@ export default function BookingForm() {
   );
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [passengers, setPassengers] = useState(1);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Proceed to search or next step
-    console.log("Search initiated");
+    console.log("Search initiated", { bookingType, date, time, passengers });
   };
 
   return (
@@ -129,74 +116,102 @@ export default function BookingForm() {
       </div>
 
       <form onSubmit={handleSubmit}>
-        <div className={styles.grid}>
-          {/* Row 1 */}
+        <div className={`${styles.grid} ${
+          bookingType === "instant" ? styles.instantGrid : styles.scheduledGrid
+        }`}>
+          {/* Row 1: Locations */}
+          <Input
+            id="pickup"
+            placeholder="Pickup Location"
+            leftIcon={<Navigation size={20} />}
+          />
           <Input
             id="destination"
             placeholder="Enter your destination"
             leftIcon={<MapPin size={20} />}
           />
-          <Select
-            id="option"
-            options={optionOptions}
-            leftIcon={<MapPin size={20} />}
-          />
-          <div style={{ position: "relative" }}>
-            <Input
-              id="date-display"
-              type="text"
-              placeholder="Date"
-              value={date}
-              readOnly
-              leftIcon={<Calendar size={20} />}
-            />
-            <input
-              id="date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              onClick={(e) => {
-                try {
-                  e.currentTarget.showPicker();
-                } catch (err) {}
-              }}
-              className={styles.nativePicker}
-            />
-          </div>
 
-          {/* Row 2 */}
-          <div style={{ position: "relative" }}>
-            <Input
-              id="time-display"
-              type="text"
-              placeholder="Time"
-              value={time}
-              readOnly
-              leftIcon={<Clock size={20} />}
-            />
-            <input
-              id="time"
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              onClick={(e) => {
-                try {
-                  e.currentTarget.showPicker();
-                } catch (err) {}
-              }}
-              className={styles.nativePicker}
-            />
-          </div>
+          {/* Row 2: Date & Time - Only for Scheduled */}
+          {bookingType === "scheduled" && (
+            <>
+              <div style={{ position: "relative" }}>
+                <Input
+                  id="date-display"
+                  type="text"
+                  placeholder="Date"
+                  value={date}
+                  readOnly
+                  leftIcon={<Calendar size={20} />}
+                />
+                <input
+                  id="date"
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  onClick={(e) => {
+                    try {
+                      e.currentTarget.showPicker();
+                    } catch (err) {}
+                  }}
+                  className={styles.nativePicker}
+                />
+              </div>
+
+              <div style={{ position: "relative" }}>
+                <Input
+                  id="time-display"
+                  type="text"
+                  placeholder="Time"
+                  value={time}
+                  readOnly
+                  leftIcon={<Clock size={20} />}
+                />
+                <input
+                  id="time"
+                  type="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  onClick={(e) => {
+                    try {
+                      e.currentTarget.showPicker();
+                    } catch (err) {}
+                  }}
+                  className={styles.nativePicker}
+                />
+              </div>
+            </>
+          )}
+
+          {/* Vehicle & Passengers */}
           <Select
             id="vehicleType"
             options={vehicleOptions}
             leftIcon={<Car size={20} />}
           />
-          <Select
-            id="passengers"
-            options={passengerOptions}
-            leftIcon={<Users size={20} />}
-          />
+          
+          <div className={styles.inputGroup}>
+            <div className={styles.counterWrapper}>
+              <div className={styles.iconLeft}><Users size={20} /></div>
+              <span className={styles.counterLabel}>Passengers</span>
+              <div className={styles.counterControls}>
+                <button 
+                  type="button" 
+                  onClick={() => setPassengers(Math.max(1, passengers - 1))}
+                  className={styles.counterBtn}
+                >
+                  <Minus size={18} />
+                </button>
+                <span className={styles.counterValue}>{passengers}</span>
+                <button 
+                  type="button" 
+                  onClick={() => setPassengers(Math.min(10, passengers + 1))}
+                  className={styles.counterBtn}
+                >
+                  <Plus size={18} />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Submit Button */}
