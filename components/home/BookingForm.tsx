@@ -394,7 +394,7 @@ export default function BookingForm() {
             </>
           ) : (
             <>
-              Search Available Rides
+              Submit Enquiry
               <ArrowRight size={20} />
             </>
           )}
