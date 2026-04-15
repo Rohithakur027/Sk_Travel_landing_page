@@ -226,7 +226,7 @@ export default function CONTACT() {
             </div>
 
             <div className={styles.contactImageWrap}>
-              <Image src="/images/classydriver.png" alt="vehicle" width={360} height={220} className={styles.contactImage} />
+              <Image src="/images/classydriver.png" alt="vehicle" width={460} height={220} className={styles.contactImage} />
             </div>
           </aside>
         </div>

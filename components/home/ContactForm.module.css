@@ -120,8 +120,8 @@
 }
 
 .btnDisabled {
-  background: #e9ecef !important;
-  color: #adb5bd !important;
+  background: rgba(255, 200, 57, 0.9) !important;
+  color: #111827 !important;
   cursor: not-allowed !important;
   transform: none !important;
   box-shadow: none !important;

@@ -13,16 +13,16 @@ import styles from "./ServicesSection.module.css";
 
 const MAIN_SERVICES = [
   {
-    title: "Employee Shuttle Service",
+    title: "Airport Transfers",
     description:
-      "Provide your employees with a reliable and comfortable daily commute. Our shuttle services are designed to maximize productivity and employee satisfaction.",
-    iconSrc: "/Container (5).png",
-    image: "/images/corporateshuttles.jpeg",
+      "Never miss a flight again. Our airport transfer service provides punctual, stress-free transportation with real-time flight tracking.",
+    iconSrc: "/Container (4).png",
+    image: "/images/airpot.jpeg",
     features: [
-      "Fixed route scheduling",
-      "GPS tracked vehicles",
-      "Professional drivers",
-      "Employee app access",
+      "Flight tracking",
+      "Meet & greet service",
+      "24/7 availability",
+      "Luggage assistance",
     ],
   },
   {
@@ -39,6 +39,19 @@ const MAIN_SERVICES = [
     ],
   },
   {
+    title: "Corporate Shuttle Service",
+    description:
+      "Provide your employees with a reliable and comfortable daily commute. Our shuttle services are designed to maximize productivity and employee satisfaction.",
+    iconSrc: "/Container (5).png",
+    image: "/images/corporateshuttles.jpeg",
+    features: [
+      "Fixed route scheduling",
+      "GPS tracked vehicles",
+      "Professional drivers",
+      "Employee app access",
+    ],
+  },
+  {
     title: "Event Transportation",
     description:
       "Seamless group transportation for conferences, corporate events, and special occasions. We coordinate every detail to ensure your event runs smoothly.",
@@ -51,19 +64,7 @@ const MAIN_SERVICES = [
       "Flexible scheduling",
     ],
   },
-  {
-    title: "Airport Transfers",
-    description:
-      "Never miss a flight again. Our airport transfer service provides punctual, stress-free transportation with real-time flight tracking.",
-    iconSrc: "/Container (4).png",
-    image: "/images/airpot.jpeg",
-    features: [
-      "Flight tracking",
-      "Meet & greet service",
-      "24/7 availability",
-      "Luggage assistance",
-    ],
-  },
+  
 ];
 
 const ADDITIONAL_SERVICES = [
@@ -155,7 +156,7 @@ export default function ServicesSection() {
                         </li>
                     ))}
                   </ul>
-                  <Link href="/contact#booking" className={styles.quoteBtn}>Get Quote →</Link>
+                  <Link href="/contact#booking" className={styles.quoteBtn}>Enquire Now →</Link>
                 </div>
               </div>
             ))}
@@ -193,7 +194,7 @@ export default function ServicesSection() {
             <span className={styles.ctaLine2}> transportation needs and get a</span>
             <span className={styles.ctaLine3}> customized quote</span>
           </p>
-          <Link href="/contact#booking" className={styles.ctaBtn}>Request a Quote →</Link>
+          <Link href="/contact#booking" className={styles.ctaBtn}>Send An Enquiry →</Link>
         </div>
       </section>
     </>

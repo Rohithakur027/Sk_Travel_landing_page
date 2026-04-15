@@ -50,11 +50,11 @@ export default function Footer() {
               <ChevronDown className={`${styles.chevron} ${openSection === 'services' ? styles.chevronOpen : ''}`} size={18} />
             </h4>
             <ul className={`${styles.linkList} ${openSection === 'services' ? styles.linkListOpen : ''}`}>
-              <li><Link href="#">Daily Commute</Link></li>
-              <li><Link href="#">Corporate Events</Link></li>
-              <li><Link href="#">Airport Transfers</Link></li>
-              <li><Link href="#">Group Transport</Link></li>
-              <li><Link href="#">Executive Service</Link></li>
+              <li><Link href="/services">Daily Commute</Link></li>
+              <li><Link href="/services">Corporate Events</Link></li>
+              <li><Link href="/services">Airport Transfers</Link></li>
+              <li><Link href="/services">Group Transport</Link></li>
+              <li><Link href="/services">Executive Service</Link></li>
             </ul>
           </div>
 
@@ -68,11 +68,11 @@ export default function Footer() {
               <ChevronDown className={`${styles.chevron} ${openSection === 'company' ? styles.chevronOpen : ''}`} size={18} />
             </h4>
             <ul className={`${styles.linkList} ${openSection === 'company' ? styles.linkListOpen : ''}`}>
-              <li><Link href="#">About Us</Link></li>
-              <li><Link href="#">Careers</Link></li>
-              <li><Link href="#">Blog</Link></li>
-              <li><Link href="#">Press</Link></li>
-              <li><Link href="#">Partners</Link></li>
+              <li><Link href="/about">About Us</Link></li>
+              <li><Link href="/contact">Careers</Link></li>
+              <li><Link href="/contact">Blog</Link></li>
+              <li><Link href="/contact">Press</Link></li>
+              <li><Link href="/contact">Partners</Link></li>
             </ul>
           </div>
 
@@ -86,11 +86,11 @@ export default function Footer() {
               <ChevronDown className={`${styles.chevron} ${openSection === 'support' ? styles.chevronOpen : ''}`} size={18} />
             </h4>
             <ul className={`${styles.linkList} ${openSection === 'support' ? styles.linkListOpen : ''}`}>
-              <li><Link href="#">Help Center</Link></li>
-              <li><Link href="#">Safety</Link></li>
-              <li><Link href="#">Terms of Service</Link></li>
-              <li><Link href="#">Privacy Policy</Link></li>
-              <li><Link href="#">Contact Us</Link></li>
+              <li><Link href="/contact">Help Center</Link></li>
+              <li><Link href="/about">Safety</Link></li>
+              <li><Link href="/">Terms of Service</Link></li>
+              <li><Link href="/">Privacy Policy</Link></li>
+              <li><Link href="/contact">Contact Us</Link></li>
             </ul>
           </div>
         </div>
