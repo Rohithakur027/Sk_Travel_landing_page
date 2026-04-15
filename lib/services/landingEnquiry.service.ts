@@ -24,7 +24,17 @@ export interface ScheduledEnquiryData extends BaseEnquiryData {
   time: string;
 }
 
-export type BookingEnquiryData = InstantEnquiryData | ScheduledEnquiryData;
+export interface SpecialBookingData {
+  type: 'special_booking';
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  company_name: string;
+  message: string;
+}
+
+export type BookingEnquiryData = InstantEnquiryData | ScheduledEnquiryData | SpecialBookingData;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -58,6 +68,7 @@ const SHEET_ID = process.env.GOOGLE_SHEET_ID ?? '';
 
 const INSTANT_TAB = 'Instant Bookings';
 const SCHEDULED_TAB = 'Scheduled Bookings';
+const SPECIAL_BOOKINGS_TAB = 'Special Bookings';
 
 /**
  * Appends one row to the correct tab based on booking type.
@@ -88,7 +99,7 @@ export async function appendToGoogleSheet(
       data.vehicle_type,
       data.passengers,
     ];
-  } else {
+  } else if (data.type === 'scheduled') {
     sheetTab = SCHEDULED_TAB;
     row = [
       submittedAt,
@@ -101,6 +112,17 @@ export async function appendToGoogleSheet(
       data.time ?? '',
       data.vehicle_type,
       data.passengers,
+    ];
+  } else {
+    sheetTab = SPECIAL_BOOKINGS_TAB;
+    row = [
+      submittedAt,
+      data.first_name,
+      data.last_name,
+      data.email,
+      data.phone,
+      data.company_name,
+      data.message,
     ];
   }
 
@@ -128,37 +150,51 @@ export async function sendTeamNotification(
   const submittedAt = getISTDateTime();
 
   // ── Subject ──────────────────────────────────────────────────────────────
-  const subject =
-    data.type === 'instant'
-      ? `New Instant Booking Enquiry — ${data.name} | ${data.vehicle_type}`
-      : `New Scheduled Booking — ${data.name} | ${(data as ScheduledEnquiryData).date} ${(data as ScheduledEnquiryData).time}`;
+  let subject: string;
+  if (data.type === 'instant') {
+    subject = `New Instant Booking Enquiry — ${data.name} | ${data.vehicle_type}`;
+  } else if (data.type === 'scheduled') {
+    subject = `New Scheduled Booking — ${data.name} | ${data.date} ${data.time}`;
+  } else {
+    subject = `NEW Special Booking Enquiry — ${data.first_name} ${data.last_name} | ${data.company_name}`;
+  }
 
   // ── HTML body ─────────────────────────────────────────────────────────────
-  const commonRows = `
-    <tr><td>Name</td><td>${data.name}</td></tr>
-    <tr><td>Email</td><td>${data.email}</td></tr>
-    <tr><td>Phone</td><td>${data.phone}</td></tr>
-    <tr><td>Pickup Location</td><td>${data.pickup_location}</td></tr>
-    <tr><td>Destination</td><td>${data.destination}</td></tr>
-    <tr><td>Vehicle Type</td><td>${data.vehicle_type}</td></tr>
-    <tr><td>Passengers</td><td>${data.passengers}</td></tr>
-  `;
+  const commonRows = data.type !== 'special_booking' 
+    ? `
+      <tr><td>Name</td><td>${(data as any).name}</td></tr>
+      <tr><td>Email</td><td>${data.email}</td></tr>
+      <tr><td>Phone</td><td>${data.phone}</td></tr>
+      <tr><td>Pickup Location</td><td>${(data as any).pickup_location}</td></tr>
+      <tr><td>Destination</td><td>${(data as any).destination}</td></tr>
+      <tr><td>Vehicle Type</td><td>${(data as any).vehicle_type}</td></tr>
+      <tr><td>Passengers</td><td>${(data as any).passengers}</td></tr>
+    `
+    : `
+      <tr><td>First Name</td><td>${data.first_name}</td></tr>
+      <tr><td>Last Name</td><td>${data.last_name}</td></tr>
+      <tr><td>Email</td><td>${data.email}</td></tr>
+      <tr><td>Phone</td><td>${data.phone}</td></tr>
+      <tr><td>Company Name</td><td>${data.company_name}</td></tr>
+      <tr><td>Message</td><td style="white-space:pre-wrap;">${data.message}</td></tr>
+    `;
 
   const scheduledRows =
     data.type === 'scheduled'
       ? `
     <tr style="background:#fff8e1;">
       <td><strong>Date</strong></td>
-      <td><strong>${(data as ScheduledEnquiryData).date}</strong></td>
+      <td><strong>${data.date}</strong></td>
     </tr>
     <tr style="background:#fff8e1;">
       <td><strong>Time</strong></td>
-      <td><strong>${(data as ScheduledEnquiryData).time}</strong></td>
+      <td><strong>${data.time}</strong></td>
     </tr>`
       : '';
 
   const bookingTypeLabel =
-    data.type === 'instant' ? 'Instant Booking' : 'Scheduled Booking';
+    data.type === 'instant' ? 'Instant Booking' : 
+    data.type === 'scheduled' ? 'Scheduled Booking' : 'Special Booking';
 
   const html = `
 <!DOCTYPE html>

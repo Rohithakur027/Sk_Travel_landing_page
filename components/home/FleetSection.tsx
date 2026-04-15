@@ -47,14 +47,14 @@ export default function FleetSection() {
           <div className={styles.card}>
             <Image 
               src="/images/expertdrivers.jpeg" 
-              alt="Tempo Drivers" 
+              alt="Expert Drivers" 
               fill 
               className={styles.bgImg} 
             />
             <div className={styles.overlay} />
             <div className={styles.content}>
-              <h3>Tempo Drivers</h3>
-              <p>Group transportation solutions</p>
+              <h3>Expert Drivers</h3>
+              <p>Professional and experienced drivers</p>
             </div>
           </div>
 

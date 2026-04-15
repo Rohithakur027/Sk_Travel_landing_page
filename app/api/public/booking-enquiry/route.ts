@@ -66,11 +66,13 @@ function validate(body: Record<string, unknown>): string[] {
     errors.push('email must be a valid email address');
   }
 
-  // phone: exactly 10 digits
-  if (!body.phone || typeof body.phone !== 'string') {
+  // phone: at least 10 digits, allow symbols like +, -, spaces
+  const phoneStr = String(body.phone || '');
+  const digits = phoneStr.replace(/\D/g, '');
+  if (!body.phone) {
     errors.push('phone is required');
-  } else if (!/^\d{10}$/.test(body.phone)) {
-    errors.push('phone must be exactly 10 digits');
+  } else if (digits.length < 10) {
+    errors.push('phone must contain at least 10 digits');
   }
 
   // passengers: integer between 1 and 10

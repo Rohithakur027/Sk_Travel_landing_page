@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: 'Your trusted travel partner for premium transportation services.',
 };
 
+import { ToastProvider } from '@/lib/context/ToastContext';
+
 export default function RootLayout({
   children,
 }: {
@@ -16,9 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <ToastProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </ToastProvider>
       </body>
     </html>
   );

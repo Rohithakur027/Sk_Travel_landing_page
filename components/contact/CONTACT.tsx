@@ -1,11 +1,67 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { CheckCircle, XCircle } from 'lucide-react';
+import { useToast } from '@/lib/context/ToastContext';
 import styles from './CONTACT.module.css';
 
+
 export default function CONTACT() {
-  const [formType, setFormType] = useState<'company' | 'driver'>('company');
+  const [formData, setFormData] = useState({
+    fullName: '',
+    company: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const { showToast } = useToast();
+  
+  const isFormIncomplete = 
+    !formData.fullName.trim() || 
+    !formData.company.trim() || 
+    !formData.email.trim() || 
+    !formData.phone.trim() || 
+    !formData.message.trim();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const names = formData.fullName.trim().split(' ');
+      const firstName = names[0] || '';
+      const lastName = names.slice(1).join(' ') || '-';
+
+      const response = await fetch('/api/public/special-booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          company_name: formData.company,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+        }),
+      });
+
+      const result = await response.json();
+      if (!result.success) throw new Error(result.errors?.[0] || 'Failed to send message');
+      
+      showToast("success", "Your enquiry has been submitted! We'll be in touch shortly.");
+      setFormData({ fullName: '', company: '', email: '', phone: '', message: '' });
+    } catch (err: any) {
+      showToast("error", err.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   return (
     <section className={styles.contactPage}>
       {/* Hero / First Section - full width */}
@@ -31,31 +87,11 @@ export default function CONTACT() {
 
       <div className={styles.container}>
         <div className={styles.grid}>
-          <form id="booking" className={styles.form} onSubmit={(e) => e.preventDefault()}>
+          <form id="booking" className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.formHeaderRow}>
               <div className={styles.tabCard}>
-                <div
-                  className={styles.tabSlider}
-                  aria-hidden
-                  style={{ transform: formType === 'driver' ? 'translateX(100%)' : 'translateX(0)' }}
-                />
                 <div className={styles.formTabs} role="tablist" aria-label="Contact type">
-                  <button
-                    type="button"
-                    className={`${styles.tab} ${formType === 'company' ? styles.active : ''}`}
-                    onClick={() => setFormType('company')}
-                    aria-selected={formType === 'company'}
-                  >
-                    As Company
-                  </button>
-                  <button
-                    type="button"
-                    className={`${styles.tab} ${formType === 'driver' ? styles.active : ''}`}
-                    onClick={() => setFormType('driver')}
-                    aria-selected={formType === 'driver'}
-                  >
-                    As Driver
-                  </button>
+                  <div className={styles.specialBookingBadge}>Special Bookings</div>
                 </div>
               </div>
 
@@ -65,84 +101,83 @@ export default function CONTACT() {
 
               <div className={styles.formBody}>
                 <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Full Name</span>
-                  <input name="fullName" type="text" placeholder="Enter your name" required />
+                  <span className={styles.reqText}>Full Name *</span>
+                  <input 
+                    name="fullName" 
+                    type="text" 
+                    placeholder="Enter your name" 
+                    required 
+                    value={formData.fullName}
+                    onChange={handleChange}
+                  />
                 </label>
 
-              {/* Company-only field */}
-              {formType === 'company' && (
                 <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Company Name</span>
-                  <input name="company" type="text" placeholder="Enter your company name" required />
+                  <span className={styles.reqText}>Company Name *</span>
+                  <input 
+                    name="company" 
+                    type="text" 
+                    placeholder="Enter your company name" 
+                    required 
+                    value={formData.company}
+                    onChange={handleChange}
+                  />
                 </label>
-              )}
 
               <div className={styles.formRow}>
                 <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Email</span>
-                  <input name="email" type="email" placeholder="your@email.com" required />
+                  <span className={styles.reqText}>Email *</span>
+                  <input 
+                    name="email" 
+                    type="email" 
+                    placeholder="your@email.com" 
+                    required 
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
                 </label>
 
                 <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Phone</span>
-                  <input name="phone" type="tel" placeholder="+91 98765 43210" required />
+                  <span className={styles.reqText}>Phone *</span>
+                  <input 
+                    name="phone" 
+                    type="tel" 
+                    placeholder="+91 98765 43210" 
+                    required 
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
                 </label>
               </div>
 
-              {formType === 'driver' ? (
-                <>
-                  <label className={styles.requiredLabel}>
-                    <span className={styles.reqText}>Vehicle Manufacturer</span>
-                    <input
-                      name="vehicleManufacturer"
-                      list="manufacturers"
-                      placeholder="eg. Honda"
-                      autoComplete="off"
-                      required
-                    />
-                    <datalist id="manufacturers">
-                      <option value="Maruti Suzuki" />
-                      <option value="Honda" />
-                      <option value="Hyundai" />
-                      <option value="Toyota" />
-                    </datalist>
-                  </label>
-
-                  <label className={styles.requiredLabel}>
-                    <span className={styles.reqText}>Vehicle Model</span>
-                    <input name="vehicleModel" type="text" placeholder="e.g. Swift, Innova" required />
-                  </label>
-
-                  <label className={styles.messageLabel}>
-                    Message
-                    <textarea name="message" placeholder="Tell us about your availability or vehicle..." rows={6} />
-                  </label>
-                </>
-              ) : (
-                <>
-
-
-                  <label className={styles.requiredLabel}>
-                    <span className={styles.reqText}>Number of Employees</span>
-                    <input name="employees" type="number" placeholder="e.g. 50" required />
-                  </label>
-
-                  <label className={styles.messageLabel}>
-                    Message
-                    <textarea name="message" placeholder="Tell us about your transportation needs..." rows={6} />
-                  </label>
-                </>
-              )}
+              <label className={styles.requiredLabel}>
+                <span className={styles.reqText}>Message *</span>
+                <textarea 
+                  name="message" 
+                  placeholder="Tell us about your transportation needs..." 
+                  rows={6} 
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
             </div>
 
+
             <div className={styles.actions}>
-              <button type="submit" className={styles.primaryBtn}>
-                <span>Send Message</span>
-                <span className={styles.btnIcon} aria-hidden>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path d="M2 21L23 12L2 3v7l15 2-15 2v7z" fill="#08121A" opacity="0.95"/>
-                  </svg>
-                </span>
+              <button 
+                type="submit" 
+                className={`${styles.primaryBtn} ${isFormIncomplete ? styles.btnDisabled : ''}`} 
+                disabled={isLoading || isFormIncomplete}
+              >
+                <span>{isLoading ? 'Sending...' : isFormIncomplete ? 'Send Message' : 'Send Message'}</span>
+                {!isLoading && (
+                  <span className={styles.btnIcon} aria-hidden>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                      <path d="M2 21L23 12L2 3v7l15 2-15 2v7z" fill="#08121A" opacity="0.95"/>
+                    </svg>
+                  </span>
+                )}
               </button>
             </div>
           </form>

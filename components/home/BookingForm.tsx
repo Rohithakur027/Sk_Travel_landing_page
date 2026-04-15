@@ -2,41 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useToast } from "@/lib/context/ToastContext";
 import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus, CheckCircle, XCircle, Loader2, User, Mail, Phone } from "lucide-react";
 import styles from "./BookingForm.module.css";
 
-// ─── Toast ────────────────────────────────────────────────────────────────────
-
-interface ToastState {
-  visible: boolean;
-  type: "success" | "error";
-  message: string;
-}
-
-function Toast({ toast, onClose }: { toast: ToastState; onClose: () => void }) {
-  useEffect(() => {
-    if (!toast.visible) return;
-    const t = setTimeout(onClose, 4000);
-    return () => clearTimeout(t);
-  }, [toast.visible, onClose]);
-
-  // Always rendered — visibility controlled by CSS only to avoid removeChild errors
-  return (
-    <div
-      className={`${styles.toast} ${styles[toast.type]} ${toast.visible ? styles.toastVisible : styles.toastHidden}`}
-      aria-live="polite"
-      aria-atomic="true"
-    >
-      <span className={styles.toastIcon}>
-        {toast.type === "success"
-          ? <CheckCircle size={20} />
-          : <XCircle size={20} />}
-      </span>
-      <span className={styles.toastMessage}>{toast.message}</span>
-      <button className={styles.toastClose} onClick={onClose} aria-label="Dismiss">×</button>
-    </div>
-  );
-}
 
 // ─── Validation helpers ───────────────────────────────────────────────────────
 
@@ -74,40 +43,54 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   leftIcon?: React.ReactNode;
 }
 
-const Select = ({ id, options, leftIcon, ...props }: SelectProps) => (
-  <div className={styles.inputGroup}>
-    <div className={styles.inputWrapper}>
-      {leftIcon && <div className={styles.iconLeft}>{leftIcon}</div>}
-      <select
-        id={id}
-        className={`${styles.select} ${leftIcon ? styles.hasIcon : ""}`}
-        {...props}
-      >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value} disabled={opt.value === ""}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-      <div className={styles.chevron}>
-        <svg
-          className={styles.chevronIcon}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+const Select = ({ id, options, leftIcon, value, defaultValue, onChange, ...props }: SelectProps) => {
+  const [val, setVal] = useState(defaultValue || value || "");
+
+  // Update internal state if value prop changes
+  useEffect(() => {
+    if (value !== undefined) setVal(value);
+  }, [value]);
+
+  return (
+    <div className={styles.inputGroup}>
+      <div className={styles.inputWrapper}>
+        {leftIcon && <div className={styles.iconLeft}>{leftIcon}</div>}
+        <select
+          id={id}
+          className={`${styles.select} ${leftIcon ? styles.hasIcon : ""} ${val === "" ? styles.isPlaceholder : ""}`}
+          {...props}
+          value={val}
+          onChange={(e) => {
+            setVal(e.target.value);
+            if (onChange) onChange(e);
+          }}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value} disabled={opt.value === ""}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <div className={styles.chevron}>
+          <svg
+            className={styles.chevronIcon}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            ></path>
+          </svg>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const vehicleOptions = [
   { value: "", label: "Vehicle Type" },
@@ -117,55 +100,65 @@ const vehicleOptions = [
   { value: "traveller", label: "Traveller" },
 ];
 
-/** "09:00" → "09:00 AM"  |  "14:30" → "02:30 PM" */
-function formatTimeDisplay(t: string): string {
-  if (!t) return "";
-  const [h, m] = t.split(":");
-  let hours = parseInt(h, 10);
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12;
-  return `${hours.toString().padStart(2, "0")}:${m} ${ampm}`;
+const serviceOptions = [
+  { value: "", label: "Booking Type" },
+  { value: "within_city", label: "Within City" },
+  { value: "airport", label: "Airport Taxis" },
+  { value: "outstation", label: "Out Station" },
+];
+
+/** "2024-05-24T14:30" → "2024-05-24, 02:30 PM" */
+function formatDateTimeDisplay(dt: string): string {
+  if (!dt) return "";
+  try {
+    const [datePart, timePart] = dt.split("T");
+    const [h, m] = timePart.split(":");
+    let hours = parseInt(h, 10);
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    const formattedTime = `${hours.toString().padStart(2, "0")}:${m} ${ampm}`;
+    return `${datePart}, ${formattedTime}`;
+  } catch (err) {
+    return dt;
+  }
 }
 
 export default function BookingForm() {
   const [bookingType, setBookingType] = useState<"instant" | "scheduled">(
-    "scheduled",
+    "instant",
   );
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [pickup, setPickup] = useState("");
+  const [destination, setDestination] = useState("");
+  const [vehicleType, setVehicleType] = useState("");
+  const [serviceType, setServiceType] = useState("");
+  const [isReturnTrip, setIsReturnTrip] = useState(false);
+  const [dateTime, setDateTime] = useState("");
   const [passengers, setPassengers] = useState(1);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [fieldErrors, setFieldErrors] = useState({ email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [toast, setToast] = useState<ToastState>({ visible: false, type: "success", message: "" });
-
-  const showToast = (type: "success" | "error", message: string) => {
-    setToast({ visible: true, type, message });
-  };
+  const { showToast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting) return;
-
-    const form = e.currentTarget as HTMLFormElement;
-    const pickup      = (form.querySelector("#pickup")      as HTMLInputElement)?.value ?? "";
-    const destination = (form.querySelector("#destination") as HTMLInputElement)?.value ?? "";
-    const vehicleType = (form.querySelector("#vehicleType") as HTMLSelectElement)?.value ?? "";
 
     const body = {
       type: bookingType,
       pickup_location: pickup.trim(),
       destination: destination.trim(),
       vehicle_type: vehicleType,
+      service_type: serviceType,
+      is_return_trip: serviceType === "airport" ? isReturnTrip : false,
       passengers,
       name:  name.trim(),
       email: email.trim(),
       phone: phone.trim(),
-      ...(bookingType === "scheduled" && {
-        date,
-        time: formatTimeDisplay(time),
+      ...(bookingType === "scheduled" && dateTime && {
+        date: dateTime.split("T")[0],
+        time: formatDateTimeDisplay(dateTime).split(", ")[1],
       }),
     };
 
@@ -200,9 +193,17 @@ export default function BookingForm() {
     }
   };
 
+  const isFormIncomplete = 
+    !pickup.trim() || 
+    !destination.trim() || 
+    !vehicleType || 
+    !serviceType || 
+    !name.trim() || 
+    !email.trim() || 
+    !phone.trim() || 
+    (bookingType === "scheduled" && !dateTime);
+
   return (
-    <>
-    <Toast toast={toast} onClose={() => setToast(t => ({ ...t, visible: false }))} />
     <div className={styles.card}>
       {/* Toggle */}
       <div className={styles.toggle}>
@@ -238,77 +239,84 @@ export default function BookingForm() {
           {/* Row 1: Locations */}
           <Input
             id="pickup"
-            placeholder="Pickup Location"
+            placeholder="Pickup Location *"
             leftIcon={<Navigation size={20} />}
+            value={pickup}
+            onChange={(e) => setPickup(e.target.value)}
+            required
           />
           <Input
             id="destination"
-            placeholder="Enter your destination"
+            placeholder="Enter your destination *"
             leftIcon={<MapPin size={20} />}
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+            required
           />
 
           {/* Row 2: Date & Time - Only for Scheduled */}
           {bookingType === "scheduled" && (
-            <>
-              <div style={{ position: "relative" }}>
-                <Input
-                  id="date-display"
-                  type="text"
-                  placeholder="Date"
-                  value={date}
-                  readOnly
-                  leftIcon={<Calendar size={20} />}
-                />
-                <input
-                  id="date"
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  onClick={(e) => {
-                    try {
-                      e.currentTarget.showPicker();
-                    } catch (err) {}
-                  }}
-                  className={styles.nativePicker}
-                />
-              </div>
-
-              <div style={{ position: "relative" }}>
-                <Input
-                  id="time-display"
-                  type="text"
-                  placeholder="Time"
-                  value={formatTimeDisplay(time)}
-                  readOnly
-                  leftIcon={<Clock size={20} />}
-                />
-                <input
-                  id="time"
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  onClick={(e) => {
-                    try {
-                      e.currentTarget.showPicker();
-                    } catch (err) {}
-                  }}
-                  className={styles.nativePicker}
-                />
-              </div>
-            </>
+            <div style={{ position: "relative" }}>
+              <Input
+                id="dateTime-display"
+                type="text"
+                placeholder="Date & Time *"
+                value={formatDateTimeDisplay(dateTime)}
+                readOnly
+                leftIcon={<Calendar size={20} />}
+              />
+              <input
+                id="dateTime"
+                type="datetime-local"
+                value={dateTime}
+                onChange={(e) => setDateTime(e.target.value)}
+                onClick={(e) => {
+                  try {
+                    e.currentTarget.showPicker();
+                  } catch (err) {}
+                }}
+                className={styles.nativePicker}
+                required
+              />
+            </div>
           )}
 
-          {/* Vehicle & Passengers */}
+          {/* Service, Vehicle & Passengers */}
+          <div className={styles.inputGroup}>
+            <Select
+              id="serviceType"
+              options={serviceOptions}
+              leftIcon={<Navigation size={20} />}
+              value={serviceType}
+              onChange={(e) => setServiceType(e.target.value)}
+              required
+            />
+            {serviceType === "airport" && (
+              <label className={styles.checkboxContainer}>
+                <input
+                  type="checkbox"
+                  checked={isReturnTrip}
+                  onChange={(e) => setIsReturnTrip(e.target.checked)}
+                  className={styles.checkbox}
+                />
+                <span className={styles.checkboxLabel}>Return Trip?</span>
+              </label>
+            )}
+          </div>
+
           <Select
             id="vehicleType"
             options={vehicleOptions}
             leftIcon={<Car size={20} />}
+            value={vehicleType}
+            onChange={(e) => setVehicleType(e.target.value)}
+            required
           />
 
           <div className={styles.inputGroup}>
             <div className={styles.counterWrapper}>
               <div className={styles.iconLeft}><Users size={20} /></div>
-              <span className={styles.counterLabel}>Passengers</span>
+              <span className={styles.counterLabel}>Passengers *</span>
               <div className={styles.counterControls}>
                 <button
                   type="button"
@@ -334,7 +342,7 @@ export default function BookingForm() {
         <div className={styles.contactGrid}>
           <Input
             id="name"
-            placeholder="Your Name"
+            placeholder="Your Name *"
             value={name}
             onChange={(e) => setName(e.target.value)}
             leftIcon={<User size={20} />}
@@ -343,7 +351,7 @@ export default function BookingForm() {
           <Input
             id="email"
             type="email"
-            placeholder="Email Address"
+            placeholder="Email Address *"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -362,7 +370,7 @@ export default function BookingForm() {
           <Input
             id="phone"
             type="tel"
-            placeholder="Mobile Number"
+            placeholder="Mobile Number *"
             value={phone}
             onChange={(e) => {
               const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
@@ -384,8 +392,8 @@ export default function BookingForm() {
         {/* Submit Button */}
         <button
           type="submit"
-          className={`${styles.submitBtn} ${isSubmitting ? styles.submitBtnLoading : ""}`}
-          disabled={isSubmitting}
+          className={`${styles.submitBtn} ${isSubmitting ? styles.submitBtnLoading : ""} ${isFormIncomplete ? styles.submitBtnDisabled : ""}`}
+          disabled={isSubmitting || isFormIncomplete}
         >
           {isSubmitting ? (
             <>
@@ -394,7 +402,7 @@ export default function BookingForm() {
             </>
           ) : (
             <>
-              Submit Enquiry
+              {isFormIncomplete ? "Submit Enquiry" : "Submit Enquiry"}
               <ArrowRight size={20} />
             </>
           )}
@@ -404,9 +412,18 @@ export default function BookingForm() {
       {/* Footer Text */}
       <div className={styles.footer}>
         <Image src="/icons/spark.svg" alt="Spark" width={16} height={16} />
-        <span>Loved from 500K users</span>
+        <span>
+          For Exclusive Bookings and Corporate Inquiries, Please Contact us at:{" "}
+          <a
+            href="https://wa.me/917807818119"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.whatsappLink}
+          >
+            +91 7807818119
+          </a>
+        </span>
       </div>
     </div>
-    </>
   );
 }
