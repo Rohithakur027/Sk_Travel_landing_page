@@ -48,31 +48,34 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
 
     setLoading(true);
     try {
-      // Photon API: No key required. 
-      // We use lon=78.9629&lat=20.5937 (approx center of India) to prioritize results.
-      const response = await axios.get(`https://photon.komoot.io/api/`, {
+      // Mapbox Geocoding API
+      const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+      if (!mapboxToken) {
+        console.error("Mapbox access token is missing");
+        return;
+      }
+
+      const response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json`, {
         params: {
-          q: query,
+          access_token: mapboxToken,
           limit: 5,
-          lon: 78.96,
-          lat: 20.59,
+          country: 'IN', // Focus on India
+          proximity: '78.96,20.59', // Approx center of India
         },
       });
 
       const features = response.data.features.map((f: any) => {
-        const p = f.properties;
-        // Construct a readable address from Photon properties
-        const parts = [p.name, p.street, p.district, p.city, p.state, p.country].filter(Boolean);
+        const p = f.place_name || f.text;
         return {
-          id: f.geometry.coordinates.join(','),
-          display_name: parts.join(', '),
+          id: f.center.join(','),
+          display_name: p,
         };
       });
 
       setSuggestions(features);
       setShowSuggestions(true);
     } catch (error) {
-      console.error("Photon API error:", error);
+      console.error("Mapbox API error:", error);
     } finally {
       setLoading(false);
     }
