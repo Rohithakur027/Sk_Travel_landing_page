@@ -15,23 +15,20 @@
   padding: 0 16px;
 }
 
-/* Keep page content flush; nudge only the pill below the navbar */
 .contactPage {
-  padding-top: 0;
+  padding-top: var(--page-top-padding);
 }
 
 .header {
   background-color: #2D3142;
   text-align: center;
-  /* match About hero spacing (slightly reduced height) */
-  padding: 5.5rem 0 2.5rem;
+  padding: 4rem 0 2.5rem;
   margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
-  min-height: 580px !important;
-  height: 580px !important;
+  min-height: auto; /* Remove rigid height */
 }
 
 /* header gap handled globally; no in-file spacer */
@@ -174,11 +171,11 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 494px 360px; /* restore original fixed columns on desktop */
+  grid-template-columns: minmax(0, 494px) minmax(0, 360px); 
   gap: 36px;
-  align-items: start; /* keep columns top-aligned so aside can be shorter */
-  /* fixed intrinsic width (columns + gap) so the grid centers precisely */
-  width: calc(494px + 360px + 36px);
+  align-items: start;
+  width: 100%;
+  max-width: 890px; /* 494 + 360 + 36 */
   margin: 24px auto 40px;
   justify-content: center;
 }
@@ -550,7 +547,7 @@
 
 /* All office cards use the same padding so internal line gaps match Pune */
 
-.officeIconWrap { width: 56px; height: 56px; margin: 0; display:flex; align-items:center; justify-content:center; border-radius:16px; background: linear-gradient(135deg,#fff9e6 0%,#fff3cc 100%); flex-shrink: 0; padding-top: 6px; }
+.officeIconWrap { width: 56px; height: 56px; margin: 0; display:flex; align-items:center; justify-content:center; border-radius:16px; background: linear-gradient(135deg,#fff9e6 0%,#fff3cc 100%); flex-shrink: 0; }
 .officeIconWrap svg { width: 24px; height: 24px; display:block }
 
 .officeCity { color: #2D3142; margin: 0 0 2px 0; padding-top: 0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; font-size: 18px; font-weight: 700; line-height: 1; }
@@ -562,11 +559,15 @@
   line-height: 21px;
   font-weight: 600;
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  width: 120px;
-  height: 21px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  width: auto;
+  height: auto;
+}
+
+.officeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
 }
 
 /* Desktop: left-aligned card layout */
@@ -683,6 +684,11 @@
 .faqList p { margin: 8px 0 0 0; color: #6b7280; }
 
 @media (max-width: 880px) {
+  .header {
+    padding-top: 2rem;
+    min-height: auto;
+  }
+
   .grid {
     grid-template-columns: 1fr;
     width: 100%;
@@ -702,11 +708,12 @@
   }
 
   .officeCard {
-    padding: 20px;
+    padding: 16px; /* Slightly tighter padding for mobile cards */
     border-radius: 16px;
     text-align: left;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center; /* Center icon with text block vertically */
+    gap: 16px; /* Standard gap between icon and info */
   }
 
   .officeSection {
@@ -877,16 +884,6 @@
   .aside { order: 2; }
   .contactImageWrap { display: flex; justify-content: center; margin-top: 0px; }
 
-  /* Office grid -> single column, compact spacing */
-  .officeGrid { grid-template-columns: 1fr; gap: 18px; }
-  .officeCard { padding: 18px; border-radius: 16px; }
-  .officeIconWrap { width: 48px; height: 48px; margin-bottom: 12px; margin-top: -6px; }
-  .officeIconWrap svg { width: 20px; height: 20px; }
-
-  .officeCity { font-size: 16px; }
-  .officeAddress { font-size: 13px; }
-  .officePhone { font-size: 13px; line-height: 18px; }
-
   /* FAQ adjustments */
   .faqHeading { font-size: 28px; line-height: 36px; }
   .faqSubtitle { font-size: 13px; line-height: 20px; width: auto; }
@@ -898,33 +895,21 @@
 
 /* Alternate mobile layout: keep icon at left, stack text vertically to the right */
 @media (max-width: 480px) {
+  /* Normalize office card layout: icon left, vertical text stack to the right */
   .officeCard {
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    grid-auto-rows: auto;
-    gap: 0px 12px; /* remove vertical spacing between stacked lines */
-    align-items: start;
-    padding: 18px; /* restore card vertical padding/length */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 20px;
+    text-align: left;
   }
-  .officeIconWrap { grid-column: 1; grid-row: 1 / span 3; margin: 0; align-self: start; padding-top: 6px; }
-  .officeCity { grid-column: 2; grid-row: 1; margin: -18px 0 0 0; padding-top: 0; }
-  .officeAddress { grid-column: 2; grid-row: 2; margin: 0; }
-  .officePhone { grid-column: 2; grid-row: 3; margin: 0; }
+  .officeIconWrap { width: 56px; height: 56px; margin: 0; flex-shrink: 0; }
+  .officeCity { margin: 0 0 4px 0; font-size: 18px; }
+  .officeAddress { margin: 0 0 2px 0; font-size: 14px; }
+  .officePhone { margin: 0; font-size: 14px; }
 
-  /* Target only the Pune card (4th card) on small screens and align text start
-     with the icon's top so the title begins on the same line as the icon. */
-  .officeGrid > .officeCard:nth-child(4) {
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    grid-auto-rows: auto;
-    gap: 1px 12px;
-    align-items: start;
-    padding: 18px;
-  }
-  .officeGrid > .officeCard:nth-child(4) .officeIconWrap { grid-column: 1; grid-row: 1 / span 3; margin: 0; align-self: start; padding-top: 6px; }
-  .officeGrid > .officeCard:nth-child(4) .officeCity { grid-column: 2; grid-row: 1; margin: -18px 0 0 0; padding-top: 0; align-self: start; }
-  .officeGrid > .officeCard:nth-child(4) .officeAddress { grid-column: 2; grid-row: 2; margin: 0; }
-  .officeGrid > .officeCard:nth-child(4) .officePhone { grid-column: 2; grid-row: 3; margin: 0; }
 
   /* Ensure inline contact list icons are vertically centered on mobile rows */
   /* Align icon top with the first line of text on mobile */

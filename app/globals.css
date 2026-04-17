@@ -14,10 +14,32 @@
   padding: 0;
 }
 
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  --page-top-padding: calc(var(--navbar-height) + 2rem);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --page-top-padding: calc(var(--navbar-height) + 1rem);
+  }
 }
 
 /* Mobile compatibility helpers (non-layout - safe to add) */

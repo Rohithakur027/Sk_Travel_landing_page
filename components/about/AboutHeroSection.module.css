@@ -1,7 +1,6 @@
 .section {
-  padding: 10rem 0 6rem;
-  background-color:rgba(45, 49, 66, 1);
-;
+  padding: var(--page-top-padding) 1.5rem 6rem;
+  background-color: rgba(45, 49, 66, 1);
   text-align: center;
 }
 

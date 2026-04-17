@@ -101,7 +101,7 @@ export default function CONTACT() {
 
               <div className={styles.formBody}>
                 <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Full Name *</span>
+                  <span className={styles.reqText}>Full Name</span>
                   <input 
                     name="fullName" 
                     type="text" 
@@ -113,7 +113,7 @@ export default function CONTACT() {
                 </label>
 
                 <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Company Name *</span>
+                  <span className={styles.reqText}>Company Name</span>
                   <input 
                     name="company" 
                     type="text" 
@@ -126,7 +126,7 @@ export default function CONTACT() {
 
               <div className={styles.formRow}>
                 <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Email *</span>
+                  <span className={styles.reqText}>Email</span>
                   <input 
                     name="email" 
                     type="email" 
@@ -138,7 +138,7 @@ export default function CONTACT() {
                 </label>
 
                 <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Phone *</span>
+                  <span className={styles.reqText}>Phone</span>
                   <input 
                     name="phone" 
                     type="tel" 
@@ -151,7 +151,7 @@ export default function CONTACT() {
               </div>
 
               <label className={styles.requiredLabel}>
-                <span className={styles.reqText}>Message *</span>
+                <span className={styles.reqText}>Message</span>
                 <textarea 
                   name="message" 
                   placeholder="Tell us about your transportation needs..." 
@@ -258,9 +258,11 @@ export default function CONTACT() {
                     <circle cx="12" cy="9" r="2.2" stroke="#FFD23F" strokeWidth="1.6" fill="none" />
                   </svg>
                 </div>
-                <h4 className={styles.officeCity}>{office.city}</h4>
-                <p className={styles.officeAddress}>{office.address}</p>
-                <p className={styles.officePhone}>{office.phone}</p>
+                <div className={styles.officeInfo}>
+                  <h4 className={styles.officeCity}>{office.city}</h4>
+                  <p className={styles.officeAddress}>{office.address}</p>
+                  <p className={styles.officePhone}>{office.phone}</p>
+                </div>
               </div>
             ))}
           </div>

@@ -1,15 +1,17 @@
 .section {
   position: relative;
   width: 100%;
-  min-height: 950px;
+  min-height: 800px;
   background-color: #000000;
   isolation: isolate;
-  margin-bottom: 16rem;
+  margin-bottom: 24rem; /* Standard desktop spacing for the overlap form */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .section {
-    min-height: 850px;
+    min-height: auto; /* Allow content to define height */
+    margin-bottom: 0;
+    padding-bottom: 4rem;
   }
 }
 
@@ -30,7 +32,7 @@
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding-inline: var(--container-padding);
-  padding-top: 4rem;
+  padding-top: var(--page-top-padding); /* Uses global standard padding */
   padding-bottom: 20rem;
   display: flex;
   flex-direction: column;
@@ -39,10 +41,9 @@
   text-align: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .content {
-    padding-top: 4rem;
-    padding-bottom: 16rem;
+    padding-bottom: 4rem;
   }
 }
 
@@ -92,20 +93,30 @@
 
 @media (max-width: 1024px) {
   .heading {
-    font-size: 5rem;
-    line-height: 1.1;
-    letter-spacing: -2px;
+    font-size: 3rem; /* Scaled down */
+    line-height: 1.2;
+    letter-spacing: -1.5px;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 768px) {
   .heading {
-    font-size: 2.9rem;
+    font-size: 2.25rem; /* Better fit for mobile */
     line-height: 1.2;
     letter-spacing: -1px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     text-align: center;
     width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 1.85rem;
+    letter-spacing: -0.5px;
+    line-height: 1.3;
   }
 }
 
@@ -135,8 +146,12 @@
   padding: 0 1.5rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .formWrapper {
-    transform: translateY(45%); /* Bleed more into next section to clear hero text */
+    position: relative; /* Flow baseline for smaller screens */
+    bottom: auto;
+    transform: none; /* No vertical offset overlap on mobile/tablet */
+    padding: 2rem 1rem;
+    background-color: #ffffff; /* Ensure white background for the flow area */
   }
 }

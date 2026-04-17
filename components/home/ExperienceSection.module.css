@@ -64,7 +64,7 @@
 }
 
 .content h3 {
-  font-size: 2.5rem;
+  font-size: 1.75rem; /* Scaled down from 2.5rem */
   font-family: var(--font-sans);
   font-weight: 700;
   margin-bottom: 0.5rem;
@@ -89,7 +89,7 @@
 }
 
 .centerContent h3 {
-  font-size: 2.5rem;
+  font-size: 1.75rem; /* Scaled down from 2.5rem */
   font-weight: 700;
   font-family: var(--font-sans);
   margin-bottom: 0.5rem;
@@ -142,7 +142,7 @@
 }
 
 .scoreText {
-  font-size: 3.5rem;
+  font-size: 2.75rem; /* Scaled down from 3.5rem */
   font-weight: 900;
   font-family: var(--font-sans);
   line-height: 1;
@@ -233,7 +233,7 @@
 
 .sectionTitle {
   font-family: var(--font-heading);
-  font-size: 2.875rem;
+  font-size: 2.25rem; /* Scaled down from 2.875rem */
   font-weight: 700;
   color: #111827;
   margin-bottom: 1rem;
@@ -280,7 +280,28 @@
 
 @media (min-width: 768px) {
   .sectionTitle {
-    font-size: 3.5rem;
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .section :global(.container) {
+    padding-inline: 2rem;
+  }
+
+  .bentoGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .premiumComfort { grid-column: span 2; }
+  .expertDrivers { grid-column: span 1; }
+  .airportTransfers { grid-column: span 1; }
+  
+  .card, .yellowCard, .darkCard {
+    min-height: 20rem;
+    height: 100%;
   }
 }
 
@@ -290,10 +311,7 @@
   }
 
   .bentoGrid {
-    display: grid;
-    /* Increase widths of right-side stacked columns */
     grid-template-columns: 1fr 1fr 1.25fr 1.25fr;
-    /* Custom row heights to proportionally adjust cards */
     grid-template-rows: 12rem 12rem 6rem 17rem;
     gap: 1.5rem;
   }
