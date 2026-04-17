@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import {
   appendToGoogleSheet,
   sendTeamNotification,
+  sendToAdminAPI,
   type SpecialBookingData,
 } from '@/lib/services/landingEnquiry.service';
 
@@ -79,9 +80,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     message: String(body.message || '').trim(),
   };
 
-  const [sheetsResult, emailResult] = await Promise.allSettled([
+  const [sheetsResult, emailResult, adminApiResult] = await Promise.allSettled([
     appendToGoogleSheet(data),
     sendTeamNotification(data),
+    sendToAdminAPI(data),
   ]);
 
   if (sheetsResult.status === 'rejected') {
@@ -89,6 +91,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
   if (emailResult.status === 'rejected') {
     console.error('[SpecialBooking] Email failed:', emailResult.reason);
+  }
+  if (adminApiResult.status === 'rejected') {
+    console.error('[SpecialBooking] Admin API forward failed:', adminApiResult.reason);
   }
 
   return NextResponse.json({ success: true, message: 'Special booking received' });

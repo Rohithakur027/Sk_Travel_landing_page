@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useToast } from "@/lib/context/ToastContext";
-import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus, CheckCircle, XCircle, Loader2, User, Mail, Phone } from "lucide-react";
+import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus, CheckCircle, XCircle, Loader2, User, Mail, Phone, ChevronDown } from "lucide-react";
 import styles from "./BookingForm.module.css";
+import AddressAutocomplete from "./AddressAutocomplete";
 
 
 // ─── Validation helpers ───────────────────────────────────────────────────────
@@ -38,55 +39,72 @@ const Input = ({ id, placeholder, leftIcon, error, ...props }: InputProps) => (
   </div>
 );
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectProps {
+  id: string;
   options: { value: string; label: string }[];
   leftIcon?: React.ReactNode;
+  value?: string;
+  onChange?: (e: { target: { value: string; id: string } }) => void;
+  required?: boolean;
 }
 
-const Select = ({ id, options, leftIcon, value, defaultValue, onChange, ...props }: SelectProps) => {
-  const [val, setVal] = useState(defaultValue || value || "");
+const Select = ({ id, options, leftIcon, value, onChange, required }: SelectProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Update internal state if value prop changes
   useEffect(() => {
-    if (value !== undefined) setVal(value);
-  }, [value]);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectedOption = options.find((opt) => opt.value === value) || options[0];
 
   return (
-    <div className={styles.inputGroup}>
+    <div className={styles.inputGroup} ref={containerRef}>
       <div className={styles.inputWrapper}>
-        {leftIcon && <div className={styles.iconLeft}>{leftIcon}</div>}
-        <select
-          id={id}
-          className={`${styles.select} ${leftIcon ? styles.hasIcon : ""} ${val === "" ? styles.isPlaceholder : ""}`}
-          {...props}
-          value={val}
-          onChange={(e) => {
-            setVal(e.target.value);
-            if (onChange) onChange(e);
-          }}
+        <div
+          className={`${styles.select} ${leftIcon ? styles.hasIcon : ""} ${
+            !value ? styles.isPlaceholder : ""
+          } ${isOpen ? styles.selectOpen : ""}`}
+          onClick={() => setIsOpen(!isOpen)}
         >
-          {options.map((opt) => (
-            <option key={opt.value} value={opt.value} disabled={opt.value === ""}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-        <div className={styles.chevron}>
-          <svg
-            className={styles.chevronIcon}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 9l-7 7-7-7"
-            ></path>
-          </svg>
+          {leftIcon && <div className={styles.iconLeft}>{leftIcon}</div>}
+          <span className={styles.selectedLabel}>{selectedOption.label}</span>
+          <div className={styles.chevron}>
+            <ChevronDown
+              size={18}
+              className={`${styles.chevronIcon} ${isOpen ? styles.chevronRotate : ""}`}
+            />
+          </div>
         </div>
+
+        {isOpen && (
+          <div className={styles.dropdownList}>
+            {options.map((opt) => (
+              <div
+                key={opt.value}
+                className={`${styles.dropdownItem} ${
+                  opt.value === "" ? styles.dropdownPlaceholder : ""
+                } ${opt.value === value ? styles.dropdownItemSelected : ""}`}
+                onClick={() => {
+                  if (opt.value !== "") {
+                    if (onChange) {
+                      onChange({ target: { value: opt.value, id } });
+                    }
+                    setIsOpen(false);
+                  }
+                }}
+              >
+                {opt.label}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -237,51 +255,30 @@ export default function BookingForm() {
           bookingType === "instant" ? styles.instantGrid : styles.scheduledGrid
         }`}>
           {/* Row 1: Locations */}
-          <Input
+          <AddressAutocomplete
             id="pickup"
             placeholder="Pickup Location *"
             leftIcon={<Navigation size={20} />}
             value={pickup}
-            onChange={(e) => setPickup(e.target.value)}
+            onChange={(val) => setPickup(val)}
+            className={`${styles.input} ${styles.hasIcon}`}
+            wrapperClassName={styles.inputWrapper}
+            iconClassName={styles.iconLeft}
             required
           />
-          <Input
+          <AddressAutocomplete
             id="destination"
             placeholder="Enter your destination *"
             leftIcon={<MapPin size={20} />}
             value={destination}
-            onChange={(e) => setDestination(e.target.value)}
+            onChange={(val) => setDestination(val)}
+            className={`${styles.input} ${styles.hasIcon}`}
+            wrapperClassName={styles.inputWrapper}
+            iconClassName={styles.iconLeft}
             required
           />
 
-          {/* Row 2: Date & Time - Only for Scheduled */}
-          {bookingType === "scheduled" && (
-            <div style={{ position: "relative" }}>
-              <Input
-                id="dateTime-display"
-                type="text"
-                placeholder="Date & Time *"
-                value={formatDateTimeDisplay(dateTime)}
-                readOnly
-                leftIcon={<Calendar size={20} />}
-              />
-              <input
-                id="dateTime"
-                type="datetime-local"
-                value={dateTime}
-                onChange={(e) => setDateTime(e.target.value)}
-                onClick={(e) => {
-                  try {
-                    e.currentTarget.showPicker();
-                  } catch (err) {}
-                }}
-                className={styles.nativePicker}
-                required
-              />
-            </div>
-          )}
-
-          {/* Service, Vehicle & Passengers */}
+          {/* Row 2: Booking Type, Vehicle Type & Passengers */}
           <div className={styles.inputGroup}>
             <Select
               id="serviceType"
@@ -304,16 +301,47 @@ export default function BookingForm() {
             )}
           </div>
 
-          <Select
-            id="vehicleType"
-            options={vehicleOptions}
-            leftIcon={<Car size={20} />}
-            value={vehicleType}
-            onChange={(e) => setVehicleType(e.target.value)}
-            required
-          />
+          <div className={`${bookingType === "instant" ? styles.wideField : ""}`}>
+            <Select
+              id="vehicleType"
+              options={vehicleOptions}
+              leftIcon={<Car size={20} />}
+              value={vehicleType}
+              onChange={(e) => setVehicleType(e.target.value)}
+              required
+            />
+          </div>
 
-          <div className={styles.inputGroup}>
+          {/* Row 3: Date/Time (if scheduled) & Passengers */}
+          {bookingType === "scheduled" && (
+            <div className={styles.inputGroup}>
+              <div className={styles.inputWrapper}>
+                <div className={styles.iconLeft}>
+                  <Calendar size={20} />
+                </div>
+                <input
+                  id="dateTime"
+                  type="datetime-local"
+                  value={dateTime}
+                  onChange={(e) => setDateTime(e.target.value)}
+                  onClick={(e) => {
+                    try {
+                      e.currentTarget.showPicker();
+                    } catch (err) {}
+                  }}
+                  className={`${styles.input} ${styles.hasIcon} ${styles.datetimeInput}`}
+                  required
+                />
+                {!dateTime ? (
+                  <div className={styles.datetimePlaceholder}>Date & Time *</div>
+                ) : (
+                  <div className={styles.datetimeValue}>{formatDateTimeDisplay(dateTime)}</div>
+                )}
+              </div>
+            </div>
+          )}
+
+          <div className={`${styles.inputGroup} ${bookingType === "instant" ? styles.wideField : ""}`}>
             <div className={styles.counterWrapper}>
               <div className={styles.iconLeft}><Users size={20} /></div>
               <span className={styles.counterLabel}>Passengers *</span>

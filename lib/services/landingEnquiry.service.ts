@@ -1,5 +1,6 @@
 import { sheets } from '@/lib/googleSheets';
 import transporter from '@/lib/mailer';
+import axios from 'axios';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -196,6 +197,8 @@ export async function sendTeamNotification(
     data.type === 'instant' ? 'Instant Booking' : 
     data.type === 'scheduled' ? 'Scheduled Booking' : 'Special Booking';
 
+  const recipientEmails = process.env.NOTIFY_EMAIL?.split(',').map(email => email.trim()) || [];
+
   const html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -235,8 +238,34 @@ export async function sendTeamNotification(
 
   await transporter.sendMail({
     from: process.env.SMTP_USER,
-    to: process.env.NOTIFY_EMAIL,
+    to: recipientEmails.length > 0 ? recipientEmails.join(', ') : process.env.NOTIFY_EMAIL,
     subject,
     html,
   });
+}
+
+/**
+ * Forwards the booking enquiry to a custom Admin API endpoint.
+ * This ensures data is synchronized with your internal admin system.
+ */
+export async function sendToAdminAPI(data: BookingEnquiryData): Promise<void> {
+  const adminApiUrl = process.env.ADMIN_API_URL;
+
+  if (!adminApiUrl) {
+    console.warn('[AdminAPI] ADMIN_API_URL is not defined in .env');
+    return;
+  }
+
+  try {
+    await axios.post(adminApiUrl, data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      timeout: 5000,
+    });
+    console.log('[AdminAPI] Data successfully sent to Admin API');
+  } catch (err: any) {
+    console.error('[AdminAPI] Request failed:', err.response?.data || err.message);
+    // We don't throw here to ensure the main flow continues even if admin API is down
+  }
 }
