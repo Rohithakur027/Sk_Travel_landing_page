@@ -198,7 +198,7 @@ export default function ServicesSection() {
             <span className={styles.ctaLine2}> transportation needs and get a</span>
             <span className={styles.ctaLine3}> customized quote</span>
           </p>
-          <Link href="/contact#booking" className={styles.ctaBtn}>Request a Quote →</Link>
+          <Link href="/contact#booking" className={styles.ctaBtn}>Send an Enquiry →</Link>
         </div>
       </section>
     </>

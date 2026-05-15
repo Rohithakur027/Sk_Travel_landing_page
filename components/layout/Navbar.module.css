@@ -1,3 +1,9 @@
+.home {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  /* Optionally, remove border for a cleaner look */
+  border: none !important;
+}
 .header {
   position: fixed;
   top: 0;

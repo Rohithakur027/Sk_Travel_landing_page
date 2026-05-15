@@ -73,7 +73,6 @@ export default function CONTACT() {
 
           <h1 className={styles.title}>
             <span className={styles.line1}>Let's Start Your</span>
-            <br />
             <span className={styles.line2}>Transportation Journey</span>
           </h1>
 

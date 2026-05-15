@@ -107,7 +107,7 @@
     color: transparent !important;
   }
 }
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 0.8rem 0;
   line-height: 1;
   text-align: center;
   transform: translateY(-8px);
@@ -120,8 +120,9 @@
   color: #ffffff;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  margin-bottom: 0.25rem;
-  transform: translateY(10px);
+  margin-bottom: 0.5; /* no gap */
+    margin-top: 0.6; /* no gap */
+  transform: none; /* remove extra vertical space */
 }
 .line2 {
   display: block;
@@ -136,7 +137,7 @@
   background-clip: text;
   color: transparent;
   display: inline-block;
-  transform: translateY(-8px);
+  transform: none; /* remove extra vertical space */
 }
 
 .lead {
