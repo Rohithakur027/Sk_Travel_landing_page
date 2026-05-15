@@ -28,8 +28,10 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Add 'home' class if on home page
+  const isHome = pathname === '/';
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ''}`}>
+    <header className={`${styles.header} ${isScrolled ? styles.headerScrolled : ''} ${isHome ? styles.home : ''}`}>
       <div className={styles.inner}>
         {/* Left Side: Logo + Navlinks Container */}
         <div className={styles.leftSideGroup}>

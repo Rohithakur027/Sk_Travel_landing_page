@@ -114,8 +114,7 @@ export default function ServicesSection() {
             <div className={styles.heroContent}>
               <div className={styles.heroBadge}>Our Services</div>
               <h1 className={styles.heroHeading}>
-                Comprehensive{" "}
-                <span className={styles.heroHighlight}>Transportation Solutions</span>
+                Comprehensive <br/><span className={styles.heroHighlight}>Transportation Solutions</span>
               </h1>
               <p className={styles.heroSubtitle}>
                 Tailored services designed to meet all your corporate transportation needs
@@ -199,7 +198,7 @@ export default function ServicesSection() {
             <span className={styles.ctaLine2}> transportation needs and get a</span>
             <span className={styles.ctaLine3}> customized quote</span>
           </p>
-          <Link href="/contact#booking" className={styles.ctaBtn}>Send An Enquiry →</Link>
+          <Link href="/contact#booking" className={styles.ctaBtn}>Send an Enquiry →</Link>
         </div>
       </section>
     </>
