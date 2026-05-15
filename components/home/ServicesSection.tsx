@@ -7,6 +7,7 @@ const SERVICES = [
     description:
       "Reliable pickup and drop-off services for all major airports. Track flights in real-time and meet your team on schedule.",
     image: "/images/airpot.jpeg",
+    imagePosition: "center",
     badge: "Popular",
     badgeClass: styles.badgePopular,
   },
@@ -14,7 +15,8 @@ const SERVICES = [
     title: "Corporate Shuttles",
     description:
       "Daily commute solutions for your employees with scheduled routes, dedicated vehicles, and professional drivers.",
-    image: "/images/corporateshuttles.jpeg",
+    image: "/images/corporatesuttlenew.jpeg",
+    imagePosition: "right center",
     badge: "Best Value",
     badgeClass: styles.badgeBestValue,
   },
@@ -23,6 +25,7 @@ const SERVICES = [
     description:
       "Premium transportation for corporate events, conferences, and special occasions with flexible group booking options.",
     image: "/images/premiumfleet.jpeg",
+    imagePosition: "center",
     badge: "Premium",
     badgeClass: styles.badgePremium,
   },
@@ -58,6 +61,7 @@ export default function ServicesSection() {
                   fill
                   className={styles.image}
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  style={{ objectPosition: service.imagePosition }}
                 />
                 {/* Badge */}
                 <span className={`${styles.badge} ${service.badgeClass}`}>

@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <main>
+    <main style={{ marginTop: '3rem' }}>
       <CONTACT />
     </main>
   );

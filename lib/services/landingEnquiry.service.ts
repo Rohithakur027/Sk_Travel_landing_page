@@ -1,5 +1,6 @@
 import { sheets } from '@/lib/googleSheets';
 import transporter from '@/lib/mailer';
+import { prisma } from '@/lib/prisma';
 import axios from 'axios';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -13,6 +14,11 @@ export interface BaseEnquiryData {
   name: string;
   email: string;
   phone: string;
+  pickup_lat?: number;
+  pickup_lng?: number;
+  destination_lat?: number;
+  destination_lng?: number;
+  distance_km?: number;
 }
 
 export interface InstantEnquiryData extends BaseEnquiryData {
@@ -241,6 +247,61 @@ export async function sendTeamNotification(
     to: recipientEmails.length > 0 ? recipientEmails.join(', ') : process.env.NOTIFY_EMAIL,
     subject,
     html,
+  });
+}
+
+// ─── Supabase (Prisma) ────────────────────────────────────────────────────────
+
+/**
+ * Persists the enquiry to Supabase via Prisma.
+ * - special_booking → special_booking_inquiries
+ * - instant/scheduled → bookings
+ *
+ * Throws on failure; callers should wrap in Promise.allSettled if they want
+ * the DB write to be non-blocking alongside other sinks.
+ */
+export async function saveToDatabase(data: BookingEnquiryData): Promise<void> {
+  if (data.type === 'special_booking') {
+    await prisma.special_booking_inquiries.create({
+      data: {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        phone: data.phone,
+        company_name: data.company_name,
+        message: data.message,
+      },
+    });
+    return;
+  }
+
+  // Combine date (YYYY-MM-DD) + time (HH:mm) as IST → real Date.
+  let scheduledDateTime: Date | null = null;
+  if (data.type === 'scheduled' && data.date && data.time) {
+    const iso = `${data.date}T${data.time.length === 5 ? data.time : data.time.slice(0, 5)}:00+05:30`;
+    const parsed = new Date(iso);
+    if (!isNaN(parsed.getTime())) scheduledDateTime = parsed;
+  }
+
+  await prisma.bookings.create({
+    data: {
+      is_scheduled: data.type === 'scheduled',
+      booking_type: data.type,
+      pickup_location: data.pickup_location,
+      destination: data.destination,
+      passengers: data.passengers,
+      vehicle_type: data.vehicle_type,
+      customer_name: data.name,
+      customer_email: data.email,
+      customer_mobile: data.phone,
+      scheduled_date_time: scheduledDateTime,
+      status: 'pending',
+      pickup_lat: data.pickup_lat ?? null,
+      pickup_lng: data.pickup_lng ?? null,
+      destination_lat: data.destination_lat ?? null,
+      destination_lng: data.destination_lng ?? null,
+      distance_km: data.distance_km ?? null,
+    },
   });
 }
 

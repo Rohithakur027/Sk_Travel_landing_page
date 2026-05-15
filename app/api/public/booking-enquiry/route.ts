@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
   appendToGoogleSheet,
+  saveToDatabase,
   sendTeamNotification,
   sendToAdminAPI,
   type BookingEnquiryData,
@@ -140,6 +141,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     name: (body.name as string).trim(),
     email: (body.email as string).trim(),
     phone: (body.phone as string).trim(),
+    ...(typeof body.pickup_lat === 'number' && { pickup_lat: body.pickup_lat }),
+    ...(typeof body.pickup_lng === 'number' && { pickup_lng: body.pickup_lng }),
+    ...(typeof body.destination_lat === 'number' && { destination_lat: body.destination_lat }),
+    ...(typeof body.destination_lng === 'number' && { destination_lng: body.destination_lng }),
+    ...(typeof body.distance_km === 'number' && { distance_km: body.distance_km }),
   };
 
   const rawScheduled = body as unknown as ScheduledEnquiryData;
@@ -153,14 +159,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         }
       : { ...base, type: 'instant' };
 
-  // Run Google Sheets write, team email, and admin API in parallel.
+  // Run DB write, Google Sheets, team email, and admin API in parallel.
   // These are non-critical — a failure in any must NOT block the response.
-  const [sheetsResult, emailResult, adminApiResult] = await Promise.allSettled([
+  const [dbResult, sheetsResult, emailResult, adminApiResult] = await Promise.allSettled([
+    saveToDatabase(data),
     appendToGoogleSheet(data),
     sendTeamNotification(data),
     sendToAdminAPI(data),
   ]);
 
+  if (dbResult.status === 'rejected') {
+    console.error('[BookingEnquiry] DB insert failed:', dbResult.reason);
+  }
   if (sheetsResult.status === 'rejected') {
     console.error('[BookingEnquiry] Google Sheets append failed:', sheetsResult.reason);
   }

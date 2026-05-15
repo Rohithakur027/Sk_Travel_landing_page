@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
   appendToGoogleSheet,
+  saveToDatabase,
   sendTeamNotification,
   sendToAdminAPI,
   type SpecialBookingData,
@@ -80,12 +81,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     message: String(body.message || '').trim(),
   };
 
-  const [sheetsResult, emailResult, adminApiResult] = await Promise.allSettled([
+  const [dbResult, sheetsResult, emailResult, adminApiResult] = await Promise.allSettled([
+    saveToDatabase(data),
     appendToGoogleSheet(data),
     sendTeamNotification(data),
     sendToAdminAPI(data),
   ]);
 
+  if (dbResult.status === 'rejected') {
+    console.error('[SpecialBooking] DB insert failed:', dbResult.reason);
+  }
   if (sheetsResult.status === 'rejected') {
     console.error('[SpecialBooking] Sheets failed:', sheetsResult.reason);
   }
