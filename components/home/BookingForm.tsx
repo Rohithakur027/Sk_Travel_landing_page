@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import { useToast } from "@/lib/context/ToastContext";
 import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus, CheckCircle, XCircle, Loader2, User, Mail, Phone, ChevronDown } from "lucide-react";
 import styles from "./BookingForm.module.css";
@@ -125,6 +124,15 @@ const serviceOptions = [
   { value: "outstation", label: "Out Station" },
 ];
 
+const vehiclePassengerLimits: Record<string, number> = {
+  sedan: 3,
+  suv: 5,
+};
+
+function getMaxPassengers(vehicle: string): number {
+  return vehiclePassengerLimits[vehicle] ?? 10;
+}
+
 /** "2024-05-24T14:30" → "2024-05-24, 02:30 PM" */
 function formatDateTimeDisplay(dt: string): string {
   if (!dt) return "";
@@ -147,6 +155,9 @@ export default function BookingForm() {
   );
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
+  const [pickupCoords, setPickupCoords] = useState<[number, number] | null>(null);
+  const [destinationCoords, setDestinationCoords] = useState<[number, number] | null>(null);
+  const [distanceKm, setDistanceKm] = useState<number | null>(null);
   const [vehicleType, setVehicleType] = useState("");
   const [serviceType, setServiceType] = useState("");
   const [isReturnTrip, setIsReturnTrip] = useState(false);
@@ -156,8 +167,32 @@ export default function BookingForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [fieldErrors, setFieldErrors] = useState({ email: "", phone: "" });
+  const [passengerError, setPassengerError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { showToast } = useToast();
+
+  useEffect(() => {
+    if (!pickupCoords || !destinationCoords) {
+      setDistanceKm(null);
+      return;
+    }
+    const token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+    if (!token) return;
+    const [pLng, pLat] = pickupCoords;
+    const [dLng, dLat] = destinationCoords;
+    fetch(
+      `https://api.mapbox.com/directions/v5/mapbox/driving/${pLng},${pLat};${dLng},${dLat}?access_token=${token}`
+    )
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.routes?.length > 0) {
+          setDistanceKm(Math.round((data.routes[0].distance / 1000) * 100) / 100);
+        } else {
+          setDistanceKm(null);
+        }
+      })
+      .catch(() => setDistanceKm(null));
+  }, [pickupCoords, destinationCoords]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,20 +209,51 @@ export default function BookingForm() {
       name:  name.trim(),
       email: email.trim(),
       phone: phone.trim(),
+      ...(pickupCoords && {
+        pickup_lng: pickupCoords[0],
+        pickup_lat: pickupCoords[1],
+      }),
+      ...(destinationCoords && {
+        destination_lng: destinationCoords[0],
+        destination_lat: destinationCoords[1],
+      }),
+      ...(distanceKm !== null && { distance_km: distanceKm }),
       ...(bookingType === "scheduled" && dateTime && {
         date: dateTime.split("T")[0],
         time: formatDateTimeDisplay(dateTime).split(", ")[1],
       }),
     };
 
-    // Validate email and phone before sending
+    // Validate all required fields
+    const missingFields: string[] = [];
+    if (!pickup.trim()) missingFields.push("pickup location");
+    if (!destination.trim()) missingFields.push("destination");
+    if (!vehicleType) missingFields.push("vehicle type");
+    if (!serviceType) missingFields.push("booking type");
+    if (!name.trim()) missingFields.push("your name");
+    if (bookingType === "scheduled" && !dateTime) missingFields.push("date & time");
+
     const emailErr = email.trim() === "" ? "Email is required." : !isValidEmail(email) ? "Enter a valid email address." : "";
     const phoneErr = phone.trim() === "" ? "Mobile number is required." : !isValidPhone(phone) ? "Enter a valid 10-digit mobile number." : "";
-    if (emailErr || phoneErr) {
+
+    if (missingFields.length > 0 || emailErr || phoneErr) {
       setFieldErrors({ email: emailErr, phone: phoneErr });
+      if (missingFields.length > 0) {
+        showToast("error", "Please fill in all required fields before submitting.");
+      }
       return;
     }
     setFieldErrors({ email: "", phone: "" });
+
+    // Validate passenger count against vehicle type
+    if (vehicleType) {
+      const max = getMaxPassengers(vehicleType);
+      if (passengers > max) {
+        const label = vehicleOptions.find((o) => o.value === vehicleType)?.label ?? vehicleType;
+        setPassengerError(`Max ${max} passengers allowed for ${label}.`);
+        return;
+      }
+    }
 
     setIsSubmitting(true);
     try {
@@ -211,15 +277,6 @@ export default function BookingForm() {
     }
   };
 
-  const isFormIncomplete = 
-    !pickup.trim() || 
-    !destination.trim() || 
-    !vehicleType || 
-    !serviceType || 
-    !name.trim() || 
-    !email.trim() || 
-    !phone.trim() || 
-    (bookingType === "scheduled" && !dateTime);
 
   return (
     <div className={styles.card}>
@@ -250,7 +307,7 @@ export default function BookingForm() {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <div className={`${styles.grid} ${
           bookingType === "instant" ? styles.instantGrid : styles.scheduledGrid
         }`}>
@@ -261,10 +318,13 @@ export default function BookingForm() {
             leftIcon={<Navigation size={20} />}
             value={pickup}
             onChange={(val) => setPickup(val)}
+            onCoordinatesChange={(coords) => {
+              setPickupCoords(coords);
+              setDistanceKm(null);
+            }}
             className={`${styles.input} ${styles.hasIcon}`}
             wrapperClassName={styles.inputWrapper}
             iconClassName={styles.iconLeft}
-            required
           />
           <AddressAutocomplete
             id="destination"
@@ -272,10 +332,13 @@ export default function BookingForm() {
             leftIcon={<MapPin size={20} />}
             value={destination}
             onChange={(val) => setDestination(val)}
+            onCoordinatesChange={(coords) => {
+              setDestinationCoords(coords);
+              setDistanceKm(null);
+            }}
             className={`${styles.input} ${styles.hasIcon}`}
             wrapperClassName={styles.inputWrapper}
             iconClassName={styles.iconLeft}
-            required
           />
 
           {/* Row 2: Booking Type, Vehicle Type & Passengers */}
@@ -307,7 +370,22 @@ export default function BookingForm() {
               options={vehicleOptions}
               leftIcon={<Car size={20} />}
               value={vehicleType}
-              onChange={(e) => setVehicleType(e.target.value)}
+              onChange={(e) => {
+                const v = e.target.value;
+                setVehicleType(v);
+                if (v) {
+                  const max = getMaxPassengers(v);
+                  if (passengers > max) {
+                    setPassengers(max);
+                    const label = vehicleOptions.find((o) => o.value === v)?.label ?? v;
+                    setPassengerError(`Max ${max} passengers for ${label}. Count adjusted.`);
+                  } else {
+                    setPassengerError("");
+                  }
+                } else {
+                  setPassengerError("");
+                }
+              }}
               required
             />
           </div>
@@ -330,7 +408,6 @@ export default function BookingForm() {
                     } catch (err) {}
                   }}
                   className={`${styles.input} ${styles.hasIcon} ${styles.datetimeInput}`}
-                  required
                 />
                 {!dateTime ? (
                   <div className={styles.datetimePlaceholder}>Date & Time *</div>
@@ -342,13 +419,13 @@ export default function BookingForm() {
           )}
 
           <div className={`${styles.inputGroup} ${bookingType === "instant" ? styles.wideField : ""}`}>
-            <div className={styles.counterWrapper}>
+            <div className={`${styles.counterWrapper} ${passengerError ? styles.counterError : ""}`}>
               <div className={styles.iconLeft}><Users size={20} /></div>
               <span className={styles.counterLabel}>Passengers *</span>
               <div className={styles.counterControls}>
                 <button
                   type="button"
-                  onClick={() => setPassengers(Math.max(1, passengers - 1))}
+                  onClick={() => { setPassengers(Math.max(1, passengers - 1)); setPassengerError(""); }}
                   className={styles.counterBtn}
                 >
                   <Minus size={18} />
@@ -356,13 +433,23 @@ export default function BookingForm() {
                 <span className={styles.counterValue}>{passengers}</span>
                 <button
                   type="button"
-                  onClick={() => setPassengers(Math.min(10, passengers + 1))}
+                  onClick={() => {
+                    const max = vehicleType ? getMaxPassengers(vehicleType) : 10;
+                    if (passengers < max) {
+                      setPassengers(passengers + 1);
+                      setPassengerError("");
+                    } else {
+                      const label = vehicleOptions.find((o) => o.value === vehicleType)?.label ?? vehicleType ?? "this vehicle";
+                      setPassengerError(`Max ${max} passengers allowed for ${label}.`);
+                    }
+                  }}
                   className={styles.counterBtn}
                 >
                   <Plus size={18} />
                 </button>
               </div>
             </div>
+            {passengerError && <span className={styles.errorMsg}>{passengerError}</span>}
           </div>
         </div>
 
@@ -374,7 +461,6 @@ export default function BookingForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             leftIcon={<User size={20} />}
-            required
           />
           <Input
             id="email"
@@ -393,7 +479,6 @@ export default function BookingForm() {
             }}
             error={fieldErrors.email}
             leftIcon={<Mail size={20} />}
-            required
           />
           <Input
             id="phone"
@@ -413,15 +498,14 @@ export default function BookingForm() {
             }}
             error={fieldErrors.phone}
             leftIcon={<Phone size={20} />}
-            required
           />
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className={`${styles.submitBtn} ${isSubmitting ? styles.submitBtnLoading : ""} ${isFormIncomplete ? styles.submitBtnDisabled : ""}`}
-          disabled={isSubmitting || isFormIncomplete}
+          className={`${styles.submitBtn} ${isSubmitting ? styles.submitBtnLoading : ""}`}
+          disabled={isSubmitting}
         >
           {isSubmitting ? (
             <>
@@ -430,7 +514,7 @@ export default function BookingForm() {
             </>
           ) : (
             <>
-              {isFormIncomplete ? "Submit Enquiry" : "Submit Enquiry"}
+              Submit Enquiry
               <ArrowRight size={20} />
             </>
           )}
@@ -439,7 +523,6 @@ export default function BookingForm() {
 
       {/* Footer Text */}
       <div className={styles.footer}>
-        <Image src="/icons/spark.svg" alt="Spark" width={16} height={16} />
         <span>
           For Exclusive Bookings and Corporate Inquiries, Please Contact us at:{" "}
           <a

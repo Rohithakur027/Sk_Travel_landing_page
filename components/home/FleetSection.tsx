@@ -31,10 +31,11 @@ export default function FleetSection() {
           
           <div className={styles.card}>
             <Image 
-              src="/images/corporateshuttles.jpeg" 
-              alt="Corporate Shuttles" 
-              fill 
-              className={styles.bgImg} 
+              src="/images/corporatesuttlenew.jpeg"
+              alt="Corporate Shuttles"
+              fill
+              className={styles.bgImg}
+              style={{ objectPosition: "right center" }}
             />
             <div className={styles.overlay} />
             <div className={styles.content}>

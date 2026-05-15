@@ -18,21 +18,17 @@ const FEATURE_CARDS = [
 export default function FeaturesPage() {
   return (
     <section className={styles.section}>
-      <div className={styles.headerBand}>
-        <div className={styles.container}>
-          <div className={styles.header}>
-            <div className={styles.pillImage}>
-              <span className={styles.pillInner}>Platform Features</span>
-            </div>
-            <div className={styles.pillImageMobile}>
-              <span className={styles.pillInner}>Platform Features</span>
-            </div>
-            <h1 className={styles.title}>
-              <span>Advanced Features for</span>
-              <br />
-              <span className={styles.titleGold}>Modern Transportation</span>
+      <div className={styles.heroSection}>
+        <div className="container">
+          <div className={styles.heroContent}>
+            <div className={styles.heroBadge}>Platform Features</div>
+            <h1 className={styles.heroHeading}>
+              Advanced Features for<br />
+              <span className={styles.heroHighlight}>Modern Transportation</span>
             </h1>
-            <p className={styles.lead}>Discover the technology and features that make SK Voyage the smart choice for corporate transportation</p>
+            <p className={styles.heroSubtitle}>
+              Discover the technology and features that make SK Voyage the smart choice for corporate transportation
+            </p>
           </div>
         </div>
       </div>

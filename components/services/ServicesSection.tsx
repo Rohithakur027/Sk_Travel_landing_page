@@ -18,6 +18,7 @@ const MAIN_SERVICES = [
       "Never miss a flight again. Our airport transfer service provides punctual, stress-free transportation with real-time flight tracking.",
     iconSrc: "/Container (4).png",
     image: "/images/airpot.jpeg",
+    imagePosition: "center",
     features: [
       "Flight tracking",
       "Meet & greet service",
@@ -31,6 +32,7 @@ const MAIN_SERVICES = [
       "Premium transportation for executives and VIP clients. Enjoy a first-class experience with our luxury fleet and highly trained chauffeurs.",
     iconSrc: "/Container (6).png",
     image: "/images/safetyprior.png",
+    imagePosition: "center",
     features: [
       "Luxury fleet vehicles",
       "Certified chauffeurs",
@@ -43,7 +45,8 @@ const MAIN_SERVICES = [
     description:
       "Provide your employees with a reliable and comfortable daily commute. Our shuttle services are designed to maximize productivity and employee satisfaction.",
     iconSrc: "/Container (5).png",
-    image: "/images/corporateshuttles.jpeg",
+    image: "/images/corporatesuttlenew.jpeg",
+    imagePosition: "right center",
     features: [
       "Fixed route scheduling",
       "GPS tracked vehicles",
@@ -57,6 +60,7 @@ const MAIN_SERVICES = [
       "Seamless group transportation for conferences, corporate events, and special occasions. We coordinate every detail to ensure your event runs smoothly.",
     iconSrc: "/Container (8).png",
     image: "/images/premiumfleet.jpeg",
+    imagePosition: "center",
     features: [
       "Group capacity planning",
       "Event day coordination",
@@ -103,25 +107,25 @@ const ADDITIONAL_SERVICES = [
 export default function ServicesSection() {
   return (
     <>
-      <section id="services" className={styles.section} style={{ minHeight: '500px' }}>
-        {/* ── White top zone: Header + 4 Cards ─────────────────── */}
-        <div className={styles.container}>
-          <div className={styles.header} style={{ height: '580px', padding: '10rem 0 6rem' }}>
-            <div className={styles.content}>
-              <div className={styles.pillImage}>
-                <div className={styles.pillInner}>Our Services</div>
-              </div>
-              <h1 className={styles.heading}>
-                <span>Comprehensive</span>
-                <br />
-                <span className={styles.headingGold}>Transportation Solutions</span>
+      <section id="services" className={styles.section}>
+        {/* ── Hero — mirrors About page layout exactly ──────────── */}
+        <div className={styles.heroSection}>
+          <div className="container">
+            <div className={styles.heroContent}>
+              <div className={styles.heroBadge}>Our Services</div>
+              <h1 className={styles.heroHeading}>
+                Comprehensive{" "}
+                <span className={styles.heroHighlight}>Transportation Solutions</span>
               </h1>
-              <p className={styles.subheading}>
+              <p className={styles.heroSubtitle}>
                 Tailored services designed to meet all your corporate transportation needs
               </p>
             </div>
           </div>
+        </div>
 
+        {/* ── Cards Grid ────────────────────────────────────────── */}
+        <div className={styles.container}>
           <div className={styles.grid}>
             {MAIN_SERVICES.map((service, idx) => (
               <div key={idx} className={styles.card}>
@@ -132,6 +136,7 @@ export default function ServicesSection() {
                     fill
                     className={styles.image}
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{ objectPosition: service.imagePosition ?? "center" }}
                   />
                 </div>
                 <div className={styles.body}>

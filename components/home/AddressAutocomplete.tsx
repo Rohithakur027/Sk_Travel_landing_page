@@ -7,6 +7,7 @@ interface AddressAutocompleteProps {
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
+  onCoordinatesChange?: (coords: [number, number] | null) => void;
   leftIcon?: React.ReactNode;
   required?: boolean;
   className?: string;
@@ -14,18 +15,29 @@ interface AddressAutocompleteProps {
   iconClassName?: string;
 }
 
-// Bangalore bounding box [minLng, minLat, maxLng, maxLat] — wide enough to
-// cover every neighbourhood, layout, and surrounding suburb (Whitefield,
-// Electronic City, Yelahanka, Kengeri, Anekal, Devanahalli, etc.).
-const BANGALORE_BBOX = "77.30,12.70,77.90,13.30";
+// Bias all results toward Bangalore so every locality, layout, and
+// neighbourhood (Whitefield, Koramangala, HSR, Yelahanka, Anekal, etc.)
+// ranks first. We intentionally do NOT pass a bbox so users can still pick
+// major metros outside Karnataka.
 const BANGALORE_PROXIMITY = "77.5946,12.9716";
 const BANGALORE_KEYWORDS = ["bangalore", "bengaluru", "karnataka"];
+
+// Outside Bangalore, only allow these big Indian cities through. Anything
+// else (small towns, villages) gets filtered out.
+const BIG_CITIES_OUTSIDE_BANGALORE = new Set([
+  "mumbai", "delhi", "new delhi", "chennai", "hyderabad", "kolkata",
+  "pune", "ahmedabad", "jaipur", "lucknow", "surat", "kanpur", "nagpur",
+  "indore", "bhopal", "visakhapatnam", "patna", "vadodara", "ghaziabad",
+  "ludhiana", "agra", "nashik", "faridabad", "meerut", "rajkot", "varanasi",
+  "coimbatore", "kochi", "chandigarh", "mysore", "mysuru", "mangalore", "mangaluru",
+]);
 
 const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   id,
   placeholder,
   value,
   onChange,
+  onCoordinatesChange,
   leftIcon,
   required,
   className,
@@ -69,11 +81,16 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
       return;
     }
 
-    // Append "Bangalore" hint to the query when the user hasn't typed it
-    // themselves — keeps the search loose but biases results toward the city.
+    // Detect whether the user is searching outside Bangalore. If they typed
+    // a big-city name (Mumbai, Delhi, etc.) we let it through unmodified so
+    // Mapbox can resolve it. Otherwise we append "Bangalore" so generic
+    // queries like "HSR" or "Koramangala" stay biased to the city.
     const lowered = query.toLowerCase();
-    const hasCityHint = BANGALORE_KEYWORDS.some((kw) => lowered.includes(kw));
-    const searchQuery = hasCityHint ? query : `${query}, Bangalore`;
+    const hasBangaloreHint = BANGALORE_KEYWORDS.some((kw) => lowered.includes(kw));
+    const hasBigCityHint = Array.from(BIG_CITIES_OUTSIDE_BANGALORE).some((c) =>
+      lowered.includes(c)
+    );
+    const searchQuery = hasBangaloreHint || hasBigCityHint ? query : `${query}, Bangalore`;
 
     const currentRequest = ++requestIdRef.current;
     setLoading(true);
@@ -83,13 +100,13 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         {
           params: {
             access_token: mapboxToken,
-            limit: 8,
+            limit: 10,
             country: "IN",
             proximity: BANGALORE_PROXIMITY,
-            bbox: BANGALORE_BBOX,
             language: "en",
             autocomplete: true,
-            // Cover localities, neighborhoods, streets, landmarks, POIs.
+            // Cover localities, neighborhoods, streets, landmarks, POIs, plus
+            // city-level "place" results so big metros surface too.
             types: "place,locality,neighborhood,address,poi,district,postcode",
           },
         }
@@ -100,14 +117,26 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
 
       const features = (response.data.features || [])
         .filter((f: any) => {
-          // bbox already constrains geographically; do a soft text check too
-          // so anything obviously outside Bangalore gets hidden.
           const name = (f.place_name || "").toLowerCase();
-          return BANGALORE_KEYWORDS.some((kw) => name.includes(kw));
+          const text = (f.text || "").toLowerCase();
+          const placeTypes: string[] = f.place_type || [];
+
+          // Always keep Bangalore-area results — every locality, layout,
+          // neighbourhood, POI inside the city.
+          if (BANGALORE_KEYWORDS.some((kw) => name.includes(kw))) return true;
+
+          // Outside Bangalore, only allow whitelisted big cities at the
+          // city level (Mapbox tags those with place_type "place").
+          if (placeTypes.includes("place") && BIG_CITIES_OUTSIDE_BANGALORE.has(text)) {
+            return true;
+          }
+
+          return false;
         })
         .map((f: any) => ({
           id: f.id || f.center.join(","),
           display_name: f.place_name || f.text,
+          center: f.center as [number, number], // [lng, lat]
         }));
 
       setSuggestions(features);
@@ -126,12 +155,14 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     onChange(newValue);
+    onCoordinatesChange?.(null); // reset coords when user types manually
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => fetchSuggestions(newValue), 250);
   };
 
   const handleSuggestionClick = (suggestion: any) => {
     onChange(suggestion.display_name);
+    onCoordinatesChange?.(suggestion.center ?? null);
     setSuggestions([]);
     setShowSuggestions(false);
   };

@@ -141,6 +141,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     name: (body.name as string).trim(),
     email: (body.email as string).trim(),
     phone: (body.phone as string).trim(),
+    ...(typeof body.pickup_lat === 'number' && { pickup_lat: body.pickup_lat }),
+    ...(typeof body.pickup_lng === 'number' && { pickup_lng: body.pickup_lng }),
+    ...(typeof body.destination_lat === 'number' && { destination_lat: body.destination_lat }),
+    ...(typeof body.destination_lng === 'number' && { destination_lng: body.destination_lng }),
+    ...(typeof body.distance_km === 'number' && { distance_km: body.distance_km }),
   };
 
   const rawScheduled = body as unknown as ScheduledEnquiryData;

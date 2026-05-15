@@ -14,6 +14,11 @@ export interface BaseEnquiryData {
   name: string;
   email: string;
   phone: string;
+  pickup_lat?: number;
+  pickup_lng?: number;
+  destination_lat?: number;
+  destination_lng?: number;
+  distance_km?: number;
 }
 
 export interface InstantEnquiryData extends BaseEnquiryData {
@@ -291,6 +296,11 @@ export async function saveToDatabase(data: BookingEnquiryData): Promise<void> {
       customer_mobile: data.phone,
       scheduled_date_time: scheduledDateTime,
       status: 'pending',
+      pickup_lat: data.pickup_lat ?? null,
+      pickup_lng: data.pickup_lng ?? null,
+      destination_lat: data.destination_lat ?? null,
+      destination_lng: data.destination_lng ?? null,
+      distance_km: data.distance_km ?? null,
     },
   });
 }

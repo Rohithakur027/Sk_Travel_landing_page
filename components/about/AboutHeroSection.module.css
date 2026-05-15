@@ -10,10 +10,12 @@
   align-items: center;
   max-width: 48rem;
   margin: 0 auto;
+  padding-top: 3rem;
 }
 
 .badge {
   display: inline-block;
+  align-self: center;
   padding: 0.5rem 1.5rem;
   border-radius: 9999px;
   background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%);
@@ -51,10 +53,13 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 9rem 1.5rem 4rem; /* Added padding to clear fixed navbar and horizontal edges */
+    padding: 9rem 1.5rem 4rem;
+  }
+  .content {
+    padding-top: 1.5rem;
   }
   .heading {
-    font-size: 2.7rem; /* Slightly smaller for mobile flow */
+    font-size: 2.7rem;
     line-height: 1.2;
   }
   .subtitle {
