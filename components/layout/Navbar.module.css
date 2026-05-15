@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  background-color: transparent;
+  background-color: rgba(45, 49, 66, 1);
   transition: all 0.3s ease;
   padding: 0 1rem;
 }

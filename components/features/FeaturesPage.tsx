@@ -18,22 +18,18 @@ const FEATURE_CARDS = [
 export default function FeaturesPage() {
   return (
     <section className={styles.section}>
-      <div className={styles.heroSection}>
-        <div className="container">
-          <div className={styles.heroContent}>
-            <div className={styles.heroBadge}>Platform Features</div>
-            <h1 className={styles.heroHeading}>
-              Advanced Features for<br />
-              <span className={styles.heroHighlight}>Modern Transportation</span>
-            </h1>
-            <p className={styles.heroSubtitle}>
-              Discover the technology and features that make SK Voyage the smart choice for corporate transportation
-            </p>
-          </div>
+      <div className={styles.headerBand}>
+        <div>
+          <div className={styles.pillImageDesktop} style={{ margin: '0 auto 2rem' }}>Platform Features</div>
+          <h1 className={styles.title}>
+            Advanced Features for<br />
+            <span className={styles.titleGold}>Modern Transportation</span>
+          </h1>
+          <p className={styles.lead}>
+            Discover the technology and features that make SK Voyage the smart choice for corporate transportation
+          </p>
         </div>
       </div>
-      
-      
 
       <div className={styles.container}>
         <div className={styles.heroRow}>
@@ -210,7 +206,7 @@ export default function FeaturesPage() {
         <h3 className={styles.sectionTitle}>Experience These Features</h3>
         <p className={styles.sectionLead}>Schedule a demo to see how our platform can transform your <span className={styles.keepTogether}>corporate transportation</span></p>
         <div style={{marginTop:24}}>
-          <Link href="/contact#booking" className={styles.ctaBtn}>Send An Enquiry →</Link>
+          <Link href="/contact#booking" className={styles.ctaBtn}>Request a Demo →</Link>
         </div>
       </div>
 

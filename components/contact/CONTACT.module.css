@@ -16,7 +16,7 @@
 }
 
 .contactPage {
-  padding-top: var(--page-top-padding);
+  padding-top: 0;
 }
 
 .header {
@@ -1246,7 +1246,7 @@ section.contactPage > header,
 .contactPage > .header {
   background-color: rgba(45, 49, 66, 1) !important;
   text-align: center !important;
-  padding: 10rem 0 6rem !important; /* same as About .section */
+  padding: 6rem 0 4rem !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
