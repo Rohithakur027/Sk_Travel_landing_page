@@ -15,6 +15,16 @@
   padding: 0 1rem;
 }
 
+.headerScrolled {
+  background-color: transparent !important;
+}
+
+@media (min-width: 1024px) {
+  .headerScrolled {
+    background-color: rgba(45, 49, 66, 1);
+  }
+}
+
 
 
 .inner {
