@@ -118,7 +118,7 @@
   font-weight: 900;
   font-size: 4.5rem;
   color: #ffffff;
-  line-height: 1.1;
+  line-height: 1.3;
   letter-spacing: -0.02em;
   margin-bottom: 0.5; /* no gap */
     margin-top: 0.6; /* no gap */
@@ -1238,7 +1238,7 @@
 @media (max-width: 480px) {
   .contactPage .title, section.contactPage .title {
     transform: translateY(24px) !important;
-    margin-top: 18px !important;
+    margin-top: -58px !important;
   }
 }
 /* Apply About page first-section specs to Contact first section (desktop + mobile)
@@ -1278,7 +1278,7 @@ section.contactPage .line2 {
   font-family: var(--font-heading) !important;
   font-weight: 900 !important;
   color: #ffffff !important;
-  line-height: 1.1 !important;
+  line-height: 1.3 !important;
   letter-spacing: -0.02em !important;
 }
 
@@ -1330,7 +1330,7 @@ section.contactPage .lead {
   section.contactPage .line1,
   section.contactPage .line2 {
     font-size: 2.7rem !important;
-    line-height: 1.2 !important;
+    line-height: 1 !important;
     margin-top: 2rem !important;
   }
 
