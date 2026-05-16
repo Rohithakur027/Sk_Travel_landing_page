@@ -20,7 +20,7 @@ export default function FeaturesPage() {
     <section className={styles.section}>
       <div className={styles.headerBand}>
         <div>
-          <div className={styles.pillImageDesktop} style={{ margin: '0 auto 2rem' }}>Platform Features</div>
+          <div className={styles.pillImageDesktop} style={{ margin: '1.5rem auto 2rem' }}>Platform Features</div>
           <h1 className={styles.title}>
             Advanced Features for<br />
             <span className={styles.titleGold}>Modern Transportation</span>
