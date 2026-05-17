@@ -41,9 +41,8 @@
 .ctaWrap {
   display: flex;
   justify-content: center;
-  margin-bottom: 8px; /* reduced so text sits closer to pill (pill position unchanged) */
+  margin-bottom: 4px;
   margin-top: 0;
-  /* visual nudge only: translate preserves header height */
   transform: translateY(56px);
 }
 
@@ -107,10 +106,10 @@
     color: transparent !important;
   }
 }
-  margin: 0 0 0.8rem 0;
+  margin: 0 0 0.5rem 0;
   line-height: 1;
   text-align: center;
-  transform: translateY(-8px);
+  transform: translateY(-16px);
 }
 .line1 {
   display: block;
@@ -120,9 +119,8 @@
   color: #ffffff;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  margin-bottom: 0.5; /* no gap */
-    margin-top: 0.6; /* no gap */
-  transform: none; /* remove extra vertical space */
+  margin: 0 0 0.15rem 0;
+  transform: none;
 }
 .line2 {
   display: block;
@@ -137,7 +135,7 @@
   background-clip: text;
   color: transparent;
   display: inline-block;
-  transform: none; /* remove extra vertical space */
+  transform: none;
 }
 
 .lead {
@@ -148,8 +146,7 @@
   line-height: 1.6;
   font-weight: 400;
   text-align: center;
-  /* visual nudge down without changing header height */
-  transform: translateY(-8px);
+  transform: translateY(-16px);
 }
 
 .leadFirst {
@@ -167,7 +164,7 @@
   order: 3;
   flex-basis: 100%; /* force onto its own line on desktop */
   display: block;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .grid {
@@ -939,18 +936,18 @@
 }
 
   /* Final override: tighten the two hero title lines only, leave `.lead` spacing intact */
-  .title { display: inline-block; line-height: 1; }
-  .title .line1, .title .line2 { display: block; margin: 0; }
+  .title { display: inline-block; line-height: 1.05; overflow: visible; }
+  .title .line1, .title .line2 { display: block; margin: 0; line-height: 1.1; }
   /* Consolidated hero / lead responsive tuning: last block so it overrides earlier rules.
      Values chosen to keep desktop rhythm while tightening tablet/phone spacing. */
   @media (min-width: 1281px) {
-    .title .line2 { transform: translateY(-22px); -webkit-transform: translateY(-22px); }
+    .title .line2 { transform: translateY(-18px); -webkit-transform: translateY(-18px); }
     .lead { margin-top: 16px; }
     .header { min-height: 550px; }
   }
 
   @media (max-width: 1280px) and (min-width: 1025px) {
-    .title .line2 { transform: translateY(-12px); -webkit-transform: translateY(-12px); }
+    .title .line2 { transform: translateY(-10px); -webkit-transform: translateY(-10px); }
     .lead { margin-top: 12px; }
     .header { min-height: 480px; }
   }
@@ -1041,6 +1038,7 @@
 
   .line1 { margin-bottom: 0.25rem !important; }
   .line2 {
+    margin-top: 0.5rem !important;
     background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
@@ -1218,6 +1216,13 @@
     transform: none !important;
     margin: 0 auto !important;
   }
+
+  .title .line2,
+  section.contactPage .title .line2,
+  .contactPage .title .line2 {
+    margin-top: 0.75rem !important;
+    transform: none !important;
+  }
 }
 
 /* Final, high-specificity overrides for pill placement on phones */
@@ -1365,6 +1370,55 @@ section.contactPage .header .ctaWrap {
 @media (max-width: 480px) {
   .contactPage .header .ctaWrap,
   section.contactPage .header .ctaWrap {
-    transform: translateY(28px) !important;
+    transform: translateY(54px) !important;
+    margin-bottom: 8px !important;
+  }
+
+  .contactPage .header .ctaImg,
+  section.contactPage .header .ctaImg {
+    margin-top: 0 !important;
+  }
+}
+
+@media (min-width: 821px) {
+  section.contactPage .title .line1,
+  .contactPage .title .line1 {
+    margin-bottom: 0.75rem !important;
+  }
+
+  section.contactPage .title .line2,
+  .contactPage .title .line2 {
+    display: block !important;
+    margin-top: -0.65rem !important;
+    line-height: 1.12 !important;
+    transform: translateX(-0.25rem) !important;
+    -webkit-transform: translateX(-0.25rem) !important;
+    padding-bottom: 0.31rem !important;
+  }
+}
+
+/* Override heading push caused by later mobile overrides.
+   Pull the Contact hero text up without moving the pill. */
+@media (max-width: 768px) {
+  .contactPage .line1,
+  .contactPage .line2,
+  section.contactPage .line1,
+  section.contactPage .line2 {
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .contactPage .title,
+  section.contactPage .title {
+    transform: none !important;
+    margin-top: 0 !important;
+  }
+
+  .contactPage .line1,
+  .contactPage .line2,
+  section.contactPage .line1,
+  section.contactPage .line2 {
+    margin-top: 0 !important;
   }
 }
