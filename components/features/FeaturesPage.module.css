@@ -18,7 +18,7 @@
   color: #ffffff;
   font-size: 1rem;
   font-weight: 700;
-  margin: 0 auto 2rem;
+  margin: 1.5rem auto 2rem;
   position: relative;
   z-index: 2;
 }
@@ -117,20 +117,18 @@
   .headerBand { min-height: 580px; padding-bottom: 20px; }
 }
 
-@media (min-width: 481px) {
-  .pillImageDesktop {
-    display: inline-block;
-    padding: 0.5rem 1.5rem;
-    border-radius: 9999px;
-    background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%);
-    border: 1px solid rgba(255,210,63,0.3);
-    color: #ffffff;
-    font-size: 0.875rem;
-    font-weight: 700;
-    margin: 0 auto 2rem;
-    position: relative;
-    z-index: 2;
-  }
+.pillImageDesktop {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%);
+  border: 1px solid rgba(255,210,63,0.3);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin: 1.5rem auto 2rem;
+  position: relative;
+  z-index: 2;
 }
 .title { font-family: var(--font-heading); font-size: 4.5rem; font-weight: 900; color: #ffffff; margin: 0 0 1.5rem 0; line-height: 1.1; letter-spacing: -0.02em; text-align: center; }
 .titleGold { display: inline-block; background: linear-gradient(171.05deg, #FFD23F 5.73%, #FFA726 94.27%), linear-gradient(0deg, rgba(0,0,0,0), rgba(0,0,0,0)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; text-align: center; }
@@ -714,8 +712,6 @@
     height: auto;
   }
   .container { padding: 0 1rem; }
-  .pillImageMobile { display: inline-block !important; padding: 0.5rem 1.5rem; border-radius: 9999px; background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%); border: 1px solid rgba(255,210,63,0.3); color: #ffffff; font-size: 0.875rem; font-weight: 700; margin: 0 auto 1.25rem; }
-  .pillImage, .pillImageDesktop { display: none !important; }
   .title { font-size: 2.25rem; line-height: 1.2; margin-bottom: 1rem; }
   .titleGold { font-size: 2.25rem; line-height: 1.2; }
   .lead { font-size: 0.95rem; color: rgba(255,255,255,0.5); max-width: 48rem; margin: 0 auto; }
