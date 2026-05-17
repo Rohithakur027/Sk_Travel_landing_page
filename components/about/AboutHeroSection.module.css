@@ -34,6 +34,9 @@
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 .highlight {
@@ -43,12 +46,18 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 .subtitle {
   font-size: 1.25rem;
   color: rgba(255,255,255,0.5);
   line-height: 1.6;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 @media (max-width: 768px) {
