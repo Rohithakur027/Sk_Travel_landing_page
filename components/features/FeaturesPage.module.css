@@ -72,14 +72,12 @@
 
   /* Match Contact page mobile header dimensions */
   /* Match Services page mobile header dimensions */
-@media (max-width: 480px) {
   .headerBand {
     padding-top: var(--page-top-padding);
     padding-bottom: 2rem;
     margin-top: 0;
     min-height: auto;
   }
-}
 
   /* Reduce header internal paddings and row gaps on phones so elements sit tighter */
   .header { padding-top: 1.25rem; padding-bottom: 0.5rem; }
