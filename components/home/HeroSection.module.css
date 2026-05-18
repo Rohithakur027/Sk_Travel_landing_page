@@ -12,6 +12,7 @@
     min-height: auto; /* Allow content to define height */
     margin-bottom: 0;
     padding-bottom: 4rem;
+    background-color: transparent;
   }
 }
 
@@ -23,6 +24,17 @@
   background-size: cover;
   background-repeat: no-repeat;
   opacity: 1;
+}
+
+/* Mobile-specific: crop and shift the background so unwanted lower portion doesn't render */
+@media (max-width: 768px) {
+  .bg {
+    /* keep the focal area visible near the top */
+    background-position: center top !important;
+    /* clip the bottom 40% so the lower part of the image won't show */
+    -webkit-clip-path: inset(0 0 40% 0);
+    clip-path: inset(0 0 40% 0);
+  }
 }
 
 .content {
