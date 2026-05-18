@@ -48,6 +48,7 @@
 @media (max-width: 480px) {
   /* hide the desktop pill and show the mobile pill under the image */
   .pillImage { display: none !important; }
+  .pillImageDesktop { display: none !important; }
   /* Make mobile pill flexible (no fixed width) so text cannot overflow */
   .pillImageMobile { display: inline-flex; justify-content: center; align-items: center; margin: 2px auto 12px; padding: 0.6rem 1.2rem !important; min-height: 44px; border-radius: 9999px; background: linear-gradient(168.37deg, rgba(255, 210, 63, 0.15) 6.78%, rgba(255, 210, 63, 0.08) 93.22%); border: 1px solid rgba(255,210,63,0.3); color: #ffffff; box-shadow: none !important; overflow: hidden; transform: translateY(10px) !important; }
   .pillImageMobile .pillInner {
@@ -81,7 +82,7 @@
 
   /* Reduce header internal paddings and row gaps on phones so elements sit tighter */
   .header { padding-top: 1.25rem; padding-bottom: 0.5rem; }
-  .pillImageMobile { margin: 2px auto 8px; }
+  .pillImageMobile { margin: 0rem auto 2.5rem; }
 
   /* Specific modifier to nudge a particular mobile pill down (e.g. Safety First) */
   .pillImageMobileDown {
