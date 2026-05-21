@@ -51,19 +51,33 @@
   margin: 0 auto;
 }
 
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-  }
-}
-
 .card {
   background-color: #ffffff;
   border-radius: 1.5rem;
-  padding: 4rem 3.5rem;
+  padding: 3.5rem;
   text-align: left;
   box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+}
+
+@media (min-width: 768px) {
+  .card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3.5rem;
+    padding: 3.5rem 4rem;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .cardHeader {
+    flex: 0 0 220px;
+  }
 }
 
 .iconWrapper {
@@ -75,7 +89,7 @@
   border-radius: 1.25rem;
   background-color: rgb(255, 245, 206);
   color: #FBBF24;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .icon {
@@ -91,13 +105,26 @@
   margin-bottom: 1.5rem;
 }
 
+@media (min-width: 768px) {
+  .cardTitle {
+    margin-bottom: 0;
+  }
+}
+
 .cardText {
   font-size: 1.3rem;
   color: #6B7280;
   line-height: 1.7;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
+  .cardText {
+    flex: 1;
+    padding-top: 0.25rem;
+  }
+}
+
+@media (max-width: 767px) {
   .section {
     padding: 4rem 0;
   }
@@ -120,7 +147,7 @@
     height: 1.75rem;
   }
   .cardHeader {
-    display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 1.25rem;
     margin-bottom: 1.5rem;

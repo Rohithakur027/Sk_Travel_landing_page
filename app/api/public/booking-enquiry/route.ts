@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  appendToGoogleSheet,
   saveToDatabase,
-  sendTeamNotification,
-  sendToAdminAPI,
   type BookingEnquiryData,
   type ScheduledEnquiryData,
 } from '@/lib/services/landingEnquiry.service';
@@ -141,6 +138,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     name: (body.name as string).trim(),
     email: (body.email as string).trim(),
     phone: (body.phone as string).trim(),
+    ...(typeof body.booking_category === 'string' && body.booking_category.trim() && { booking_category: (body.booking_category as string).trim() }),
+    ...(typeof body.is_return_trip === 'boolean' && { is_return_trip: body.is_return_trip }),
+    ...(typeof body.return_date === 'string' && body.return_date.trim() && { return_date: (body.return_date as string).trim() }),
+    ...(typeof body.return_time === 'string' && body.return_time.trim() && { return_time: (body.return_time as string).trim() }),
     ...(typeof body.pickup_lat === 'number' && { pickup_lat: body.pickup_lat }),
     ...(typeof body.pickup_lng === 'number' && { pickup_lng: body.pickup_lng }),
     ...(typeof body.destination_lat === 'number' && { destination_lat: body.destination_lat }),
@@ -159,26 +160,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         }
       : { ...base, type: 'instant' };
 
-  // Run DB write, Google Sheets, team email, and admin API in parallel.
-  // These are non-critical — a failure in any must NOT block the response.
-  const [dbResult, sheetsResult, emailResult, adminApiResult] = await Promise.allSettled([
-    saveToDatabase(data),
-    appendToGoogleSheet(data),
-    sendTeamNotification(data),
-    sendToAdminAPI(data),
-  ]);
-
-  if (dbResult.status === 'rejected') {
-    console.error('[BookingEnquiry] DB insert failed:', dbResult.reason);
-  }
-  if (sheetsResult.status === 'rejected') {
-    console.error('[BookingEnquiry] Google Sheets append failed:', sheetsResult.reason);
-  }
-  if (emailResult.status === 'rejected') {
-    console.error('[BookingEnquiry] Team notification email failed:', emailResult.reason);
-  }
-  if (adminApiResult.status === 'rejected') {
-    console.error('[BookingEnquiry] Admin API forward failed:', adminApiResult.reason);
+  try {
+    await saveToDatabase(data);
+  } catch (err) {
+    console.error('[BookingEnquiry] DB insert failed:', err);
+    return NextResponse.json({ success: false, message: 'Failed to save enquiry. Please try again.' }, { status: 500 });
   }
 
   return NextResponse.json(

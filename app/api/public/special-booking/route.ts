@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  appendToGoogleSheet,
   saveToDatabase,
-  sendTeamNotification,
-  sendToAdminAPI,
-  type SpecialBookingData,
+  type GeneralEnquiryData,
 } from '@/lib/services/landingEnquiry.service';
 
 // ─── In-memory rate limiter ───────────────────────────────────────────────────
@@ -31,23 +28,31 @@ function isRateLimited(ip: string): boolean {
 // ─── Validation ───────────────────────────────────────────────────────────────
 function validate(body: Record<string, unknown>): string[] {
   const errors: string[] = [];
-  if (!body.first_name || typeof body.first_name !== 'string' || !body.first_name.trim()) {
-    errors.push('First name is required');
+
+  // Accept either a combined `name` or separate `first_name` + `last_name`
+  const hasName = typeof body.name === 'string' && (body.name as string).trim().length > 0;
+  const hasFirstLast =
+    typeof body.first_name === 'string' && (body.first_name as string).trim().length > 0;
+
+  if (!hasName && !hasFirstLast) {
+    errors.push('Name is required');
   }
-  if (!body.last_name || typeof body.last_name !== 'string' || !body.last_name.trim()) {
-    errors.push('Last name is required');
-  }
+
   if (!body.email || !String(body.email).includes('@')) {
     errors.push('Valid email is required');
   }
-  // Loose phone validation: digits only, at least 10
-  const digits = String(body.phone || '').replace(/\D/g, '');
+
+  // Accept `mobile` or `phone`
+  const phoneVal = String(body.mobile || body.phone || '');
+  const digits = phoneVal.replace(/\D/g, '');
   if (digits.length < 10) {
     errors.push('Phone must contain at least 10 digits');
   }
+
   if (!body.company_name || !String(body.company_name).trim()) {
     errors.push('Company name is required');
   }
+
   return errors;
 }
 
@@ -67,39 +72,34 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   const errors = validate(body);
   if (errors.length > 0) {
-    console.warn('[SpecialBooking] Validation failed:', errors, 'Body:', body);
+    console.warn('[GeneralEnquiry] Validation failed:', errors);
     return NextResponse.json({ success: false, errors }, { status: 400 });
   }
 
-  const data: SpecialBookingData = {
-    type: 'special_booking',
-    first_name: String(body.first_name).trim(),
-    last_name: String(body.last_name).trim(),
+  // Resolve name: prefer combined `name`, else join first_name + last_name
+  const resolvedName =
+    typeof body.name === 'string' && body.name.trim()
+      ? body.name.trim()
+      : `${String(body.first_name ?? '').trim()} ${String(body.last_name ?? '').trim()}`.trim();
+
+  // Resolve mobile: prefer `mobile`, fall back to `phone`
+  const resolvedMobile = String(body.mobile || body.phone || '').trim();
+
+  const data: GeneralEnquiryData = {
+    type: 'general_enquiry',
+    name: resolvedName,
     email: String(body.email).trim(),
-    phone: String(body.phone).trim(),
+    mobile: resolvedMobile,
     company_name: String(body.company_name).trim(),
     message: String(body.message || '').trim(),
   };
 
-  const [dbResult, sheetsResult, emailResult, adminApiResult] = await Promise.allSettled([
-    saveToDatabase(data),
-    appendToGoogleSheet(data),
-    sendTeamNotification(data),
-    sendToAdminAPI(data),
-  ]);
-
-  if (dbResult.status === 'rejected') {
-    console.error('[SpecialBooking] DB insert failed:', dbResult.reason);
-  }
-  if (sheetsResult.status === 'rejected') {
-    console.error('[SpecialBooking] Sheets failed:', sheetsResult.reason);
-  }
-  if (emailResult.status === 'rejected') {
-    console.error('[SpecialBooking] Email failed:', emailResult.reason);
-  }
-  if (adminApiResult.status === 'rejected') {
-    console.error('[SpecialBooking] Admin API forward failed:', adminApiResult.reason);
+  try {
+    await saveToDatabase(data);
+  } catch (err) {
+    console.error('[GeneralEnquiry] DB failed:', err);
+    return NextResponse.json({ success: false, message: 'Failed to save enquiry. Please try again.' }, { status: 500 });
   }
 
-  return NextResponse.json({ success: true, message: 'Special booking received' });
+  return NextResponse.json({ success: true, message: 'Enquiry received' });
 }
