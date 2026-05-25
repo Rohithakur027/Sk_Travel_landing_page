@@ -1,7 +1,6 @@
 import { sheets } from '@/lib/googleSheets';
 import transporter from '@/lib/mailer';
 import { prisma } from '@/lib/prisma';
-import axios from 'axios';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -317,20 +316,4 @@ export async function saveToDatabase(data: BookingEnquiryData): Promise<void> {
       distance_km: data.distance_km ?? null,
     },
   });
-}
-
-// ─── Admin API forward ────────────────────────────────────────────────────────
-
-export async function sendToAdminAPI(data: BookingEnquiryData): Promise<void> {
-  const adminApiUrl = process.env.ADMIN_API_URL;
-  if (!adminApiUrl) return;
-
-  try {
-    await axios.post(adminApiUrl, data, {
-      headers: { 'Content-Type': 'application/json' },
-      timeout: 5000,
-    });
-  } catch (err: any) {
-    console.error('[AdminAPI] Request failed:', err.response?.data || err.message);
-  }
 }
