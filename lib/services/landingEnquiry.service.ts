@@ -26,6 +26,7 @@ export interface BaseEnquiryData {
 
 export interface InstantEnquiryData extends BaseEnquiryData {
   type: 'instant';
+  time?: string;
 }
 
 export interface ScheduledEnquiryData extends BaseEnquiryData {
@@ -102,6 +103,7 @@ export async function appendToGoogleSheet(data: BookingEnquiryData): Promise<voi
       data.phone,
       data.pickup_location,
       data.destination,
+      data.time ?? '',
       data.vehicle_type,
       data.passengers,
       data.booking_category ?? '',
@@ -277,11 +279,19 @@ export async function saveToDatabase(data: BookingEnquiryData): Promise<void> {
     return;
   }
 
-  let scheduledDateTime: Date | null = null;
+  // Build pickup_date_time for both booking types, treating input as IST (UTC+5:30)
+  let pickupDateTime: Date | null = null;
   if (data.type === 'scheduled' && data.date && data.time) {
-    const iso = `${data.date}T${data.time.length === 5 ? data.time : data.time.slice(0, 5)}:00+05:30`;
-    const parsed = new Date(iso);
-    if (!isNaN(parsed.getTime())) scheduledDateTime = parsed;
+    const t = data.time.slice(0, 5);
+    const parsed = new Date(`${data.date}T${t}:00+05:30`);
+    if (!isNaN(parsed.getTime())) pickupDateTime = parsed;
+  } else if (data.type === 'instant') {
+    const IST_OFFSET_MS = 5.5 * 60 * 60 * 1000;
+    const istNow = new Date(Date.now() + IST_OFFSET_MS);
+    const today = istNow.toISOString().split('T')[0];
+    const t = data.time ? data.time.slice(0, 5) : '00:00';
+    const parsed = new Date(`${today}T${t}:00+05:30`);
+    if (!isNaN(parsed.getTime())) pickupDateTime = parsed;
   }
 
   let returnDateTime: Date | null = null;
@@ -307,7 +317,7 @@ export async function saveToDatabase(data: BookingEnquiryData): Promise<void> {
       customer_name: data.name,
       customer_email: data.email,
       customer_mobile: data.phone,
-      scheduled_date_time: scheduledDateTime,
+      pickup_date_time: pickupDateTime,
       status: 'new',
       pickup_lat: data.pickup_lat ?? null,
       pickup_lng: data.pickup_lng ?? null,

@@ -127,10 +127,10 @@ const serviceOptions = [
 ];
 
 const vehiclePassengerLimits: Record<string, number> = {
-  Sedan: 4,
-  SUV: 6,
-  Hatchback: 4,
-  Innova: 7,
+  Sedan: 3,
+  SUV: 5,
+  Hatchback: 3,
+  Innova: 5,
   Tempo: 12,
   Mini: 4,
 };
@@ -170,6 +170,7 @@ export default function BookingForm() {
   const [returnDate, setReturnDate] = useState("");
   const [returnTime, setReturnTime] = useState("");
   const [dateTime, setDateTime] = useState("");
+  const [instantTime, setInstantTime] = useState("");
   const [passengers, setPassengers] = useState(1);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -228,6 +229,7 @@ export default function BookingForm() {
         destination_lat: destinationCoords[1],
       }),
       ...(distanceKm !== null && { distance_km: distanceKm }),
+      ...(bookingType === "instant" && instantTime && { time: instantTime }),
       ...(bookingType === "scheduled" && dateTime && {
         date: dateTime.split("T")[0],
         time: formatDateTimeDisplay(dateTime).split(", ")[1],
@@ -241,6 +243,7 @@ export default function BookingForm() {
     if (!vehicleType) missingFields.push("vehicle type");
     if (!serviceType) missingFields.push("booking type");
     if (!name.trim()) missingFields.push("your name");
+    if (bookingType === "instant" && !instantTime) missingFields.push("pickup time");
     if (bookingType === "scheduled" && !dateTime) missingFields.push("date & time");
     if (serviceType === "airport_taxis" && isReturnTrip && !returnDate) missingFields.push("return date");
     if (serviceType === "airport_taxis" && isReturnTrip && !returnTime) missingFields.push("return time");
@@ -416,7 +419,7 @@ export default function BookingForm() {
             )}
           </div>
 
-          <div className={`${bookingType === "instant" ? styles.wideField : ""}`}>
+          <div>
             <Select
               id="vehicleType"
               options={vehicleOptions}
@@ -441,6 +444,30 @@ export default function BookingForm() {
               required
             />
           </div>
+
+          {/* Time field — instant booking only */}
+          {bookingType === "instant" && (
+            <div className={styles.inputGroup}>
+              <div className={styles.inputWrapper}>
+                <div className={styles.iconLeft}>
+                  <Clock size={20} />
+                </div>
+                <input
+                  id="instantTime"
+                  type="time"
+                  value={instantTime}
+                  onChange={(e) => setInstantTime(e.target.value)}
+                  onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
+                  className={`${styles.input} ${styles.hasIcon} ${styles.datetimeInput}`}
+                />
+                {!instantTime ? (
+                  <div className={styles.datetimePlaceholder}>Pickup Time *</div>
+                ) : (
+                  <div className={styles.datetimeValue}>{instantTime}</div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Row 3: Date/Time (if scheduled) & Passengers */}
           {bookingType === "scheduled" && (
@@ -470,7 +497,7 @@ export default function BookingForm() {
             </div>
           )}
 
-          <div className={`${styles.inputGroup} ${bookingType === "instant" ? styles.wideField : ""}`}>
+          <div className={styles.inputGroup}>
             <div className={`${styles.counterWrapper} ${passengerError ? styles.counterError : ""}`}>
               <div className={styles.iconLeft}><Users size={20} /></div>
               <span className={styles.counterLabel}>Passengers *</span>

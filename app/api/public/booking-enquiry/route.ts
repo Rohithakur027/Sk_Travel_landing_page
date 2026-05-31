@@ -83,13 +83,15 @@ function validate(body: Record<string, unknown>): string[] {
     errors.push('passengers must be a whole number between 1 and 10');
   }
 
+  // time is required for both booking types
+  if (!body.time || typeof body.time !== 'string' || !body.time.trim()) {
+    errors.push('time is required');
+  }
+
   // scheduled-only fields
   if (body.type === 'scheduled') {
     if (!body.date || typeof body.date !== 'string' || !body.date.trim()) {
       errors.push('date is required for scheduled bookings');
-    }
-    if (!body.time || typeof body.time !== 'string' || !body.time.trim()) {
-      errors.push('time is required for scheduled bookings');
     }
   }
 
@@ -159,7 +161,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           date: String(rawScheduled.date).trim(),
           time: String(rawScheduled.time).trim(),
         }
-      : { ...base, type: 'instant' };
+      : {
+          ...base,
+          type: 'instant',
+          ...(typeof body.time === 'string' && body.time.trim() && { time: (body.time as string).trim() }),
+        };
 
   try {
     await saveToDatabase(data);
