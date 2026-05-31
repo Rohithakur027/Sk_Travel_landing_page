@@ -18,7 +18,7 @@ export default function CorporateSection() {
         <div className={styles.imgCol}>
           <div className={styles.imgWrapper}>
             <Image
-              src="/images/corporatesec.png"
+              src="/images/corporatesec_indian_corp.png"
               alt="SK Voyage driver"
               fill
               className={styles.img}

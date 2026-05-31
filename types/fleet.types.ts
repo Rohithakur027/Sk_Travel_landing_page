@@ -1,6 +1,6 @@
 // Fleet / Vehicle-related TypeScript interfaces
 
-export type VehicleCategory = 'sedan' | 'suv' | 'luxury' | 'minivan' | 'bus';
+export type VehicleCategory = 'Sedan' | 'SUV' | 'Hatchback' | 'Innova' | 'Tempo' | 'Mini';
 
 export interface Vehicle {
   id: string;

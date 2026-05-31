@@ -111,22 +111,28 @@ const Select = ({ id, options, leftIcon, value, onChange, required }: SelectProp
 
 const vehicleOptions = [
   { value: "", label: "Vehicle Type" },
-  { value: "sedan", label: "Sedan" },
-  { value: "suv", label: "SUV" },
-  { value: "luxury", label: "Luxury" },
-  { value: "traveller", label: "Traveller" },
+  { value: "Sedan", label: "Sedan" },
+  { value: "SUV", label: "SUV" },
+  { value: "Hatchback", label: "Hatchback" },
+  { value: "Innova", label: "Innova" },
+  { value: "Tempo", label: "Tempo Traveller" },
+  { value: "Mini", label: "Mini" },
 ];
 
 const serviceOptions = [
   { value: "", label: "Booking Type" },
   { value: "within_city", label: "Within City" },
-  { value: "airport", label: "Airport Taxis" },
-  { value: "outstation", label: "Out Station" },
+  { value: "airport_taxis", label: "Airport Taxis" },
+  { value: "out_station", label: "Out Station" },
 ];
 
 const vehiclePassengerLimits: Record<string, number> = {
-  sedan: 3,
-  suv: 5,
+  Sedan: 3,
+  SUV: 5,
+  Hatchback: 3,
+  Innova: 5,
+  Tempo: 12,
+  Mini: 4,
 };
 
 function getMaxPassengers(vehicle: string): number {
@@ -161,7 +167,10 @@ export default function BookingForm() {
   const [vehicleType, setVehicleType] = useState("");
   const [serviceType, setServiceType] = useState("");
   const [isReturnTrip, setIsReturnTrip] = useState(false);
+  const [returnDate, setReturnDate] = useState("");
+  const [returnTime, setReturnTime] = useState("");
   const [dateTime, setDateTime] = useState("");
+  const [instantTime, setInstantTime] = useState("");
   const [passengers, setPassengers] = useState(1);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -203,8 +212,10 @@ export default function BookingForm() {
       pickup_location: pickup.trim(),
       destination: destination.trim(),
       vehicle_type: vehicleType,
-      service_type: serviceType,
-      is_return_trip: serviceType === "airport" ? isReturnTrip : false,
+      booking_category: serviceType,
+      is_return_trip: serviceType === "airport_taxis" ? isReturnTrip : false,
+      ...(serviceType === "airport_taxis" && isReturnTrip && returnDate && { return_date: returnDate }),
+      ...(serviceType === "airport_taxis" && isReturnTrip && returnTime && { return_time: returnTime }),
       passengers,
       name:  name.trim(),
       email: email.trim(),
@@ -218,6 +229,7 @@ export default function BookingForm() {
         destination_lat: destinationCoords[1],
       }),
       ...(distanceKm !== null && { distance_km: distanceKm }),
+      ...(bookingType === "instant" && instantTime && { time: instantTime }),
       ...(bookingType === "scheduled" && dateTime && {
         date: dateTime.split("T")[0],
         time: formatDateTimeDisplay(dateTime).split(", ")[1],
@@ -231,7 +243,10 @@ export default function BookingForm() {
     if (!vehicleType) missingFields.push("vehicle type");
     if (!serviceType) missingFields.push("booking type");
     if (!name.trim()) missingFields.push("your name");
+    if (bookingType === "instant" && !instantTime) missingFields.push("pickup time");
     if (bookingType === "scheduled" && !dateTime) missingFields.push("date & time");
+    if (serviceType === "airport_taxis" && isReturnTrip && !returnDate) missingFields.push("return date");
+    if (serviceType === "airport_taxis" && isReturnTrip && !returnTime) missingFields.push("return time");
 
     const emailErr = email.trim() === "" ? "Email is required." : !isValidEmail(email) ? "Enter a valid email address." : "";
     const phoneErr = phone.trim() === "" ? "Mobile number is required." : !isValidPhone(phone) ? "Enter a valid 10-digit mobile number." : "";
@@ -351,20 +366,60 @@ export default function BookingForm() {
               onChange={(e) => setServiceType(e.target.value)}
               required
             />
-            {serviceType === "airport" && (
+            {serviceType === "airport_taxis" && (
               <label className={styles.checkboxContainer}>
                 <input
                   type="checkbox"
                   checked={isReturnTrip}
-                  onChange={(e) => setIsReturnTrip(e.target.checked)}
+                  onChange={(e) => {
+                    setIsReturnTrip(e.target.checked);
+                    if (!e.target.checked) { setReturnDate(""); setReturnTime(""); }
+                  }}
                   className={styles.checkbox}
                 />
                 <span className={styles.checkboxLabel}>Return Trip?</span>
               </label>
             )}
+            {serviceType === "airport_taxis" && isReturnTrip && (
+              <div className={styles.returnDateWrapper}>
+                {/* Return Date */}
+                <div className={styles.inputWrapper}>
+                  <input
+                    id="returnDate"
+                    type="date"
+                    value={returnDate}
+                    min={new Date().toISOString().split("T")[0]}
+                    onChange={(e) => setReturnDate(e.target.value)}
+                    onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
+                    className={`${styles.input} ${styles.returnDateInput}`}
+                  />
+                  {!returnDate ? (
+                    <div className={styles.returnFieldPlaceholder}>Return Date *</div>
+                  ) : (
+                    <div className={styles.returnFieldValue}>{returnDate}</div>
+                  )}
+                </div>
+                {/* Return Time */}
+                <div className={styles.inputWrapper}>
+                  <input
+                    id="returnTime"
+                    type="time"
+                    value={returnTime}
+                    onChange={(e) => setReturnTime(e.target.value)}
+                    onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
+                    className={`${styles.input} ${styles.returnDateInput}`}
+                  />
+                  {!returnTime ? (
+                    <div className={styles.returnFieldPlaceholder}>Return Time *</div>
+                  ) : (
+                    <div className={styles.returnFieldValue}>{returnTime}</div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
-          <div className={`${bookingType === "instant" ? styles.wideField : ""}`}>
+          <div>
             <Select
               id="vehicleType"
               options={vehicleOptions}
@@ -389,6 +444,30 @@ export default function BookingForm() {
               required
             />
           </div>
+
+          {/* Time field — instant booking only */}
+          {bookingType === "instant" && (
+            <div className={styles.inputGroup}>
+              <div className={styles.inputWrapper}>
+                <div className={styles.iconLeft}>
+                  <Clock size={20} />
+                </div>
+                <input
+                  id="instantTime"
+                  type="time"
+                  value={instantTime}
+                  onChange={(e) => setInstantTime(e.target.value)}
+                  onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
+                  className={`${styles.input} ${styles.hasIcon} ${styles.datetimeInput}`}
+                />
+                {!instantTime ? (
+                  <div className={styles.datetimePlaceholder}>Pickup Time *</div>
+                ) : (
+                  <div className={styles.datetimeValue}>{instantTime}</div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Row 3: Date/Time (if scheduled) & Passengers */}
           {bookingType === "scheduled" && (
@@ -418,7 +497,7 @@ export default function BookingForm() {
             </div>
           )}
 
-          <div className={`${styles.inputGroup} ${bookingType === "instant" ? styles.wideField : ""}`}>
+          <div className={styles.inputGroup}>
             <div className={`${styles.counterWrapper} ${passengerError ? styles.counterError : ""}`}>
               <div className={styles.iconLeft}><Users size={20} /></div>
               <span className={styles.counterLabel}>Passengers *</span>

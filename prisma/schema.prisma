@@ -8,45 +8,41 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-enum booking_status {
-  pending
-  driver_assigned
-  completed
-  cancelled
-}
-
-model bookings {
-  id                  String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  is_scheduled        Boolean         @default(false)
-  pickup_location     String
-  destination         String
-  passengers          Int
+model website_booking_enquiries {
+  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  enq_ref             String?
   customer_name       String
   customer_email      String
   customer_mobile     String
-  created_at          DateTime?       @default(now()) @db.Timestamptz(6)
-  scheduled_date_time DateTime?       @db.Timestamptz(6)
-  pickup_lat          Decimal?        @db.Decimal
-  pickup_lng          Decimal?        @db.Decimal
-  destination_lat     Decimal?        @db.Decimal
-  destination_lng     Decimal?        @db.Decimal
-  distance_km         Decimal?        @db.Decimal
+  pickup_location     String
+  destination         String
+  pickup_lat          Decimal?  @db.Decimal
+  pickup_lng          Decimal?  @db.Decimal
+  destination_lat     Decimal?  @db.Decimal
+  destination_lng     Decimal?  @db.Decimal
   booking_type        String?
+  booking_category    String?
   vehicle_type        String?
-  status              booking_status?
-  driver_id           String?         @db.Uuid
-  notes               String?
+  passengers          Int
+  is_scheduled        Boolean   @default(false)
+  pickup_date_time    DateTime? @db.Timestamptz(6)
+  is_return_trip      Boolean?  @default(false)
+  return_date_time    DateTime? @db.Timestamptz(6)
+  distance_km         Decimal?  @db.Decimal
+  status              String?   @default("new")
+  created_at          DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at          DateTime? @default(now()) @db.Timestamptz(6)
 }
 
-model special_booking_inquiries {
-  id           BigInt    @id @default(autoincrement())
-  first_name   String?
-  last_name    String?
+model website_general_enquiries {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  enq_ref      String?
+  name         String?
   email        String?
-  phone        String?
-  company_name String?
+  mobile       String?
   message      String?
-  status       String?   @default("New")
-  notes        String?
+  company_name String?
+  status       String?   @default("new")
   created_at   DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at   DateTime? @default(now()) @db.Timestamptz(6)
 }
