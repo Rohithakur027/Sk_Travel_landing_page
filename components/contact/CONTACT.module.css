@@ -1372,7 +1372,7 @@ section.contactPage .header .ctaWrap {
 @media (max-width: 480px) {
   .contactPage .header .ctaWrap,
   section.contactPage .header .ctaWrap {
-    transform: translateY(54px) !important;
+    transform: translateY(32px) !important;
     margin-bottom: 8px !important;
   }
 

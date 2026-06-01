@@ -251,9 +251,8 @@
 
 @media (max-width: 768px) {
   .section {
-    /* reduce vertical space and nudge section upward on small screens */
     padding: 2rem 0 2.5rem;
-    margin-top: -5rem; /* moved up ~2.5rem more */
+    margin-top: 0;
   }
   
   .premiumComfort { order: 1; }
