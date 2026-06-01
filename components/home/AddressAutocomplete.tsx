@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import styles from "./AddressAutocomplete.module.css";
+import React, { useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 
 interface AddressAutocompleteProps {
   id: string;
@@ -15,24 +14,35 @@ interface AddressAutocompleteProps {
   iconClassName?: string;
 }
 
-// Bias all results toward Bangalore so every locality, layout, and
-// neighbourhood (Whitefield, Koramangala, HSR, Yelahanka, Anekal, etc.)
-// ranks first. We intentionally do NOT pass a bbox so users can still pick
-// major metros outside Karnataka.
-const BANGALORE_PROXIMITY = "77.5946,12.9716";
-const BANGALORE_KEYWORDS = ["bangalore", "bengaluru", "karnataka"];
+interface MapboxFeature {
+  id?: string;
+  text?: string;
+  place_name?: string;
+  center: [number, number];
+  place_type?: string[];
+}
 
-// Outside Bangalore, only allow these big Indian cities through. Anything
-// else (small towns, villages) gets filtered out.
+interface AddressSuggestion {
+  id: string;
+  display_name: string;
+  center: [number, number];
+}
+
+const BANGALORE_PROXIMITY = '77.5946,12.9716';
+const BANGALORE_KEYWORDS = ['bangalore', 'bengaluru', 'karnataka'];
+
 const BIG_CITIES_OUTSIDE_BANGALORE = new Set([
-  "mumbai", "delhi", "new delhi", "chennai", "hyderabad", "kolkata",
-  "pune", "ahmedabad", "jaipur", "lucknow", "surat", "kanpur", "nagpur",
-  "indore", "bhopal", "visakhapatnam", "patna", "vadodara", "ghaziabad",
-  "ludhiana", "agra", "nashik", "faridabad", "meerut", "rajkot", "varanasi",
-  "coimbatore", "kochi", "chandigarh", "mysore", "mysuru", "mangalore", "mangaluru",
+  'mumbai', 'delhi', 'new delhi', 'chennai', 'hyderabad', 'kolkata',
+  'pune', 'ahmedabad', 'jaipur', 'lucknow', 'surat', 'kanpur', 'nagpur',
+  'indore', 'bhopal', 'visakhapatnam', 'patna', 'vadodara', 'ghaziabad',
+  'ludhiana', 'agra', 'nashik', 'faridabad', 'meerut', 'rajkot', 'varanasi',
+  'coimbatore', 'kochi', 'chandigarh', 'mysore', 'mysuru', 'mangalore', 'mangaluru',
 ]);
 
-const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
+const suggestionsListClass =
+  'absolute left-0 right-0 top-full z-[1000] mt-2 max-h-[250px] list-none overflow-y-auto rounded-xl border border-[#eef2f6] bg-[#fdfdfd] p-2 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)]';
+
+export default function AddressAutocomplete({
   id,
   placeholder,
   value,
@@ -43,8 +53,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   className,
   wrapperClassName,
   iconClassName,
-}) => {
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+}: AddressAutocompleteProps) {
+  const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loading, setLoading] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,13 +67,16 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         setShowSuggestions(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   useEffect(() => {
     return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
     };
   }, []);
 
@@ -77,23 +90,18 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
 
     const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
     if (!mapboxToken) {
-      console.error("Mapbox access token is missing");
+      console.error('Mapbox access token is missing');
       return;
     }
 
-    // Detect whether the user is searching outside Bangalore. If they typed
-    // a big-city name (Mumbai, Delhi, etc.) we let it through unmodified so
-    // Mapbox can resolve it. Otherwise we append "Bangalore" so generic
-    // queries like "HSR" or "Koramangala" stay biased to the city.
     const lowered = query.toLowerCase();
     const hasBangaloreHint = BANGALORE_KEYWORDS.some((kw) => lowered.includes(kw));
-    const hasBigCityHint = Array.from(BIG_CITIES_OUTSIDE_BANGALORE).some((c) =>
-      lowered.includes(c)
-    );
+    const hasBigCityHint = Array.from(BIG_CITIES_OUTSIDE_BANGALORE).some((c) => lowered.includes(c));
     const searchQuery = hasBangaloreHint || hasBigCityHint ? query : `${query}, Bangalore`;
 
     const currentRequest = ++requestIdRef.current;
     setLoading(true);
+
     try {
       const response = await axios.get(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json`,
@@ -101,66 +109,69 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
           params: {
             access_token: mapboxToken,
             limit: 10,
-            country: "IN",
+            country: 'IN',
             proximity: BANGALORE_PROXIMITY,
-            language: "en",
+            language: 'en',
             autocomplete: true,
-            // Cover localities, neighborhoods, streets, landmarks, POIs, plus
-            // city-level "place" results so big metros surface too.
-            types: "place,locality,neighborhood,address,poi,district,postcode",
+            types: 'place,locality,neighborhood,address,poi,district,postcode',
           },
         }
       );
 
-      // Drop stale responses if the user kept typing.
-      if (currentRequest !== requestIdRef.current) return;
+      if (currentRequest !== requestIdRef.current) {
+        return;
+      }
 
-      const features = (response.data.features || [])
-        .filter((f: any) => {
-          const name = (f.place_name || "").toLowerCase();
-          const text = (f.text || "").toLowerCase();
-          const placeTypes: string[] = f.place_type || [];
+      const features = ((response.data.features || []) as MapboxFeature[])
+        .filter((feature) => {
+          const name = (feature.place_name || '').toLowerCase();
+          const text = (feature.text || '').toLowerCase();
+          const placeTypes: string[] = feature.place_type || [];
 
-          // Always keep Bangalore-area results — every locality, layout,
-          // neighbourhood, POI inside the city.
-          if (BANGALORE_KEYWORDS.some((kw) => name.includes(kw))) return true;
+          if (BANGALORE_KEYWORDS.some((kw) => name.includes(kw))) {
+            return true;
+          }
 
-          // Outside Bangalore, only allow whitelisted big cities at the
-          // city level (Mapbox tags those with place_type "place").
-          if (placeTypes.includes("place") && BIG_CITIES_OUTSIDE_BANGALORE.has(text)) {
+          if (placeTypes.includes('place') && BIG_CITIES_OUTSIDE_BANGALORE.has(text)) {
             return true;
           }
 
           return false;
         })
-        .map((f: any) => ({
-          id: f.id || f.center.join(","),
-          display_name: f.place_name || f.text,
-          center: f.center as [number, number], // [lng, lat]
+        .map((feature) => ({
+          id: feature.id || feature.center.join(','),
+          display_name: feature.place_name || feature.text || "",
+          center: feature.center,
         }));
 
       setSuggestions(features);
       setShowSuggestions(features.length > 0);
     } catch (error) {
       if (currentRequest === requestIdRef.current) {
-        console.error("Mapbox API error:", error);
+        console.error('Mapbox API error:', error);
         setSuggestions([]);
         setShowSuggestions(false);
       }
     } finally {
-      if (currentRequest === requestIdRef.current) setLoading(false);
+      if (currentRequest === requestIdRef.current) {
+        setLoading(false);
+      }
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     onChange(newValue);
-    onCoordinatesChange?.(null); // reset coords when user types manually
-    if (debounceRef.current) clearTimeout(debounceRef.current);
+    onCoordinatesChange?.(null);
+
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+
     debounceRef.current = setTimeout(() => fetchSuggestions(newValue), 250);
   };
 
-  const handleSuggestionClick = (suggestion: any) => {
+  const handleSuggestionClick = (suggestion: AddressSuggestion) => {
     onChange(suggestion.display_name);
     onCoordinatesChange?.(suggestion.center ?? null);
     setSuggestions([]);
@@ -168,9 +179,9 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   };
 
   return (
-    <div className={`${styles.container} ${wrapperClassName || ""}`} ref={containerRef}>
-      <div className={styles.inputWrapper}>
-        {leftIcon && <div className={`${styles.iconLeft} ${iconClassName || ""}`}>{leftIcon}</div>}
+    <div className={`relative w-full ${wrapperClassName || ''}`} ref={containerRef}>
+      <div className="relative w-full">
+        {leftIcon && <div className={`pointer-events-none absolute inset-y-0 left-0 z-[1] flex items-center ${iconClassName || ''}`}>{leftIcon}</div>}
         <input
           id={id}
           type="text"
@@ -178,19 +189,22 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
           value={value}
           onChange={handleInputChange}
           onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-          className={`${styles.input} ${className || ""}`}
+          className={className || ''}
           required={required}
           autoComplete="off"
         />
-        {loading && <div className={styles.loader}></div>}
+        {loading && (
+          <div className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full border-2 border-[#f3f3f3] border-t-[#ffc839] animate-autocomplete-spin" />
+        )}
       </div>
+
       {showSuggestions && suggestions.length > 0 && (
-        <ul className={styles.suggestionsList}>
+        <ul className={suggestionsListClass}>
           {suggestions.map((suggestion, index) => (
             <li
               key={`${suggestion.id}-${index}`}
               onClick={() => handleSuggestionClick(suggestion)}
-              className={styles.suggestionItem}
+              className="cursor-pointer rounded-lg px-4 py-[0.85rem] text-[0.95rem] text-slate-700 transition-all duration-200 ease-out hover:translate-x-1 hover:bg-[rgba(255,200,57,0.9)] hover:text-black"
             >
               {suggestion.display_name}
             </li>
@@ -199,6 +213,4 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
       )}
     </div>
   );
-};
-
-export default AddressAutocomplete;
+}

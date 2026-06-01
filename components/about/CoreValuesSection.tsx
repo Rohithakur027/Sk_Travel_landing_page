@@ -1,5 +1,4 @@
-import { CheckCircle2, Clock, Star, Eye, Lightbulb, Globe } from 'lucide-react';
-import styles from './CoreValuesSection.module.css';
+import { CheckCircle2, Clock, Eye, Globe, Lightbulb, Star } from 'lucide-react';
 
 const CORE_VALUES = [
   {
@@ -36,33 +35,41 @@ const CORE_VALUES = [
 
 export default function CoreValuesSection() {
   return (
-    <section className={styles.section}>
-      <div className="container">
-        
-        <div className={styles.header}>
-          <h2 className={styles.heading}>Our Core Values</h2>
-          <p className={styles.subheading}>
+    <section className="bg-white py-16 text-center">
+      <div className="mx-auto w-full max-w-[1800px] px-6 lg:max-w-[1200px] lg:px-16 2xl:px-32">
+        <div className="mx-auto mb-12 max-w-[48rem] md:mb-16">
+          <h2 className="mb-4 font-heading text-[2.25rem] font-extrabold text-[#1F2937] md:text-[3rem]">
+            Our Core Values
+          </h2>
+          <p className="text-[1.125rem] leading-[1.6] text-[#6B7280]">
             The principles that guide everything we do
           </p>
         </div>
 
-        <div className={styles.grid}>
-          {CORE_VALUES.map((val, idx) => {
-            const IconComponent = val.Icon;
+        <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-6 min-[500px]:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+          {CORE_VALUES.map((value) => {
+            const IconComponent = value.Icon;
+
             return (
-              <div key={idx} className={styles.card}>
-                <div className={styles.cardHeader}>
-                  <div className={styles.iconWrapper}>
-                    <IconComponent className={styles.icon} strokeWidth={1.5} />
+              <div
+                key={value.title}
+                className="rounded-3xl bg-white px-5 py-6 text-left shadow-[0_10px_40px_rgba(0,0,0,0.04)] sm:px-7 sm:py-8 lg:px-14 lg:py-16 max-[500px]:rounded-[1.25rem]"
+              >
+                <div className="mb-4 flex items-center gap-4 max-[500px]:mb-4">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[rgb(255,245,206)] text-[#FBBF24] sm:h-14 sm:w-14 lg:mb-8 lg:h-16 lg:w-16 max-[500px]:mb-0">
+                    <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8" strokeWidth={1.5} />
                   </div>
-                  <h3 className={styles.cardTitle}>{val.title}</h3>
+                  <h3 className="font-heading text-[1.15rem] font-extrabold text-[#1F2937] sm:text-[1.25rem] lg:text-[1.75rem]">
+                    {value.title}
+                  </h3>
                 </div>
-                <p className={styles.cardText}>{val.description}</p>
+                <p className="text-left text-[0.875rem] leading-[1.5] text-[#6B7280] sm:text-base lg:text-[1.25rem] lg:leading-[1.7]">
+                  {value.description}
+                </p>
               </div>
             );
           })}
         </div>
-
       </div>
     </section>
   );

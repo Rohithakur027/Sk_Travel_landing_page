@@ -1,11 +1,21 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '@/lib/context/ToastContext';
-import styles from './CONTACT.module.css';
 
+function getErrorMessage(error: unknown) {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return 'Something went wrong. Please try again.';
+}
+
+const inputClassName =
+  'mt-2 h-12 w-full rounded-[14px] border border-[#eef2f6] bg-[#fbfdff] px-4 text-[13px] text-[#2D3142] outline-none transition-all duration-200 ease-out placeholder:text-[#bfc9cf] focus:border-[var(--color-black)] focus:shadow-[0_0_0_2px_var(--color-black)]';
+const textareaClassName =
+  'mt-2 min-h-[140px] w-full rounded-[14px] border border-[#eef2f6] bg-[#fbfdff] px-4 py-3 text-[13px] text-[#2D3142] outline-none transition-all duration-200 ease-out placeholder:text-[#bfc9cf] focus:border-[var(--color-black)] focus:shadow-[0_0_0_2px_var(--color-black)]';
 
 export default function CONTACT() {
   const [formData, setFormData] = useState({
@@ -17,12 +27,12 @@ export default function CONTACT() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const { showToast } = useToast();
-  
-  const isFormIncomplete = 
-    !formData.fullName.trim() || 
-    !formData.company.trim() || 
-    !formData.email.trim() || 
-    !formData.phone.trim() || 
+
+  const isFormIncomplete =
+    !formData.fullName.trim() ||
+    !formData.company.trim() ||
+    !formData.email.trim() ||
+    !formData.phone.trim() ||
     !formData.message.trim();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -47,133 +57,222 @@ export default function CONTACT() {
       });
 
       const result = await response.json();
-      if (!result.success) throw new Error(result.errors?.[0] || 'Failed to send message');
-      
+      if (!result.success) {
+        throw new Error(result.errors?.[0] || 'Failed to send message');
+      }
+
       showToast("success", "Your enquiry has been submitted! We'll be in touch shortly.");
       setFormData({ fullName: '', company: '', email: '', phone: '', message: '' });
-    } catch (err: any) {
-      showToast("error", err.message || "Something went wrong. Please try again.");
+    } catch (error) {
+      showToast("error", getErrorMessage(error));
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const contactItems = [
+    {
+      key: 'email',
+      label: 'Email Us',
+      text: (
+        <>
+          info@skvoyage.com
+          <br />
+          support@skvoyage.com
+        </>
+      ),
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <rect x="2.5" y="4" width="19" height="14" rx="2.5" stroke="#FFD23F" strokeWidth="1.6" fill="none" />
+          <path d="M3.5 6.5L12 12.2L20.5 6.5" stroke="#FFD23F" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      ),
+    },
+    {
+      key: 'phone',
+      label: 'Call Us',
+      text: (
+        <>
+          +91 98765 43210
+          <br />
+          Mon-Sat 9:00 AM - 6:00 PM
+        </>
+      ),
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.27c1.12.37 2.33.57 3.56.57a1 1 0 0 1 1 1V21a1 1 0 0 1-1 1A19.92 19.92 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.23.2 2.44.57 3.56a1 1 0 0 1-.27 1l-2.2 2.2z" stroke="#FFD23F" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      ),
+    },
+    {
+      key: 'visit',
+      label: 'Visit Us',
+      text: (
+        <>
+          SK Voyage Headquarters
+          <br />
+          Andheri East, Mumbai
+          <br />
+          Maharashtra 400069, India
+        </>
+      ),
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#FFD23F" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <circle cx="12" cy="9" r="2.2" stroke="#FFD23F" strokeWidth="1.6" fill="none" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
-    <section className={styles.contactPage}>
-      {/* Hero / First Section - full width */}
-      <header className={styles.header}>
-        <div className={styles.container}>
-          <div className={styles.ctaWrap}>
-            <div className={styles.ctaImg} aria-hidden={false}>Get In Touch</div>
+    <section className="pt-0">
+      <header className="flex min-h-[420px] items-center justify-center bg-[#2D3142] px-6 py-16 text-center md:min-h-[550px]">
+        <div className="mx-auto w-full max-w-[1244px] px-4">
+          <div className="mb-2 flex justify-center">
+            <div className="inline-flex items-center justify-center rounded-full border border-[rgba(255,210,63,0.3)] bg-[linear-gradient(168.37deg,rgba(255,210,63,0.15)_6.78%,rgba(255,210,63,0.08)_93.22%)] px-8 py-2 text-base font-bold text-white">
+              Get In Touch
+            </div>
           </div>
 
-          <h1 className={styles.title}>
-            <span className={styles.line1}>Let's Start Your</span>
-            <span className={styles.line2}>Transportation Journey</span>
+          <h1 className="mb-6 text-center font-heading font-black tracking-[-0.02em]">
+            <span className="block text-[2.7rem] leading-[1.1] text-white md:text-[4.5rem] md:leading-[1.3]">
+              Let&apos;s Start Your
+            </span>
+            <span className="mt-1 block bg-[linear-gradient(171.05deg,#FFD23F_5.73%,#FFA726_94.27%)] bg-clip-text text-[2.7rem] leading-[1.1] text-transparent md:text-[4.5rem] md:leading-[1.1]">
+              Transportation Journey
+            </span>
           </h1>
 
-          <p className={styles.lead}>
-            <span className={styles.leadFirst}>Ready to transform your corporate transportation?</span>
-            <span className={styles.leadConnector}>Reach out to us and</span>
-            <span className={styles.leadSecond}>let's discuss your needs</span>
+          <p className="mx-auto max-w-[48rem] text-sm leading-[1.5] text-white/50 md:text-[1.25rem] md:leading-[1.6]">
+            <span className="md:block">Ready to transform your corporate transportation?</span>
+            <span className="md:mr-1">Reach out to us and</span>
+            <span className="md:block">let&apos;s discuss your needs</span>
           </p>
         </div>
       </header>
 
-      <div className={styles.container}>
-        <div className={styles.grid}>
-          <form id="booking" className={styles.form} onSubmit={handleSubmit}>
-              <div className={styles.formHeaderRow}>
-              <div className={styles.tabCard}>
-                <div className={styles.formTabs} role="tablist" aria-label="Contact type">
-                  <div className={styles.specialBookingBadge}>Special Bookings</div>
-                </div>
+      <div className="mx-auto w-full max-w-[1244px] px-4">
+        <div className="mx-auto my-10 grid w-full max-w-[890px] grid-cols-1 gap-8 lg:grid-cols-[minmax(0,494px)_minmax(0,360px)]">
+          <form
+            id="booking"
+            className="flex w-full flex-col rounded-[32px] border-t border-t-black/5 bg-white p-7 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
+            onSubmit={handleSubmit}
+          >
+            <div className="mb-5">
+              <div className="mb-2 inline-flex items-center justify-center rounded-[1.125rem] bg-[linear-gradient(180deg,#FED23F_0%,#FFA726_100%)] px-4 py-2 text-[0.9375rem] font-extrabold text-[#08121A] shadow-[0_6px_16px_rgba(249,115,22,0.12)]">
+                Special Bookings
               </div>
-
-              <h3 className={styles.formTitle}>Send us a Message</h3>
-              <p className={styles.formDesc}>Fill out the form and our team will get back to you within 24 hours</p>
+              <h3 className="mb-2 text-[32px] font-extrabold leading-[48px] text-[#2D3142]">
+                Send us a Message
+              </h3>
+              <p className="max-w-[375px] text-base leading-6 text-[#6B7280]">
+                Fill out the form and our team will get back to you within 24 hours
+              </p>
             </div>
 
-              <div className={styles.formBody}>
-                <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Full Name</span>
-                  <input 
-                    name="fullName" 
-                    type="text" 
-                    placeholder="Enter your name" 
-                    required 
-                    value={formData.fullName}
-                    onChange={handleChange}
-                  />
-                </label>
+            <div className="flex flex-1 flex-col gap-[14px]">
+              <label className="block text-[13px] font-semibold text-[#6B7280]">
+                <span>
+                  Full Name
+                  <span className="ml-1 inline-block -translate-y-[0.15rem] align-text-top text-[0.6rem] text-red-500">*</span>
+                </span>
+                <input
+                  name="fullName"
+                  type="text"
+                  placeholder="Enter your name"
+                  required
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  className={inputClassName}
+                />
+              </label>
 
-                <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Company Name</span>
-                  <input 
-                    name="company" 
-                    type="text" 
-                    placeholder="Enter your company name" 
-                    required 
-                    value={formData.company}
-                    onChange={handleChange}
-                  />
-                </label>
+              <label className="block text-[13px] font-semibold text-[#6B7280]">
+                <span>
+                  Company Name
+                  <span className="ml-1 inline-block -translate-y-[0.15rem] align-text-top text-[0.6rem] text-red-500">*</span>
+                </span>
+                <input
+                  name="company"
+                  type="text"
+                  placeholder="Enter your company name"
+                  required
+                  value={formData.company}
+                  onChange={handleChange}
+                  className={inputClassName}
+                />
+              </label>
 
-              <div className={styles.formRow}>
-                <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Email</span>
-                  <input 
-                    name="email" 
-                    type="email" 
-                    placeholder="your@email.com" 
-                    required 
+              <div className="flex flex-col gap-[14px] md:flex-row md:gap-4">
+                <label className="block flex-1 text-[13px] font-semibold text-[#6B7280]">
+                  <span>
+                    Email
+                    <span className="ml-1 inline-block -translate-y-[0.15rem] align-text-top text-[0.6rem] text-red-500">*</span>
+                  </span>
+                  <input
+                    name="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    required
                     value={formData.email}
                     onChange={handleChange}
+                    className={inputClassName}
                   />
                 </label>
 
-                <label className={styles.requiredLabel}>
-                  <span className={styles.reqText}>Phone</span>
-                  <input 
-                    name="phone" 
-                    type="tel" 
-                    placeholder="+91 98765 43210" 
-                    required 
+                <label className="block flex-1 text-[13px] font-semibold text-[#6B7280]">
+                  <span>
+                    Phone
+                    <span className="ml-1 inline-block -translate-y-[0.15rem] align-text-top text-[0.6rem] text-red-500">*</span>
+                  </span>
+                  <input
+                    name="phone"
+                    type="tel"
+                    placeholder="+91 98765 43210"
+                    required
                     value={formData.phone}
                     onChange={handleChange}
+                    className={inputClassName}
                   />
                 </label>
               </div>
 
-              <label className={styles.requiredLabel}>
-                <span className={styles.reqText}>Message</span>
-                <textarea 
-                  name="message" 
-                  placeholder="Tell us about your transportation needs..." 
-                  rows={6} 
+              <label className="block text-[13px] font-semibold text-[#6B7280]">
+                <span>
+                  Message
+                  <span className="ml-1 inline-block -translate-y-[0.15rem] align-text-top text-[0.6rem] text-red-500">*</span>
+                </span>
+                <textarea
+                  name="message"
+                  placeholder="Tell us about your transportation needs..."
+                  rows={6}
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  className={textareaClassName}
                 />
               </label>
             </div>
 
-
-            <div className={styles.actions}>
-              <button 
-                type="submit" 
-                className={`${styles.primaryBtn} ${isFormIncomplete ? styles.btnDisabled : ''}`} 
+            <div className="mt-5 text-left">
+              <button
+                type="submit"
+                className={[
+                  'inline-flex w-full items-center justify-center gap-[10px] rounded-xl bg-[linear-gradient(180deg,#FED23F_0%,#FFA726_100%)] px-5 py-3.5 text-[15px] font-extrabold text-[#08121A] shadow-[0_12px_30px_rgba(255,153,51,0.18)] transition-all duration-200 ease-out hover:-translate-y-px',
+                  isFormIncomplete ? 'cursor-not-allowed bg-[rgba(255,200,57,0.9)] bg-none text-[#111827] shadow-none hover:translate-y-0' : '',
+                ].join(' ')}
                 disabled={isLoading || isFormIncomplete}
               >
-                <span>{isLoading ? 'Sending...' : isFormIncomplete ? 'Send Message' : 'Send Message'}</span>
+                <span>{isLoading ? 'Sending...' : 'Send Message'}</span>
                 {!isLoading && (
-                  <span className={styles.btnIcon} aria-hidden>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                      <path d="M2 21L23 12L2 3v7l15 2-15 2v7z" fill="#08121A" opacity="0.95"/>
+                  <span className="inline-flex items-center justify-center" aria-hidden>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M2 21L23 12L2 3v7l15 2-15 2v7z" fill="#08121A" opacity="0.95" />
                     </svg>
                   </span>
                 )}
@@ -181,67 +280,40 @@ export default function CONTACT() {
             </div>
           </form>
 
-          <aside className={styles.aside}>
-            <div className={styles.contactCard}>
-              <h3>Contact Information</h3>
+          <aside className="flex flex-col gap-4">
+            <div className="flex flex-col rounded-3xl bg-white px-8 pb-2 pt-8 shadow-[0_18px_40px_rgba(2,6,23,0.07)]">
+              <h3 className="mb-4 text-[28px] font-extrabold text-[#111827]">Contact Information</h3>
 
-              <div className={styles.contactItem}>
-                <div className={styles.iconWrap}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                      <rect x="2.5" y="4" width="19" height="14" rx="2.5" stroke="#FFD23F" strokeWidth="1.6" fill="none" />
-                      <path d="M3.5 6.5L12 12.2L20.5 6.5" stroke="#FFD23F" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                    </svg>
+              {contactItems.map((item) => (
+                <div key={item.key} className="flex items-start gap-4 py-5 last:pb-0">
+                  <div className="mt-[6px] flex h-14 w-14 flex-none items-center justify-center rounded-[14px] bg-[linear-gradient(180deg,rgba(255,210,63,0.15)_0%,rgba(255,210,63,0.08)_100%)] shadow-[0_10px_28px_rgba(2,6,23,0.06)]">
+                    {item.icon}
+                  </div>
+                  <div className="flex min-h-20 flex-col justify-start">
+                    <div className="text-[15px] font-extrabold text-[#2D3142]">{item.label}</div>
+                    <div className="mt-1 text-[13px] text-[#6b7280]">{item.text}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className={styles.contactLabel}>Email Us</div>
-                  <div className={styles.contactText}>info@skvoyage.com<br />support@skvoyage.com</div>
-                </div>
-              </div>
-
-              <div className={styles.contactItem}>
-                <div className={styles.iconWrap}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                      <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.27c1.12.37 2.33.57 3.56.57a1 1 0 0 1 1 1V21a1 1 0 0 1-1 1A19.92 19.92 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.23.2 2.44.57 3.56a1 1 0 0 1-.27 1l-2.2 2.2z" stroke="#FFD23F" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                    </svg>
-                </div>
-                <div>
-                  <div className={styles.contactLabel}>Call Us</div>
-                  <div className={styles.contactText}>+91 98765 43210<br />Mon-Sat 9:00 AM - 6:00 PM</div>
-                </div>
-              </div>
-
-              <div className={styles.contactItem}>
-                <div className={styles.iconWrap}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#FFD23F" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                      <circle cx="12" cy="9" r="2.2" stroke="#FFD23F" strokeWidth="1.6" fill="none" />
-                    </svg>
-                </div>
-                <div>
-                  <div className={styles.contactLabel}>Visit Us</div>
-                  <div className={styles.contactText}>SK Voyage Headquarters<br />Andheri East, Mumbai<br />Maharashtra 400069, India</div>
-                </div>
-              </div>
+              ))}
             </div>
 
-            <div className={styles.contactImageWrap}>
-              <Image src="/images/classydriver.png" alt="vehicle" width={460} height={220} className={styles.contactImage} />
+            <div className="mt-0">
+              <Image src="/images/classydriver.png" alt="vehicle" width={460} height={220} className="block h-auto w-full rounded-xl object-cover" />
             </div>
           </aside>
         </div>
-
-        {/* FAQ section removed per request */}
       </div>
 
-      {/* Office Locations Section */}
-      <section className={styles.officeSection}>
-        <div className={styles.container}>
-          <div className={styles.officeSectionHeader}>
-            <h2 className={styles.officeTitle}>Our Office Locations</h2>
-            <p className={styles.officeSubtitle}>We operate across major metropolitan cities in India to be closer to you</p>
+      <section className="bg-[#FDF9F6] px-4 py-20">
+        <div className="mx-auto w-full max-w-[1244px]">
+          <div className="mb-12 text-center">
+            <h2 className="mb-3 text-[36px] font-extrabold text-[#2D3142]">Our Office Locations</h2>
+            <p className="text-base leading-[1.5] text-[#6B7280]">
+              We operate across major metropolitan cities in India to be closer to you
+            </p>
           </div>
 
-          <div className={styles.officeGrid}>
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             {[
               { city: 'Mumbai', address: 'Andheri East, Mumbai 400069', phone: '+91 98765 43210' },
               { city: 'Delhi NCR', address: 'Gurgaon, Haryana 122001', phone: '+91 98765 43211' },
@@ -249,18 +321,21 @@ export default function CONTACT() {
               { city: 'Pune', address: 'Hinjewadi, Pune 411057', phone: '+91 98765 43213' },
               { city: 'Hyderabad', address: 'HITEC City, Hyderabad 500081', phone: '+91 98765 43214' },
               { city: 'Chennai', address: 'OMR, Chennai 600096', phone: '+91 98765 43215' }
-            ].map((office, idx) => (
-              <div className={styles.officeCard} key={idx}>
-                <div className={styles.officeIconWrap}>
+            ].map((office) => (
+              <div
+                key={office.city}
+                className="flex items-center gap-4 rounded-3xl border border-[rgba(243,244,246,1)] bg-white px-[18px] py-5 text-left shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-200 ease-out hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] lg:flex-col lg:items-start"
+              >
+                <div className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#fff9e6_0%,#fff3cc_100%)]">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#FFD23F" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                     <circle cx="12" cy="9" r="2.2" stroke="#FFD23F" strokeWidth="1.6" fill="none" />
                   </svg>
                 </div>
-                <div className={styles.officeInfo}>
-                  <h4 className={styles.officeCity}>{office.city}</h4>
-                  <p className={styles.officeAddress}>{office.address}</p>
-                  <p className={styles.officePhone}>{office.phone}</p>
+                <div className="flex flex-1 flex-col gap-1">
+                  <h4 className="m-0 text-[18px] font-bold leading-none text-[#2D3142]">{office.city}</h4>
+                  <p className="m-0 text-sm leading-[1.4] text-[#6B7280]">{office.address}</p>
+                  <p className="m-0 text-sm font-semibold leading-[21px] text-[#2D3142]">{office.phone}</p>
                 </div>
               </div>
             ))}
@@ -268,32 +343,32 @@ export default function CONTACT() {
         </div>
       </section>
 
-      {/* FAQ Section (below office locations) */}
-      <section className={styles.faqSection}>
-        <div className={styles.container}>
-          <h2 className={styles.faqHeading}>Frequently Asked Questions</h2>
-          <p className={styles.faqSubtitle}>Quick answers to questions you may have</p>
-          <div className={styles.faqList}>
-            <details>
-              <summary>How do I get started with SK Voyage?</summary>
-              <p>Simply fill out the contact form above or call us directly. We'll schedule a consultation to understand your needs and provide a customized solution.</p>
-            </details>
-            <details>
-              <summary>What areas do you service?</summary>
-              <p>We currently operate in Mumbai, Delhi NCR, Bangalore, Pune, Hyderabad, and Chennai. We're expanding to more cities across India.</p>
-            </details>
-            <details>
-              <summary>Do you offer customized transportation solutions?</summary>
-              <p>Yes — we understand every business is unique. We create tailored transportation plans based on your specific requirements, routes, and schedules.</p>
-            </details>
-            <details>
-              <summary>How do you ensure driver quality and safety?</summary>
-              <p>All our drivers undergo thorough background verification, police checks, and professional training. Vehicles are regularly maintained and inspected.</p>
-            </details>
-            <details>
-              <summary>What is your pricing model?</summary>
-              <p>We offer flexible pricing based on your needs — monthly contracts, per-trip basis, or custom packages. Contact us for a detailed quote.</p>
-            </details>
+      <section className="mt-10 bg-white px-4 py-[60px]">
+        <div className="mx-auto w-full max-w-[1244px]">
+          <h2 className="mx-auto mb-2 max-w-[1052px] text-center text-[32px] font-extrabold leading-[42px] text-[#2D3142] md:text-[48px] md:leading-[63px]">
+            Frequently Asked Questions
+          </h2>
+          <p className="mx-auto mb-6 text-center text-[13px] leading-5 text-[#6b7280] md:w-[600px] md:text-sm md:leading-[27px]">
+            Quick answers to questions you may have
+          </p>
+          <div className="mx-auto max-w-[1052px]">
+            {[
+              ['How do I get started with SK Voyage?', "Simply fill out the contact form above or call us directly. We'll schedule a consultation to understand your needs and provide a customized solution."],
+              ['What areas do you service?', "We currently operate in Mumbai, Delhi NCR, Bangalore, Pune, Hyderabad, and Chennai. We're expanding to more cities across India."],
+              ['Do you offer customized transportation solutions?', 'Yes — we understand every business is unique. We create tailored transportation plans based on your specific requirements, routes, and schedules.'],
+              ['How do you ensure driver quality and safety?', 'All our drivers undergo thorough background verification, police checks, and professional training. Vehicles are regularly maintained and inspected.'],
+              ['What is your pricing model?', 'We offer flexible pricing based on your needs — monthly contracts, per-trip basis, or custom packages. Contact us for a detailed quote.'],
+            ].map(([question, answer]) => (
+              <details
+                key={question}
+                className="mb-3 rounded-xl bg-white px-[18px] py-[14px] shadow-[0_6px_20px_rgba(2,6,23,0.04)]"
+              >
+                <summary className="cursor-pointer pr-10 text-[18px] font-bold leading-[27px] text-[#2D3142] marker:content-none">
+                  {question}
+                </summary>
+                <p className="mt-2 text-base text-[#6b7280]">{answer}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>

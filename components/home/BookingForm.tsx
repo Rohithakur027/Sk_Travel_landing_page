@@ -1,13 +1,32 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import {
+  type FormEvent,
+  type InputHTMLAttributes,
+  type MouseEvent as ReactMouseEvent,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  ArrowRight,
+  Calendar,
+  Car,
+  ChevronDown,
+  Clock,
+  Loader2,
+  Mail,
+  MapPin,
+  Minus,
+  Navigation,
+  Phone,
+  Plus,
+  User,
+  Users,
+} from "lucide-react";
 import { useToast } from "@/lib/context/ToastContext";
-import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus, CheckCircle, XCircle, Loader2, User, Mail, Phone, ChevronDown } from "lucide-react";
-import styles from "./BookingForm.module.css";
 import AddressAutocomplete from "./AddressAutocomplete";
-
-
-// ─── Validation helpers ───────────────────────────────────────────────────────
 
 function isValidEmail(v: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
@@ -17,37 +36,59 @@ function isValidPhone(v: string) {
   return /^\d{10}$/.test(v.trim());
 }
 
-// Local sub-components to reduce dependencies
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  leftIcon?: React.ReactNode;
+const cardClassName =
+  "relative z-10 mx-auto mb-16 w-full max-w-[85rem] rounded-[1.25rem] border border-[rgba(255,255,255,0.4)] bg-[rgba(255,255,255,0.88)] p-4 shadow-[0_30px_70px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.6)] backdrop-blur-[20px] transition-[box-shadow,border-color] duration-300 ease-out hover:border-[rgba(255,255,255,0.5)] hover:shadow-[0_35px_80px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.8)] sm:p-[1.5rem] md:p-[3.5rem] max-[480px]:rounded-2xl max-[480px]:px-4 max-[480px]:py-5";
+const toggleClassName =
+  "relative mb-5 flex w-full rounded-full border border-[rgba(226,232,240,0.8)] bg-[rgba(241,245,249,0.65)] p-[0.15rem] sm:mb-6 sm:w-fit sm:p-[0.2rem]";
+const toggleButtonClassName =
+  "relative z-[1] flex-1 whitespace-nowrap rounded-full bg-transparent px-1 py-3 text-sm font-bold text-slate-500 transition-all duration-300 ease-out hover:text-slate-800 sm:px-[2.2rem] sm:py-[0.85rem] sm:text-[0.95rem]";
+const fieldBaseClassName =
+  "w-full rounded-xl border-[1.5px] border-[rgba(226,232,240,0.8)] bg-[rgba(248,250,252,0.7)] px-5 py-[1.15rem] text-[1.05rem] text-slate-900 shadow-[inset_0_1px_2px_rgba(0,0,0,0.01)] outline-none transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] placeholder:text-slate-400 focus:border-[rgba(249,115,22,0.5)] focus:bg-white focus:shadow-[0_0_0_4px_rgba(249,115,22,0.12)] max-sm:rounded-[0.6rem] max-sm:px-4 max-sm:py-3 max-sm:text-[0.95rem]";
+const inputClassName = `${fieldBaseClassName} cursor-text`;
+const selectTriggerClassName = `${fieldBaseClassName} flex cursor-pointer select-none items-center`;
+const overlayFieldClassName =
+  "flex w-full items-center rounded-xl border-[1.5px] border-[rgba(226,232,240,0.8)] bg-[rgba(248,250,252,0.7)] px-5 py-[1.15rem] text-[1.05rem] shadow-[inset_0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] peer-focus:border-[rgba(249,115,22,0.5)] peer-focus:bg-white peer-focus:shadow-[0_0_0_4px_rgba(249,115,22,0.12)] max-sm:rounded-[0.6rem] max-sm:px-4 max-sm:py-3 max-sm:text-[0.95rem]";
+const iconClassName =
+  "pointer-events-none absolute inset-y-0 left-0 z-[1] flex items-center pl-5 text-[rgba(255,200,57,1)] transition-all duration-200 ease-out group-focus-within:scale-105 max-sm:pl-[0.85rem]";
+const dropdownListClassName =
+  "absolute left-0 right-0 top-full z-[1000] mt-2 max-h-[250px] overflow-y-auto rounded-xl border border-[rgba(226,232,240,0.8)] bg-[rgba(255,255,255,0.98)] p-[0.4rem] shadow-[0_12px_30px_rgba(0,0,0,0.08)] backdrop-blur-[8px] animate-dropdown-slide";
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  leftIcon?: ReactNode;
   error?: string;
 }
 
 const Input = ({ id, placeholder, leftIcon, error, ...props }: InputProps) => (
-  <div className={styles.inputGroup}>
-    <div className={styles.inputWrapper}>
-      {leftIcon && <div className={styles.iconLeft}>{leftIcon}</div>}
+  <div className="flex w-full flex-col gap-1">
+    <div className="group relative w-full">
+      {leftIcon && <div className={iconClassName}>{leftIcon}</div>}
       <input
         id={id}
         placeholder={placeholder}
-        className={`${styles.input} ${leftIcon ? styles.hasIcon : ""} ${error ? styles.inputError : ""}`}
+        className={[
+          inputClassName,
+          leftIcon ? "pl-14 max-sm:pl-10" : "",
+          error ? "border-[#f87171] bg-[#fffafb] shadow-[0_0_0_4px_rgba(248,113,113,0.15)]" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
         {...props}
       />
     </div>
-    {error && <span className={styles.errorMsg}>{error}</span>}
+    {error && <span className="mt-[0.35rem] block pl-1 text-[0.8rem] font-semibold text-red-600">{error}</span>}
   </div>
 );
 
 interface SelectProps {
   id: string;
   options: { value: string; label: string }[];
-  leftIcon?: React.ReactNode;
+  leftIcon?: ReactNode;
   value?: string;
   onChange?: (e: { target: { value: string; id: string } }) => void;
   required?: boolean;
 }
 
-const Select = ({ id, options, leftIcon, value, onChange, required }: SelectProps) => {
+const Select = ({ id, options, leftIcon, value, onChange }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -57,6 +98,7 @@ const Select = ({ id, options, leftIcon, value, onChange, required }: SelectProp
         setIsOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -64,37 +106,41 @@ const Select = ({ id, options, leftIcon, value, onChange, required }: SelectProp
   const selectedOption = options.find((opt) => opt.value === value) || options[0];
 
   return (
-    <div className={styles.inputGroup} ref={containerRef}>
-      <div className={styles.inputWrapper}>
+    <div className="flex w-full flex-col gap-1" ref={containerRef}>
+      <div className="group relative w-full">
         <div
-          className={`${styles.select} ${leftIcon ? styles.hasIcon : ""} ${
-            !value ? styles.isPlaceholder : ""
-          } ${isOpen ? styles.selectOpen : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
+          className={[
+            selectTriggerClassName,
+            leftIcon ? "pl-4" : "",
+            !value ? "text-slate-400" : "",
+            isOpen ? "border-[rgba(249,115,22,0.5)] bg-white shadow-[0_0_0_4px_rgba(249,115,22,0.12)]" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          onClick={() => setIsOpen((open) => !open)}
         >
-          {leftIcon && <div className={styles.iconLeft}>{leftIcon}</div>}
-          <span className={styles.selectedLabel}>{selectedOption.label}</span>
-          <div className={styles.chevron}>
-            <ChevronDown
-              size={18}
-              className={`${styles.chevronIcon} ${isOpen ? styles.chevronRotate : ""}`}
-            />
+          {leftIcon && <div className={iconClassName}>{leftIcon}</div>}
+          <span className={`flex-1 ${leftIcon ? "pl-9" : ""}`}>{selectedOption.label}</span>
+          <div className={`flex items-center text-slate-400 transition-transform duration-300 ${isOpen ? "rotate-180 text-[rgba(255,200,57,1)]" : ""}`}>
+            <ChevronDown size={18} />
           </div>
         </div>
 
         {isOpen && (
-          <div className={styles.dropdownList}>
+          <div className={dropdownListClassName}>
             {options.map((opt) => (
               <div
                 key={opt.value}
-                className={`${styles.dropdownItem} ${
-                  opt.value === "" ? styles.dropdownPlaceholder : ""
-                } ${opt.value === value ? styles.dropdownItemSelected : ""}`}
+                className={[
+                  "cursor-pointer rounded-lg px-4 py-3 text-[0.95rem] text-slate-700 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1 hover:bg-[rgba(249,115,22,0.08)] hover:font-medium hover:text-[var(--color-primary-dark)]",
+                  opt.value === "" ? "mb-2 border-b border-slate-100 pb-2 text-[0.85rem] italic text-slate-400 pointer-events-none" : "",
+                  opt.value === value ? "bg-[rgba(249,115,22,0.12)] font-semibold text-[var(--color-primary-dark)]" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
                 onClick={() => {
                   if (opt.value !== "") {
-                    if (onChange) {
-                      onChange({ target: { value: opt.value, id } });
-                    }
+                    onChange?.({ target: { value: opt.value, id } });
                     setIsOpen(false);
                   }
                 }}
@@ -139,9 +185,9 @@ function getMaxPassengers(vehicle: string): number {
   return vehiclePassengerLimits[vehicle] ?? 10;
 }
 
-/** "2024-05-24T14:30" → "2024-05-24, 02:30 PM" */
 function formatDateTimeDisplay(dt: string): string {
   if (!dt) return "";
+
   try {
     const [datePart, timePart] = dt.split("T");
     const [h, m] = timePart.split(":");
@@ -150,15 +196,13 @@ function formatDateTimeDisplay(dt: string): string {
     hours = hours % 12 || 12;
     const formattedTime = `${hours.toString().padStart(2, "0")}:${m} ${ampm}`;
     return `${datePart}, ${formattedTime}`;
-  } catch (err) {
+  } catch {
     return dt;
   }
 }
 
 export default function BookingForm() {
-  const [bookingType, setBookingType] = useState<"instant" | "scheduled">(
-    "instant",
-  );
+  const [bookingType, setBookingType] = useState<"instant" | "scheduled">("instant");
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
   const [pickupCoords, setPickupCoords] = useState<[number, number] | null>(null);
@@ -185,10 +229,13 @@ export default function BookingForm() {
       setDistanceKm(null);
       return;
     }
+
     const token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
     if (!token) return;
+
     const [pLng, pLat] = pickupCoords;
     const [dLng, dLat] = destinationCoords;
+
     fetch(
       `https://api.mapbox.com/directions/v5/mapbox/driving/${pLng},${pLat};${dLng},${dLat}?access_token=${token}`
     )
@@ -203,7 +250,7 @@ export default function BookingForm() {
       .catch(() => setDistanceKm(null));
   }, [pickupCoords, destinationCoords]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (isSubmitting) return;
 
@@ -217,7 +264,7 @@ export default function BookingForm() {
       ...(serviceType === "airport_taxis" && isReturnTrip && returnDate && { return_date: returnDate }),
       ...(serviceType === "airport_taxis" && isReturnTrip && returnTime && { return_time: returnTime }),
       passengers,
-      name:  name.trim(),
+      name: name.trim(),
       email: email.trim(),
       phone: phone.trim(),
       ...(pickupCoords && {
@@ -236,7 +283,6 @@ export default function BookingForm() {
       }),
     };
 
-    // Validate all required fields
     const missingFields: string[] = [];
     if (!pickup.trim()) missingFields.push("pickup location");
     if (!destination.trim()) missingFields.push("destination");
@@ -248,8 +294,14 @@ export default function BookingForm() {
     if (serviceType === "airport_taxis" && isReturnTrip && !returnDate) missingFields.push("return date");
     if (serviceType === "airport_taxis" && isReturnTrip && !returnTime) missingFields.push("return time");
 
-    const emailErr = email.trim() === "" ? "Email is required." : !isValidEmail(email) ? "Enter a valid email address." : "";
-    const phoneErr = phone.trim() === "" ? "Mobile number is required." : !isValidPhone(phone) ? "Enter a valid 10-digit mobile number." : "";
+    const emailErr =
+      email.trim() === "" ? "Email is required." : !isValidEmail(email) ? "Enter a valid email address." : "";
+    const phoneErr =
+      phone.trim() === ""
+        ? "Mobile number is required."
+        : !isValidPhone(phone)
+          ? "Enter a valid 10-digit mobile number."
+          : "";
 
     if (missingFields.length > 0 || emailErr || phoneErr) {
       setFieldErrors({ email: emailErr, phone: phoneErr });
@@ -258,9 +310,9 @@ export default function BookingForm() {
       }
       return;
     }
+
     setFieldErrors({ email: "", phone: "" });
 
-    // Validate passenger count against vehicle type
     if (vehicleType) {
       const max = getMaxPassengers(vehicleType);
       if (passengers > max) {
@@ -278,7 +330,6 @@ export default function BookingForm() {
         body: JSON.stringify(body),
       });
       const data = await res.json();
-      console.log("[BookingForm] response:", data);
       if (res.ok && data.success) {
         showToast("success", "Your enquiry has been submitted! We'll be in touch shortly.");
       } else {
@@ -292,72 +343,77 @@ export default function BookingForm() {
     }
   };
 
+  const bookingGridClassName =
+    bookingType === "instant"
+      ? "mb-4 grid grid-cols-1 gap-5 sm:gap-6 lg:mb-8 lg:grid-cols-6 lg:gap-8"
+      : "mb-4 grid grid-cols-1 gap-5 sm:gap-6 lg:mb-8 lg:grid-cols-3 lg:gap-8";
+  const gridItemClassName = bookingType === "instant" ? "lg:col-span-2" : "lg:col-span-1";
+
+  const openPicker = (e: ReactMouseEvent<HTMLInputElement>) => {
+    try {
+      e.currentTarget.showPicker();
+    } catch {}
+  };
 
   return (
-    <div className={styles.card}>
-      {/* Toggle */}
-      <div className={styles.toggle}>
+    <div className={cardClassName}>
+      <div className={toggleClassName}>
         <div
-          className={`${styles.slider} ${
-            bookingType === "instant" ? styles.instantActive : styles.scheduledActive
-          }`}
+          className={`absolute bottom-[0.15rem] left-[0.15rem] top-[0.15rem] z-0 w-[calc(50%-0.15rem)] rounded-full bg-white shadow-[0_4px_12px_rgba(249,115,22,0.12),0_2px_4px_rgba(0,0,0,0.04)] transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] sm:bottom-[0.2rem] sm:left-[0.2rem] sm:top-[0.2rem] sm:w-[calc(50%-0.2rem)] ${bookingType === "instant" ? "translate-x-0" : "translate-x-full"}`}
         />
         <button
           type="button"
           onClick={() => setBookingType("instant")}
-          className={`${styles.toggleBtn} ${
-            bookingType === "instant" ? styles.toggleBtnActive : ""
-          }`}
+          className={`${toggleButtonClassName} ${bookingType === "instant" ? "text-slate-950" : ""}`}
         >
           Instant Booking
         </button>
         <button
           type="button"
           onClick={() => setBookingType("scheduled")}
-          className={`${styles.toggleBtn} ${
-            bookingType === "scheduled" ? styles.toggleBtnActive : ""
-          }`}
+          className={`${toggleButtonClassName} ${bookingType === "scheduled" ? "text-slate-950" : ""}`}
         >
           Scheduled Booking
         </button>
       </div>
 
       <form onSubmit={handleSubmit} noValidate>
-        <div className={`${styles.grid} ${
-          bookingType === "instant" ? styles.instantGrid : styles.scheduledGrid
-        }`}>
-          {/* Row 1: Locations */}
-          <AddressAutocomplete
-            id="pickup"
-            placeholder="Pickup Location *"
-            leftIcon={<Navigation size={20} />}
-            value={pickup}
-            onChange={(val) => setPickup(val)}
-            onCoordinatesChange={(coords) => {
-              setPickupCoords(coords);
-              setDistanceKm(null);
-            }}
-            className={`${styles.input} ${styles.hasIcon}`}
-            wrapperClassName={styles.inputWrapper}
-            iconClassName={styles.iconLeft}
-          />
-          <AddressAutocomplete
-            id="destination"
-            placeholder="Enter your destination *"
-            leftIcon={<MapPin size={20} />}
-            value={destination}
-            onChange={(val) => setDestination(val)}
-            onCoordinatesChange={(coords) => {
-              setDestinationCoords(coords);
-              setDistanceKm(null);
-            }}
-            className={`${styles.input} ${styles.hasIcon}`}
-            wrapperClassName={styles.inputWrapper}
-            iconClassName={styles.iconLeft}
-          />
+        <div className={bookingGridClassName}>
+          <div className={gridItemClassName}>
+            <AddressAutocomplete
+              id="pickup"
+              placeholder="Pickup Location *"
+              leftIcon={<Navigation size={20} />}
+              value={pickup}
+              onChange={setPickup}
+              onCoordinatesChange={(coords) => {
+                setPickupCoords(coords);
+                setDistanceKm(null);
+              }}
+              className={`${inputClassName} pl-14 max-sm:pl-10`}
+              wrapperClassName=""
+              iconClassName={iconClassName}
+            />
+          </div>
 
-          {/* Row 2: Booking Type, Vehicle Type & Passengers */}
-          <div className={styles.inputGroup}>
+          <div className={gridItemClassName}>
+            <AddressAutocomplete
+              id="destination"
+              placeholder="Enter your destination *"
+              leftIcon={<MapPin size={20} />}
+              value={destination}
+              onChange={setDestination}
+              onCoordinatesChange={(coords) => {
+                setDestinationCoords(coords);
+                setDistanceKm(null);
+              }}
+              className={`${inputClassName} pl-14 max-sm:pl-10`}
+              wrapperClassName=""
+              iconClassName={iconClassName}
+            />
+          </div>
+
+          <div className={gridItemClassName}>
             <Select
               id="serviceType"
               options={serviceOptions}
@@ -367,72 +423,69 @@ export default function BookingForm() {
               required
             />
             {serviceType === "airport_taxis" && (
-              <label className={styles.checkboxContainer}>
+              <label className="mt-[0.85rem] flex cursor-pointer items-center gap-3 pl-2 animate-[fade-in-up_0.3s_ease-out_forwards]">
                 <input
                   type="checkbox"
                   checked={isReturnTrip}
                   onChange={(e) => {
                     setIsReturnTrip(e.target.checked);
-                    if (!e.target.checked) { setReturnDate(""); setReturnTime(""); }
+                    if (!e.target.checked) {
+                      setReturnDate("");
+                      setReturnTime("");
+                    }
                   }}
-                  className={styles.checkbox}
+                  className="h-5 w-5 cursor-pointer accent-[var(--color-primary)]"
                 />
-                <span className={styles.checkboxLabel}>Return Trip?</span>
+                <span className="text-[0.95rem] font-semibold text-slate-600">Return Trip?</span>
               </label>
             )}
             {serviceType === "airport_taxis" && isReturnTrip && (
-              <div className={styles.returnDateWrapper}>
-                {/* Return Date */}
-                <div className={styles.inputWrapper}>
+              <div className="mt-[0.85rem] flex gap-3 animate-[fade-in-up_0.25s_ease-out_forwards]">
+                <div className="relative min-w-0 flex-1">
                   <input
                     id="returnDate"
                     type="date"
                     value={returnDate}
                     min={new Date().toISOString().split("T")[0]}
                     onChange={(e) => setReturnDate(e.target.value)}
-                    onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
-                    className={`${styles.input} ${styles.returnDateInput}`}
+                    onClick={openPicker}
+                    className="peer absolute inset-0 z-20 h-full w-full cursor-pointer opacity-0"
                   />
-                  {!returnDate ? (
-                    <div className={styles.returnFieldPlaceholder}>Return Date *</div>
-                  ) : (
-                    <div className={styles.returnFieldValue}>{returnDate}</div>
-                  )}
+                  <div className={`${overlayFieldClassName} ${returnDate ? "text-slate-900" : "text-slate-400"}`}>
+                    {returnDate || "Return Date *"}
+                  </div>
                 </div>
-                {/* Return Time */}
-                <div className={styles.inputWrapper}>
+                <div className="relative min-w-0 flex-1">
                   <input
                     id="returnTime"
                     type="time"
                     value={returnTime}
                     onChange={(e) => setReturnTime(e.target.value)}
-                    onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
-                    className={`${styles.input} ${styles.returnDateInput}`}
+                    onClick={openPicker}
+                    className="peer absolute inset-0 z-20 h-full w-full cursor-pointer opacity-0"
                   />
-                  {!returnTime ? (
-                    <div className={styles.returnFieldPlaceholder}>Return Time *</div>
-                  ) : (
-                    <div className={styles.returnFieldValue}>{returnTime}</div>
-                  )}
+                  <div className={`${overlayFieldClassName} ${returnTime ? "text-slate-900" : "text-slate-400"}`}>
+                    {returnTime || "Return Time *"}
+                  </div>
                 </div>
               </div>
             )}
           </div>
 
-          <div>
+          <div className={gridItemClassName}>
             <Select
               id="vehicleType"
               options={vehicleOptions}
               leftIcon={<Car size={20} />}
               value={vehicleType}
               onChange={(e) => {
-                const v = e.target.value;
-                setVehicleType(v);
-                if (v) {
-                  const max = getMaxPassengers(v);
+                const nextVehicleType = e.target.value;
+                setVehicleType(nextVehicleType);
+                if (nextVehicleType) {
+                  const max = getMaxPassengers(nextVehicleType);
                   if (passengers > max) {
                     setPassengers(max);
-                    const label = vehicleOptions.find((o) => o.value === v)?.label ?? v;
+                    const label = vehicleOptions.find((o) => o.value === nextVehicleType)?.label ?? nextVehicleType;
                     setPassengerError(`Max ${max} passengers for ${label}. Count adjusted.`);
                   } else {
                     setPassengerError("");
@@ -445,95 +498,105 @@ export default function BookingForm() {
             />
           </div>
 
-          {/* Time field — instant booking only */}
           {bookingType === "instant" && (
-            <div className={styles.inputGroup}>
-              <div className={styles.inputWrapper}>
-                <div className={styles.iconLeft}>
-                  <Clock size={20} />
+            <div className={gridItemClassName}>
+              <div className="flex w-full flex-col gap-1">
+                <div className="group relative w-full">
+                  <div className={iconClassName}>
+                    <Clock size={20} />
+                  </div>
+                  <input
+                    id="instantTime"
+                    type="time"
+                    value={instantTime}
+                    onChange={(e) => setInstantTime(e.target.value)}
+                    onClick={openPicker}
+                    className="peer absolute inset-0 z-20 h-full w-full cursor-pointer opacity-0"
+                  />
+                  <div className={`${overlayFieldClassName} pl-14 max-sm:pl-10 ${instantTime ? "text-slate-900" : "text-slate-400"}`}>
+                    {instantTime || "Pickup Time *"}
+                  </div>
                 </div>
-                <input
-                  id="instantTime"
-                  type="time"
-                  value={instantTime}
-                  onChange={(e) => setInstantTime(e.target.value)}
-                  onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
-                  className={`${styles.input} ${styles.hasIcon} ${styles.datetimeInput}`}
-                />
-                {!instantTime ? (
-                  <div className={styles.datetimePlaceholder}>Pickup Time *</div>
-                ) : (
-                  <div className={styles.datetimeValue}>{instantTime}</div>
-                )}
               </div>
             </div>
           )}
 
-          {/* Row 3: Date/Time (if scheduled) & Passengers */}
           {bookingType === "scheduled" && (
-            <div className={styles.inputGroup}>
-              <div className={styles.inputWrapper}>
-                <div className={styles.iconLeft}>
-                  <Calendar size={20} />
+            <div className={gridItemClassName}>
+              <div className="flex w-full flex-col gap-1">
+                <div className="group relative w-full">
+                  <div className={iconClassName}>
+                    <Calendar size={20} />
+                  </div>
+                  <input
+                    id="dateTime"
+                    type="datetime-local"
+                    value={dateTime}
+                    onChange={(e) => setDateTime(e.target.value)}
+                    onClick={openPicker}
+                    className="peer absolute inset-0 z-20 h-full w-full cursor-pointer opacity-0"
+                  />
+                  <div className={`${overlayFieldClassName} pl-14 max-sm:pl-10 ${dateTime ? "text-slate-900" : "text-slate-400"}`}>
+                    {dateTime ? formatDateTimeDisplay(dateTime) : "Date & Time *"}
+                  </div>
                 </div>
-                <input
-                  id="dateTime"
-                  type="datetime-local"
-                  value={dateTime}
-                  onChange={(e) => setDateTime(e.target.value)}
-                  onClick={(e) => {
-                    try {
-                      e.currentTarget.showPicker();
-                    } catch (err) {}
-                  }}
-                  className={`${styles.input} ${styles.hasIcon} ${styles.datetimeInput}`}
-                />
-                {!dateTime ? (
-                  <div className={styles.datetimePlaceholder}>Date & Time *</div>
-                ) : (
-                  <div className={styles.datetimeValue}>{formatDateTimeDisplay(dateTime)}</div>
-                )}
               </div>
             </div>
           )}
 
-          <div className={styles.inputGroup}>
-            <div className={`${styles.counterWrapper} ${passengerError ? styles.counterError : ""}`}>
-              <div className={styles.iconLeft}><Users size={20} /></div>
-              <span className={styles.counterLabel}>Passengers *</span>
-              <div className={styles.counterControls}>
-                <button
-                  type="button"
-                  onClick={() => { setPassengers(Math.max(1, passengers - 1)); setPassengerError(""); }}
-                  className={styles.counterBtn}
-                >
-                  <Minus size={18} />
-                </button>
-                <span className={styles.counterValue}>{passengers}</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const max = vehicleType ? getMaxPassengers(vehicleType) : 10;
-                    if (passengers < max) {
-                      setPassengers(passengers + 1);
+          <div className={gridItemClassName}>
+            <div className="flex w-full flex-col gap-1">
+              <div
+                className={[
+                  "group relative flex min-h-[3.6rem] w-full items-center rounded-xl border-[1.5px] border-[rgba(226,232,240,0.8)] bg-[rgba(248,250,252,0.7)] px-5 py-[0.85rem] pl-[3.25rem] text-[1.05rem] transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] max-sm:px-4 max-sm:pl-10",
+                  passengerError ? "border-[#f87171] bg-[#fffafb] shadow-[0_0_0_4px_rgba(248,113,113,0.15)]" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                <div className={iconClassName}>
+                  <Users size={20} />
+                </div>
+                <span className="ml-[0.9rem] flex-1 font-medium text-slate-400">Passengers *</span>
+                <div className="flex items-center gap-[0.85rem]">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPassengers(Math.max(1, passengers - 1));
                       setPassengerError("");
-                    } else {
-                      const label = vehicleOptions.find((o) => o.value === vehicleType)?.label ?? vehicleType ?? "this vehicle";
-                      setPassengerError(`Max ${max} passengers allowed for ${label}.`);
-                    }
-                  }}
-                  className={styles.counterBtn}
-                >
-                  <Plus size={18} />
-                </button>
+                    }}
+                    className="flex h-[2.2rem] w-[2.2rem] items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-all duration-200 ease-out hover:-translate-y-px hover:border-[rgba(249,115,22,0.3)] hover:bg-[rgba(249,115,22,0.08)] hover:text-[var(--color-primary-dark)] max-sm:h-8 max-sm:w-8"
+                  >
+                    <Minus size={18} />
+                  </button>
+                  <span className="min-w-4 text-center text-[1.15rem] font-bold text-slate-950 max-sm:text-[1.05rem]">{passengers}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const max = vehicleType ? getMaxPassengers(vehicleType) : 10;
+                      if (passengers < max) {
+                        setPassengers(passengers + 1);
+                        setPassengerError("");
+                      } else {
+                        const label =
+                          vehicleOptions.find((o) => o.value === vehicleType)?.label ??
+                          vehicleType ??
+                          "this vehicle";
+                        setPassengerError(`Max ${max} passengers allowed for ${label}.`);
+                      }
+                    }}
+                    className="flex h-[2.2rem] w-[2.2rem] items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-all duration-200 ease-out hover:-translate-y-px hover:border-[rgba(249,115,22,0.3)] hover:bg-[rgba(249,115,22,0.08)] hover:text-[var(--color-primary-dark)] max-sm:h-8 max-sm:w-8"
+                  >
+                    <Plus size={18} />
+                  </button>
+                </div>
               </div>
+              {passengerError && <span className="mt-[0.35rem] block pl-1 text-[0.8rem] font-semibold text-red-600">{passengerError}</span>}
             </div>
-            {passengerError && <span className={styles.errorMsg}>{passengerError}</span>}
           </div>
         </div>
 
-        {/* Contact Details */}
-        <div className={styles.contactGrid}>
+        <div className="mb-0 mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-8">
           <Input
             id="name"
             placeholder="Your Name *"
@@ -548,13 +611,16 @@ export default function BookingForm() {
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
-              if (fieldErrors.email) setFieldErrors(fe => ({ ...fe, email: "" }));
+              if (fieldErrors.email) {
+                setFieldErrors((prev) => ({ ...prev, email: "" }));
+              }
             }}
             onBlur={() => {
-              if (email && !isValidEmail(email))
-                setFieldErrors(fe => ({ ...fe, email: "Enter a valid email address." }));
-              else
-                setFieldErrors(fe => ({ ...fe, email: "" }));
+              if (email && !isValidEmail(email)) {
+                setFieldErrors((prev) => ({ ...prev, email: "Enter a valid email address." }));
+              } else {
+                setFieldErrors((prev) => ({ ...prev, email: "" }));
+              }
             }}
             error={fieldErrors.email}
             leftIcon={<Mail size={20} />}
@@ -567,28 +633,35 @@ export default function BookingForm() {
             onChange={(e) => {
               const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
               setPhone(digits);
-              if (fieldErrors.phone) setFieldErrors(fe => ({ ...fe, phone: "" }));
+              if (fieldErrors.phone) {
+                setFieldErrors((prev) => ({ ...prev, phone: "" }));
+              }
             }}
             onBlur={() => {
-              if (phone && !isValidPhone(phone))
-                setFieldErrors(fe => ({ ...fe, phone: "Enter a valid 10-digit mobile number." }));
-              else
-                setFieldErrors(fe => ({ ...fe, phone: "" }));
+              if (phone && !isValidPhone(phone)) {
+                setFieldErrors((prev) => ({ ...prev, phone: "Enter a valid 10-digit mobile number." }));
+              } else {
+                setFieldErrors((prev) => ({ ...prev, phone: "" }));
+              }
             }}
             error={fieldErrors.phone}
             leftIcon={<Phone size={20} />}
           />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
-          className={`${styles.submitBtn} ${isSubmitting ? styles.submitBtnLoading : ""}`}
+          className={[
+            "mt-7 flex w-full items-center justify-center gap-3 rounded-xl border-none bg-[rgba(255,200,57,1)] px-8 py-[1.15rem] text-[1.1rem] font-bold uppercase tracking-[1px] text-[#111827] shadow-[0_6px_20px_rgba(255,200,57,0.25)] transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:bg-[rgba(255,190,40,1)] hover:shadow-[0_10px_28px_rgba(255,200,57,0.35)] hover:brightness-105 disabled:cursor-not-allowed disabled:bg-[rgba(255,200,57,0.7)] disabled:text-[rgba(17,24,39,0.6)] disabled:shadow-none disabled:hover:translate-y-0 disabled:hover:brightness-100 sm:mt-10 sm:text-[1.2rem] max-sm:rounded-[0.6rem] max-sm:px-4 max-sm:py-4",
+            isSubmitting ? "pointer-events-none" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <>
-              <Loader2 size={20} className={styles.spinner} />
+              <Loader2 size={20} className="animate-spin" />
               Submitting…
             </>
           ) : (
@@ -600,15 +673,14 @@ export default function BookingForm() {
         </button>
       </form>
 
-      {/* Footer Text */}
-      <div className={styles.footer}>
+      <div className="mt-10 flex items-center justify-center gap-2 text-center text-[0.9rem] font-medium text-slate-500">
         <span>
-          For Exclusive Bookings and Corporate Inquiries, Please Contact us at:{" "}
+          For Exclusive Bookings and Corporate Inquiries, Please Contact us at{" "}
           <a
             href="https://wa.me/917807818119"
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.whatsappLink}
+            className="font-bold text-[var(--color-primary)] transition-all duration-200 ease-out hover:border-b hover:border-[var(--color-primary)] hover:brightness-110"
           >
             +91 7807818119
           </a>

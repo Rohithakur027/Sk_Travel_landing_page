@@ -1,7 +1,5 @@
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from './FeaturesPage.module.css'
+import Image from 'next/image';
+import Link from 'next/link';
 
 const FEATURE_CARDS = [
   { title: 'Smart Scheduling', desc: 'Automated scheduling with recurring trip support and flexible booking options', icon: '/Container (12).png' },
@@ -13,101 +11,111 @@ const FEATURE_CARDS = [
   { title: 'Route Optimization', desc: 'AI-powered routing to minimize travel time and maximize efficiency', icon: '/Container (18).png' },
   { title: 'Multi-Location Support', desc: 'Manage transportation across multiple offices and pickup points', icon: '/Container (19).png' },
   { title: 'Vehicle Variety', desc: 'Multiple vehicle types from sedans to buses for different needs', icon: '/Container (20).png' },
-]
+];
+
+const pillClassName =
+  'inline-flex items-center justify-center rounded-full border border-[rgba(255,210,63,0.3)] bg-[linear-gradient(168.37deg,rgba(255,210,63,0.15)_6.78%,rgba(255,210,63,0.08)_93.22%)] px-6 py-2 text-sm font-bold';
+const lightPillClassName = `${pillClassName} text-white`;
+const darkPillClassName = `${pillClassName} px-3 py-[0.3rem] text-[#111827]`;
+const containerClassName = 'mx-auto w-full max-w-[1200px] px-6';
+const heroRowClassName = 'my-12 flex flex-col items-center gap-8 md:my-16 md:gap-8 lg:flex-row';
+const imageCardClassName = 'relative h-[280px] w-full overflow-hidden rounded-3xl md:h-[450px] lg:w-[494px]';
+const sectionTitleClassName = 'text-[30px] font-extrabold leading-[1.12] text-[#111827]';
 
 export default function FeaturesPage() {
   return (
-    <section className={styles.section}>
-      <div className={styles.headerBand}>
+    <section className="bg-white">
+      <div className="flex min-h-[580px] w-screen items-center justify-center bg-[#2d3142] px-4 py-8 text-center max-md:min-h-0 max-md:px-6 max-md:pb-12 max-md:pt-28">
         <div>
-          <div className={styles.pillImageDesktop} style={{ margin: '0 auto 2rem' }}>Platform Features</div>
-          <div className={styles.pillImageMobile} style={{ margin: '2.6rem auto 2rem' }}>Platform Features</div>
-          <h1 className={styles.title}>
-            Advanced Features for<br />
-            <span className={styles.titleGold}>Modern Transportation</span>
+          <div className="mb-8 hidden md:inline-flex">
+            <div className={lightPillClassName}>Platform Features</div>
+          </div>
+          <div className="mb-8 inline-flex md:hidden">
+            <div className={lightPillClassName}>Platform Features</div>
+          </div>
+          <h1 className="m-0 font-heading text-[2.25rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.1]">
+            Advanced Features for
+            <br />
+            <span className="inline-block bg-[linear-gradient(171.05deg,#FFD23F_5.73%,#FFA726_94.27%)] bg-clip-text text-transparent">
+              Modern Transportation
+            </span>
           </h1>
-          <p className={styles.lead}>
+          <p className="mx-auto mt-6 max-w-[680px] text-[0.95rem] leading-[1.6] text-white/50 md:text-base">
             Discover the technology and features that make SK Voyage the smart choice for corporate transportation
           </p>
         </div>
       </div>
 
-      <div className={styles.container}>
-        <div className={styles.heroRow}>
-          <div className={styles.heroText}>
-            <div className={`${styles.pillImageDesktop} ${styles.pillImageCompact}`}>
-              <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Real-Time Intelligence</span>
+      <div className={containerClassName}>
+        <div className={heroRowClassName}>
+          <div className="flex-1">
+            <div className="mb-6 hidden md:inline-flex">
+              <span className={darkPillClassName}>Real-Time Intelligence</span>
             </div>
-            <div className={`${styles.pillImageMobile} ${styles.pillImageMobileCompact}`}>
-              <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Real-Time Intelligence</span>
+            <div className="mb-4 inline-flex md:hidden">
+              <span className={darkPillClassName}>Real-Time Intelligence</span>
             </div>
-            <h2 className={styles.heroTitle}>Track Every Journey <span className={styles.breakOnDesktop}>in Real-Time</span></h2>
-            <p className={styles.heroDesc}>Our advanced GPS tracking system allows you to monitor all your vehicles in real-time. Know exactly where your employees are and when they'll arrive at their destination.</p>
+            <h2 className="mb-3 text-[2rem] font-bold text-[#111827] md:text-[2.5rem]">
+              Track Every Journey <span className="inline whitespace-nowrap md:block">in Real-Time</span>
+            </h2>
+            <p className="max-w-[520px] text-base leading-[1.6] text-[#6b7280]">
+              Our advanced GPS tracking system allows you to monitor all your vehicles in real-time. Know exactly where your employees are and when they&apos;ll arrive at their destination.
+            </p>
 
-            <ul className={styles.checkList}>
-              <li>
-                <span className={styles.checkImg}>
-                  <Image src={'/Container (34).png'} alt="Live GPS" width={40} height={40} />
-                </span>
-                <div>
-                  <div className={styles.checkTitle}>Live GPS Tracking</div>
-                  <div className={styles.checkDesc}>Monitor vehicle locations on an interactive map</div>
-                </div>
-              </li>
-              <li>
-                <span className={styles.checkImg}>
-                  <Image src={'/Container (34).png'} alt="ETA" width={40} height={40} />
-                </span>
-                <div>
-                  <div className={styles.checkTitle}>ETA Updates</div>
-                  <div className={styles.checkDesc}>Accurate arrival time estimates with traffic considerations</div>
-                </div>
-              </li>
-              <li>
-                <span className={styles.checkImg}>
-                  <Image src={'/Container (34).png'} alt="Route History" width={40} height={40} />
-                </span>
-                <div>
-                  <div className={styles.checkTitle}>Route History</div>
-                  <div className={styles.checkDesc}>Complete journey logs and historical route data</div>
-                </div>
-              </li>
-              <li>
-                <span className={styles.checkImg}>
-                  <Image src={'/Container (34).png'} alt="Driver Details" width={40} height={40} />
-                </span>
-                <div>
-                  <div className={styles.checkTitle}>Driver Details</div>
-                  <div className={styles.checkDesc}>View driver information and contact details</div>
-                </div>
-              </li>
+            <ul className="mt-5 list-none p-0">
+              {[
+                ['Live GPS Tracking', 'Monitor vehicle locations on an interactive map', 'Live GPS'],
+                ['ETA Updates', 'Accurate arrival time estimates with traffic considerations', 'ETA'],
+                ['Route History', 'Complete journey logs and historical route data', 'Route History'],
+                ['Driver Details', 'View driver information and contact details', 'Driver Details'],
+              ].map(([title, desc, alt]) => (
+                <li key={title} className="mb-5 flex items-start gap-3 text-[#374151]">
+                  <span className="inline-flex h-10 w-10 flex-none items-center justify-center overflow-hidden rounded-[10px] bg-[linear-gradient(135deg,rgba(255,210,63,0.15),rgba(255,210,63,0.06))]">
+                    <Image src="/Container (34).png" alt={alt} width={40} height={40} />
+                  </span>
+                  <div className="-mt-1.5">
+                    <div className="mb-1 text-base font-bold leading-6 text-[#2d3142]">{title}</div>
+                    <div className="text-sm leading-5 text-[#6b7280]">{desc}</div>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className={styles.heroImage}>
-            <div className={styles.imageCard}>
-              <div className={styles.imageWrapper}>
-                <Image src={'/images/featuretop.png'} alt="Traffic" fill className={styles.innerImage} priority />
-              </div>
+          <div className="flex justify-center lg:w-[494px]">
+            <div className={imageCardClassName}>
+              <Image src="/images/featuretop.png" alt="Traffic" fill className="object-cover scale-110" priority />
             </div>
           </div>
         </div>
       </div>
 
-      <div className={styles.sectionTitleBand}>
-        <div className={styles.container}>
-          <div className={styles.sectionTitleWrap}>
-              <h2 className={styles.sectionTitle}>Everything You Need</h2>
-              <p className={styles.sectionLead}>Comprehensive features designed to make corporate transportation <span className={styles.splitWord}>effortless</span></p>
-            </div>
+      <div className="bg-[#fffbf0] px-0 pb-6 pt-14 max-md:pt-8 max-md:pb-3">
+        <div className={containerClassName}>
+          <div className="my-7 text-center max-md:mt-3">
+            <h2 className={sectionTitleClassName}>Everything You Need</h2>
+            <p className="mx-auto mt-1 max-w-[520px] text-sm leading-[1.4] text-[#6b7280]">
+              Comprehensive features designed to make corporate transportation
+              <span className="block text-center max-[480px]:inline"> effortless</span>
+            </p>
+          </div>
 
-          <div className={styles.cardsGrid}>
-            {FEATURE_CARDS.map((c, i) => (
-              <div key={i} className={styles.featureCard}>
-                <div className={styles.cardIcon}><Image src={c.icon} alt={c.title} width={56} height={56} /></div>
-                <div className={styles.cardBody}>
-                  <h3 className={styles.cardTitle}>{c.title}</h3>
-                  <p className={styles.cardDesc}>{c.desc}</p>
+          <div className="mx-auto grid max-w-[1052px] grid-cols-1 gap-[18px] md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            {FEATURE_CARDS.map((card) => (
+              <div
+                key={card.title}
+                className="flex min-h-[254px] flex-row items-center rounded-2xl bg-white p-4 shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:min-h-0 md:flex-col md:items-start md:rounded-3xl md:p-7"
+              >
+                <div className="mr-3 flex h-12 w-12 flex-none items-center justify-center overflow-hidden rounded-[14px] md:mb-[14px] md:mr-0 md:h-14 md:w-14">
+                  <Image src={card.icon} alt={card.title} width={56} height={56} className="h-full w-full rounded-xl object-cover" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="mb-1 text-sm font-bold text-[#111827] md:mb-2 md:font-heading md:text-[1.05rem] md:font-extrabold">
+                    {card.title}
+                  </h3>
+                  <p className="m-0 text-[13px] leading-[1.35] text-[#6b7280] md:text-base md:leading-[1.6]">
+                    {card.desc}
+                  </p>
                 </div>
               </div>
             ))}
@@ -115,102 +123,99 @@ export default function FeaturesPage() {
         </div>
       </div>
 
-        <div className={styles.container}>
-        <div className={styles.heroRow}>
-          <div className={styles.heroImage}>
-            <div className={styles.imageCard}>
-              <div className={styles.imageWrapper}>
-                <Image src={'/images/safetyprior.png'} alt="Car" fill className={styles.innerImage} priority />
-              </div>
+      <div className={containerClassName}>
+        <div className={heroRowClassName}>
+          <div className="order-2 flex justify-center lg:order-1 lg:w-[494px]">
+            <div className={imageCardClassName}>
+              <Image src="/images/safetyprior.png" alt="Car" fill className="object-cover scale-110" priority />
             </div>
           </div>
 
-          <div className={styles.heroText}>
-            <div className={`${styles.pillImageDesktop} ${styles.pillImageCompact}`}>
-              <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Safety First</span>
+          <div className="order-1 flex-1 lg:order-2">
+            <div className="mb-6 hidden md:inline-flex">
+              <span className={darkPillClassName}>Safety First</span>
             </div>
-            <div className={`${styles.pillImageMobile} ${styles.pillImageMobileDown} ${styles.pillImageMobileCompact}`}>
-              <span className={`${styles.pillInner} ${styles.pillInnerDark}`}>Safety First</span>
+            <div className="mb-4 inline-flex md:hidden">
+              <span className={darkPillClassName}>Safety First</span>
             </div>
-            <h2 className={styles.heroTitle}>Your Safety is Our Priority</h2>
-            <p className={styles.heroDesc}>We implement comprehensive safety measures to ensure every journey is secure and comfortable for your employees.</p>
+            <h2 className="mb-3 text-[2rem] font-bold text-[#111827] md:text-[2.5rem]">
+              Your Safety is Our Priority
+            </h2>
+            <p className="max-w-[520px] text-base leading-[1.6] text-[#6b7280]">
+              We implement comprehensive safety measures to ensure every journey is secure and comfortable for your employees.
+            </p>
 
-            <div className={styles.stackCards}>
-              <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (30).png'} alt="Background Verified Drivers" width={48} height={48} /></div>
-                <div>
-                  <h4 className={styles.stackTitle}>Background Verified Drivers</h4>
-                  <p className={styles.stackDesc}>Every driver undergoes thorough police verification and background checks</p>
+            <div className="mt-5 flex flex-col gap-6">
+              {[
+                ['/Container (30).png', 'Background Verified Drivers', 'Every driver undergoes thorough police verification and background checks'],
+                ['/Container (31).png', 'Regular Vehicle Maintenance', 'All vehicles undergo regular inspections and maintenance checks'],
+                ['/Container (32).png', '24/7 Emergency Support', 'Round-the-clock support team available for any emergency situations'],
+                ['/Container (33).png', 'Real-Time Ride Sharing', 'Share your trip details with family or colleagues for added security'],
+              ].map(([icon, title, desc]) => (
+                <div
+                  key={title}
+                  className="flex items-start gap-5 rounded-[18px] bg-white p-[18px] shadow-[0_18px_40px_rgba(2,6,23,0.06)]"
+                >
+                  <div className="mt-1 flex h-12 w-12 flex-none items-center justify-center overflow-hidden rounded-xl bg-[linear-gradient(135deg,rgba(255,210,63,0.12),rgba(255,210,63,0.06))]">
+                    <Image src={icon} alt={title} width={48} height={48} />
+                  </div>
+                  <div>
+                    <h4 className="mb-1 text-[13px] font-bold text-[#111827] md:text-base">
+                      {title}
+                    </h4>
+                    <p className="m-0 leading-[1.5] text-[#6b7280]">
+                      {desc}
+                    </p>
+                  </div>
                 </div>
-              </div>
-
-              <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (31).png'} alt="Regular Vehicle Maintenance" width={48} height={48} /></div>
-                <div>
-                  <h4 className={styles.stackTitle}>Regular Vehicle Maintenance</h4>
-                  <p className={styles.stackDesc}>All vehicles undergo regular inspections and maintenance checks</p>
-                </div>
-              </div>
-
-              <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (32).png'} alt="24/7 Emergency Support" width={48} height={48} /></div>
-                <div>
-                  <h4 className={styles.stackTitle}>24/7 Emergency Support</h4>
-                  <p className={styles.stackDesc}>Round-the-clock support team available for any emergency situations</p>
-                </div>
-              </div>
-
-              <div className={styles.stackCard}>
-                <div className={styles.stackIcon}><Image src={'/Container (33).png'} alt="Real-Time Ride Sharing" width={48} height={48} /></div>
-                <div>
-                  <h4 className={styles.stackTitle}>Real-Time Ride Sharing</h4>
-                  <p className={styles.stackDesc}>Share your trip details with family or colleagues for added security</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <div className={styles.poweredBand}>
-        <div className={styles.poweredInner}>
-          <h3 className={styles.poweredTitle}>Powered by Advanced Technology</h3>
-          <p className={styles.poweredLead}>Built on cutting-edge technology to deliver reliable and efficient service</p>
-
-          <div className={styles.poweredGrid}>
-            <div className={styles.poweredItem}>
-              <div className={styles.poweredIcon}><Image src={'/Container (30).png'} alt="Cloud Infrastructure" width={64} height={64} /></div>
-              <div className={styles.poweredLabel}>Cloud Infrastructure</div>
-              <div className={`${styles.poweredSubLabel} ${styles.poweredSubLabelDesktop}`}>99.9% uptime guaranteed</div>
-              <div className={`${styles.poweredSubLabel} ${styles.poweredSubLabelMobile}`}>99.9% uptime assured</div>
-            </div>
-            <div className={styles.poweredItem}>
-              <div className={styles.poweredIcon}><Image src={'/Container (31).png'} alt="AI Routing" width={64} height={64} /></div>
-              <div className={styles.poweredLabel}>AI Routing</div>
-              <div className={styles.poweredSubLabel}>Smart traffic prediction</div>
-            </div>
-            <div className={styles.poweredItem}>
-              <div className={styles.poweredIcon}><Image src={'/Container (32).png'} alt="Mobile First" width={64} height={64} /></div>
-              <div className={styles.poweredLabel}>Mobile First</div>
-              <div className={styles.poweredSubLabel}>iOS & Android apps</div>
-            </div>
-            <div className={styles.poweredItem}>
-              <div className={styles.poweredIcon}><Image src={'/Container (33).png'} alt="Data Security" width={64} height={64} /></div>
-              <div className={styles.poweredLabel}>Data Security</div>
-              <div className={styles.poweredSubLabel}>Bank-level encryption</div>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-        <div className={styles.ctaBox}>
-        <h3 className={styles.sectionTitle}>Experience These Features</h3>
-        <p className={styles.sectionLead}>Schedule a demo to see how our platform can transform your <span className={styles.keepTogether}>corporate transportation</span></p>
-        <div style={{marginTop:24}}>
-          <Link href="/contact#booking" className={styles.ctaBtn}>Send an Enquiry →</Link>
+      <div className="mt-0 bg-[#2D3142] px-0 pb-10 pt-14 text-white max-md:px-3 max-md:py-12">
+        <div className="mx-auto max-w-[1052px] px-6 text-center">
+          <h3 className="mb-3 text-[32px] font-extrabold">Powered by Advanced Technology</h3>
+          <p className="mb-8 text-white/75">Built on cutting-edge technology to deliver reliable and efficient service</p>
+
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8">
+            {[
+              ['/Container (30).png', 'Cloud Infrastructure', '99.9% uptime guaranteed', '99.9% uptime assured'],
+              ['/Container (31).png', 'AI Routing', 'Smart traffic prediction', 'Smart traffic prediction'],
+              ['/Container (32).png', 'Mobile First', 'iOS & Android apps', 'iOS & Android apps'],
+              ['/Container (33).png', 'Data Security', 'Bank-level encryption', 'Bank-level encryption'],
+            ].map(([icon, label, desktopText, mobileText]) => (
+              <div key={label} className="flex flex-col items-center gap-[6px]">
+                <div className="flex h-[76px] w-[76px] items-center justify-center rounded-2xl md:h-20 md:w-20">
+                  <Image src={icon} alt={label} width={56} height={56} className="h-14 w-14 object-contain" />
+                </div>
+                <div className="min-h-6 whitespace-nowrap text-sm font-bold leading-[1.1] text-white md:min-h-7">
+                  {label}
+                </div>
+                <div className="mt-1 text-[13px] text-white/75 md:hidden">{mobileText}</div>
+                <div className="mt-1 hidden text-sm text-white/75 md:block">{desktopText}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
+      <div className="mx-auto my-10 max-w-[1052px] rounded-[32px] bg-white px-5 py-7 text-center shadow-[0_12px_32px_rgba(2,6,23,0.05)] md:px-12 md:py-14">
+        <h3 className={sectionTitleClassName}>Experience These Features</h3>
+        <p className="mx-auto mt-2 max-w-[520px] text-sm leading-[1.4] text-[#6b7280]">
+          Schedule a demo to see how our platform can transform your
+          <span className="block max-[600px]:inline"> corporate transportation</span>
+        </p>
+        <div className="mt-6">
+          <Link
+            href="/contact#booking"
+            className="inline-flex items-center gap-3 rounded-lg bg-[linear-gradient(180deg,#FFD23F,#FFA726)] px-7 py-3 text-base font-bold text-[#111827] shadow-[0_8px_24px_rgba(255,210,63,0.4)]"
+          >
+            Send an Enquiry →
+          </Link>
+        </div>
+      </div>
     </section>
-  )
+  );
 }

@@ -1,72 +1,65 @@
-import React from "react";
-import Image from "next/image";
-import { BadgeCheck } from "lucide-react";
-import styles from "./CorporateSection.module.css";
+import Image from 'next/image';
+import { BadgeCheck } from 'lucide-react';
 
 const FEATURES = [
-  "Industry-leading safety standards",
-  "Professional and verified drivers",
-  "24/7 customer support",
-  "Real-time tracking system",
+  'Industry-leading safety standards',
+  'Professional and verified drivers',
+  '24/7 customer support',
+  'Real-time tracking system',
 ];
 
 export default function CorporateSection() {
   return (
-    <section id="about" className={styles.section}>
-      <div className={styles.inner}>
-        {/* Left: Image with badge */}
-        <div className={styles.imgCol}>
-          <div className={styles.imgWrapper}>
+    <section id="about" className="bg-[rgb(253,255,255)] py-16 md:py-28">
+      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 items-center gap-8 px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
+        <div className="relative">
+          <div className="relative h-[22rem] w-full overflow-hidden rounded-3xl md:h-[30rem] lg:h-[35rem]">
             <Image
               src="/images/corporatesec_indian_corp.png"
               alt="SK Voyage driver"
               fill
-              className={styles.img}
+              className="object-cover"
             />
           </div>
-          {/* Floating badge */}
-          <div className={styles.badge}>
-            <span className={styles.badgeYears}>10+ Years</span>
-            <span className={styles.badgeSub}>Of Excellence</span>
+          <div className="absolute left-2 top-[-2.5rem] flex flex-col gap-[0.15rem] rounded-2xl bg-amber-400 px-4 py-4 shadow-[0_8px_24px_rgba(251,191,36,0.4)] md:left-4 md:top-[-4rem] md:gap-[0.3rem] md:rounded-[1.25rem] md:px-6 md:py-8">
+            <span className="text-[1.25rem] font-extrabold leading-none text-gray-900 md:text-[1.75rem]">10+ Years</span>
+            <span className="text-xs font-medium text-gray-700 md:text-[0.9rem]">Of Excellence</span>
           </div>
         </div>
 
-        {/* Right: Text content */}
-        <div className={styles.textCol}>
-          <span className={styles.eyebrow}>About SK Voyage</span>
-          <h2 className={styles.heading}>
+        <div className="flex flex-col gap-8">
+          <span className="text-base font-bold uppercase tracking-[2px] text-amber-400">About SK Voyage</span>
+          <h2 className="font-sans text-[2.25rem] font-bold leading-[1.15] tracking-[-0.02em] text-[rgba(45,49,66,1)] md:text-[2.5rem]">
             We Redefine Corporate Transportation
           </h2>
-          <p className={styles.body}>
-            At SK Voyage, we understand that your time is valuable. That's why
-            we've built a transportation service that prioritizes reliability,
-            comfort, and professionalism. With over 8 years of experience
-            serving corporate clients, we've perfected the art of seamless
+          <p className="text-[1.1rem] leading-[1.6] text-gray-600">
+            At SK Voyage, we understand that your time is valuable. That&apos;s why we&apos;ve built a transportation service that prioritizes reliability,
+            comfort, and professionalism. With over 8 years of experience serving corporate clients, we&apos;ve perfected the art of seamless
             employee transportation.
           </p>
-          <p className={styles.body}>
-            Our fleet of modern vehicles and team of professional drivers ensure
-            that your employees arrive safely, comfortably, and on time, every
+          <p className="text-[1.1rem] leading-[1.6] text-gray-600">
+            Our fleet of modern vehicles and team of professional drivers ensure that your employees arrive safely, comfortably, and on time, every
             time.
           </p>
 
-          {/* Feature checklist */}
-          <ul className={styles.featureList}>
+          <ul className="m-0 flex list-none flex-col gap-[0.9rem] p-0">
             {FEATURES.map((feature) => (
-              <li key={feature} className={styles.featureItem}>
+              <li key={feature} className="flex items-center gap-3 text-[1.2rem] font-medium text-gray-800">
                 <BadgeCheck
                   size={24}
-                  color="#ffffffff"
+                  color="#ffffff"
                   fill="#FBBF24"
                   strokeWidth={2}
-                  className={styles.checkIcon}
+                  className="shrink-0"
                 />
                 <span>{feature}</span>
               </li>
             ))}
           </ul>
 
-          <button className={styles.learnMoreBtn}>Learn More About Us</button>
+          <button className="self-start rounded-xl border-2 border-[rgba(255,210,63,1)] bg-transparent px-8 py-[0.9rem] text-base font-bold text-[rgba(45,49,66,1)] transition-all duration-200 ease-out hover:bg-[rgba(255,210,63,0.2)]">
+            Learn More About Us
+          </button>
         </div>
       </div>
     </section>
