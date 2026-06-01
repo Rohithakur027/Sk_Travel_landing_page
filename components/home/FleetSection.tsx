@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import styles from './FleetSection.module.css';
 
@@ -72,9 +73,9 @@ export default function FleetSection() {
               <span className={styles.featuredTag}>Featured</span>
               <h3>Executive Sedans</h3>
               <p>Premium comfort for 1-4 passengers</p>
-              <button className={styles.viewDetailsBtn}>
+              <Link href="/#contact" className={styles.viewDetailsBtn}>
                 View Details <ArrowRight size={18} />
-              </button>
+              </Link>
             </div>
           </div>
         </div>
