@@ -47,7 +47,7 @@ export default function ContactSection() {
               <div className={styles.infoTextGroup}>
                 <p className={styles.infoLabel}>Call Us</p>
                 <h4 className={styles.infoValue}>+1 (555) 123-4567</h4>
-                <p className={styles.infoSubtitle}>Mon-Fri 9am-6pm</p>
+                <p className={styles.infoSubtitle}>24/7 Operational Support</p>
               </div>
             </div>
 
@@ -57,7 +57,7 @@ export default function ContactSection() {
               </div>
               <div className={styles.infoTextGroup}>
                 <p className={styles.infoLabel}>Email Us</p>
-                <h4 className={styles.infoValue}>contact@skvoyage.com</h4>
+                <h4 className={styles.infoValue}>contact@skvoyages.in</h4>
                 <p className={styles.infoSubtitle}>We reply within 24 hours</p>
               </div>
             </div>

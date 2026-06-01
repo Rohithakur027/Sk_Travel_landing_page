@@ -194,7 +194,7 @@ export default function CONTACT() {
                 </div>
                 <div>
                   <div className={styles.contactLabel}>Email Us</div>
-                  <div className={styles.contactText}>info@skvoyage.com<br />support@skvoyage.com</div>
+                  <div className={styles.contactText}>contact@skvoayges.in<br />support@skvoayges.in</div>
                 </div>
               </div>
 
@@ -206,7 +206,7 @@ export default function CONTACT() {
                 </div>
                 <div>
                   <div className={styles.contactLabel}>Call Us</div>
-                  <div className={styles.contactText}>+91 98765 43210<br />Mon-Sat 9:00 AM - 6:00 PM</div>
+                  <div className={styles.contactText}>+91 98765 43210<br />24/7 Operational Support</div>
                 </div>
               </div>
 
