@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Star, Clock, ArrowRight } from 'lucide-react';
 import styles from './ExperienceSection.module.css';
 
@@ -118,9 +119,9 @@ export default function ExperienceSection() {
               <div className={styles.content}>
                 <h3>Built for Teams</h3>
                 <p>Seamless group transportation for corporate events and daily commutes</p>
-                <button className={styles.learnMoreBtn}>
+                <Link href="/#contact" className={styles.learnMoreBtn}>
                   Learn More <ArrowRight size={18} />
-                </button>
+                </Link>
               </div>
             </div>
           </div>

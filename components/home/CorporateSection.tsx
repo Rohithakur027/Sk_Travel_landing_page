@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { BadgeCheck } from "lucide-react";
 import styles from "./CorporateSection.module.css";
 
@@ -66,7 +67,9 @@ export default function CorporateSection() {
             ))}
           </ul>
 
-          <button className={styles.learnMoreBtn}>Learn More About Us</button>
+          <Link href="/#contact" className={styles.learnMoreBtn}>
+            Learn More About Us
+          </Link>
         </div>
       </div>
     </section>
