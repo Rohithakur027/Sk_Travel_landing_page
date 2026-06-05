@@ -15,22 +15,27 @@ interface AddressAutocompleteProps {
   iconClassName?: string;
 }
 
-// Bias all results toward Bangalore so every locality, layout, and
-// neighbourhood (Whitefield, Koramangala, HSR, Yelahanka, Anekal, etc.)
-// ranks first. We intentionally do NOT pass a bbox so users can still pick
-// major metros outside Karnataka.
-const BANGALORE_PROXIMITY = "77.5946,12.9716";
-const BANGALORE_KEYWORDS = ["bangalore", "bengaluru", "karnataka"];
+// Search Box API endpoints.
+const SEARCHBOX_BASE = "https://api.mapbox.com/search/searchbox/v1";
 
-// Outside Bangalore, only allow these big Indian cities through. Anything
-// else (small towns, villages) gets filtered out.
-const BIG_CITIES_OUTSIDE_BANGALORE = new Set([
-  "mumbai", "delhi", "new delhi", "chennai", "hyderabad", "kolkata",
-  "pune", "ahmedabad", "jaipur", "lucknow", "surat", "kanpur", "nagpur",
-  "indore", "bhopal", "visakhapatnam", "patna", "vadodara", "ghaziabad",
-  "ludhiana", "agra", "nashik", "faridabad", "meerut", "rajkot", "varanasi",
-  "coimbatore", "kochi", "chandigarh", "mysore", "mysuru", "mangalore", "mangaluru",
-]);
+// Bangalore city centre — proximity (ranking) bias for suggestions.
+const BANGALORE_PROXIMITY = "77.5946,12.9716";
+// Bounding box (minLon,minLat,maxLon,maxLat) ≈ 200 km around Bangalore centre.
+// The Search Box API can't be filtered by km on the client (it doesn't return
+// coordinates until /retrieve), so we restrict to Bangalore via this bbox
+// server-side instead. It's a square, so corners reach a bit past 200 km.
+const BANGALORE_BBOX = "75.75,11.16,79.44,14.78";
+
+// A Search Box "session" = many /suggest calls + one /retrieve, billed as a
+// single request. The token groups them; after a /retrieve we start a new one.
+function newSessionToken(): string {
+  try {
+    if (typeof crypto !== "undefined" && crypto.randomUUID) return crypto.randomUUID();
+  } catch {
+    // fall through to the manual fallback
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
 
 const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   id,
@@ -50,6 +55,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const requestIdRef = useRef(0);
+  // One session token reused across keystrokes; reset after a pick (retrieve).
+  const sessionTokenRef = useRef<string>(newSessionToken());
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -68,7 +75,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   }, []);
 
   const fetchSuggestions = async (rawQuery: string) => {
-    const query = rawQuery.trim();
+    // Normalize: collapse whitespace and strip characters Mapbox can't use
+    const query = rawQuery.trim().replace(/\s+/g, " ").replace(/[^\w\s,.-]/g, "");
     if (query.length < 2) {
       setSuggestions([]);
       setShowSuggestions(false);
@@ -81,69 +89,43 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
       return;
     }
 
-    // Detect whether the user is searching outside Bangalore. If they typed
-    // a big-city name (Mumbai, Delhi, etc.) we let it through unmodified so
-    // Mapbox can resolve it. Otherwise we append "Bangalore" so generic
-    // queries like "HSR" or "Koramangala" stay biased to the city.
-    const lowered = query.toLowerCase();
-    const hasBangaloreHint = BANGALORE_KEYWORDS.some((kw) => lowered.includes(kw));
-    const hasBigCityHint = Array.from(BIG_CITIES_OUTSIDE_BANGALORE).some((c) =>
-      lowered.includes(c)
-    );
-    const searchQuery = hasBangaloreHint || hasBigCityHint ? query : `${query}, Bangalore`;
-
+    // Search Box /suggest: typeahead suggestions for the raw query, biased to
+    // Bangalore via proximity + bbox. Coordinates are NOT returned here — they
+    // come from /retrieve when the user picks a suggestion.
     const currentRequest = ++requestIdRef.current;
     setLoading(true);
     try {
-      const response = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json`,
-        {
-          params: {
-            access_token: mapboxToken,
-            limit: 10,
-            country: "IN",
-            proximity: BANGALORE_PROXIMITY,
-            language: "en",
-            autocomplete: true,
-            // Cover localities, neighborhoods, streets, landmarks, POIs, plus
-            // city-level "place" results so big metros surface too.
-            types: "place,locality,neighborhood,address,poi,district,postcode",
-          },
-        }
-      );
+      const response = await axios.get(`${SEARCHBOX_BASE}/suggest`, {
+        params: {
+          q: query,
+          access_token: mapboxToken,
+          session_token: sessionTokenRef.current,
+          limit: 5,
+          country: "IN",
+          language: "en",
+          proximity: BANGALORE_PROXIMITY,
+          bbox: BANGALORE_BBOX,
+        },
+      });
 
       // Drop stale responses if the user kept typing.
       if (currentRequest !== requestIdRef.current) return;
 
-      const features = (response.data.features || [])
-        .filter((f: any) => {
-          const name = (f.place_name || "").toLowerCase();
-          const text = (f.text || "").toLowerCase();
-          const placeTypes: string[] = f.place_type || [];
-
-          // Always keep Bangalore-area results — every locality, layout,
-          // neighbourhood, POI inside the city.
-          if (BANGALORE_KEYWORDS.some((kw) => name.includes(kw))) return true;
-
-          // Outside Bangalore, only allow whitelisted big cities at the
-          // city level (Mapbox tags those with place_type "place").
-          if (placeTypes.includes("place") && BIG_CITIES_OUTSIDE_BANGALORE.has(text)) {
-            return true;
-          }
-
-          return false;
-        })
-        .map((f: any) => ({
-          id: f.id || f.center.join(","),
-          display_name: f.place_name || f.text,
-          center: f.center as [number, number], // [lng, lat]
-        }));
+      const features = (response.data.suggestions || []).map((s: any) => ({
+        id: s.mapbox_id,
+        mapbox_id: s.mapbox_id,
+        // `name` is the primary label; `place_formatted` is the rest of the
+        // address. Fall back to `full_address` / `name` if either is missing.
+        display_name:
+          s.full_address ||
+          (s.place_formatted ? `${s.name}, ${s.place_formatted}` : s.name),
+      }));
 
       setSuggestions(features);
       setShowSuggestions(features.length > 0);
     } catch (error) {
       if (currentRequest === requestIdRef.current) {
-        console.error("Mapbox API error:", error);
+        console.error("Mapbox Search Box error:", error);
         setSuggestions([]);
         setShowSuggestions(false);
       }
@@ -160,11 +142,44 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     debounceRef.current = setTimeout(() => fetchSuggestions(newValue), 250);
   };
 
-  const handleSuggestionClick = (suggestion: any) => {
+  const handleSuggestionClick = async (suggestion: any) => {
+    // Show the chosen label immediately and close the list.
     onChange(suggestion.display_name);
-    onCoordinatesChange?.(suggestion.center ?? null);
     setSuggestions([]);
     setShowSuggestions(false);
+
+    const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+    if (!mapboxToken || !suggestion.mapbox_id) {
+      onCoordinatesChange?.(null);
+      return;
+    }
+
+    // Search Box /retrieve: resolve the picked suggestion to its coordinates.
+    // This call closes the billing session, so we rotate the session token.
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${SEARCHBOX_BASE}/retrieve/${suggestion.mapbox_id}`,
+        {
+          params: {
+            access_token: mapboxToken,
+            session_token: sessionTokenRef.current,
+          },
+        }
+      );
+      const feature = response.data.features?.[0];
+      const coords = feature?.geometry?.coordinates as [number, number] | undefined;
+      onCoordinatesChange?.(coords ?? null);
+      // Prefer the fuller address from the retrieved feature if available.
+      const full = feature?.properties?.full_address;
+      if (full) onChange(full);
+    } catch (error) {
+      console.error("Mapbox Search Box retrieve error:", error);
+      onCoordinatesChange?.(null);
+    } finally {
+      setLoading(false);
+      sessionTokenRef.current = newSessionToken(); // start a fresh session
+    }
   };
 
   return (
