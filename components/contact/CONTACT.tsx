@@ -194,7 +194,7 @@ export default function CONTACT() {
                 </div>
                 <div>
                   <div className={styles.contactLabel}>Email Us</div>
-                  <div className={styles.contactText}>contact@skvoayges.in<br />support@skvoayges.in</div>
+                  <div className={styles.contactText}>contact@skvoayges.in</div>
                 </div>
               </div>
 
