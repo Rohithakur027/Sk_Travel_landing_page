@@ -114,8 +114,12 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
       const features = (response.data.suggestions || []).map((s: any) => ({
         id: s.mapbox_id,
         mapbox_id: s.mapbox_id,
-        // `name` is the primary label; `place_formatted` is the rest of the
-        // address. Fall back to `full_address` / `name` if either is missing.
+        // `name` is the primary label (rendered as the title); `place_formatted`
+        // is the rest of the address (rendered below). Kept separate so the
+        // dropdown can show a two-line title + address layout.
+        name: s.name,
+        address: s.place_formatted || "",
+        // Combined label written into the input when the suggestion is picked.
         display_name:
           s.full_address ||
           (s.place_formatted ? `${s.name}, ${s.place_formatted}` : s.name),
@@ -203,11 +207,12 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         <ul className={styles.suggestionsList}>
           {suggestions.map((suggestion, index) => (
             <li
-              key={`${suggestion.id}-${index}`}
+              key={suggestion.mapbox_id || `suggestion-${index}`}
               onClick={() => handleSuggestionClick(suggestion)}
               className={styles.suggestionItem}
             >
-              {suggestion.display_name}
+              <span className={styles.suggestionTitle}>{suggestion.name}</span>
+              <span className={styles.suggestionAddress}>{suggestion.address}</span>
             </li>
           ))}
         </ul>
