@@ -1,7 +1,7 @@
 import CONTACT from '../../components/contact/CONTACT';
 
 export const metadata = {
-  title: 'Contact - SK Travels',
+  title: 'Contact - SK Voyages',
 };
 
 export default function ContactPage() {

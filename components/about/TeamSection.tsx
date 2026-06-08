@@ -13,7 +13,7 @@ const LEADERS = [
     name: 'Ravi S',
     color: '#f59e0b',
     message:
-      "At SK Travels, our mission has always been simple — make every journey comfortable, reliable, and stress-free. We built this company with the belief that transportation should never be a burden. Whether you're heading to a wedding, a corporate event, or exploring the country, we want you to arrive feeling taken care of. That's the promise I make to every traveler who trusts us.",
+      "At SK Voyages, our mission has always been simple — make every journey comfortable, reliable, and stress-free. We built this company with the belief that transportation should never be a burden. Whether you're heading to a wedding, a corporate event, or exploring the country, we want you to arrive feeling taken care of. That's the promise I make to every traveler who trusts us.",
   },
 ];
 
@@ -25,7 +25,7 @@ export default function TeamSection() {
         <div className={styles.header}>
           <h2 className={styles.heading}>A Message From Our Team</h2>
           <p className={styles.subheading}>
-            The vision and values behind SK Travels, in the words of those who built it
+            The vision and values behind SK Voyages, in the words of those who built it
           </p>
         </div>
 

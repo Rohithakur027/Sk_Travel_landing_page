@@ -4,8 +4,8 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'SK Travel - Premium Travel Services',
-  description: 'Your trusted travel partner for premium transportation services.',
+  title: 'SK Voyages - Premium Travel Services',
+  description: 'Your trusted voyages partner for premium transportation services.',
   icons: {
     icon: [
       { url: '/icons/favicon_io/favicon-16x16.png', sizes: '16x16', type: 'image/png' },

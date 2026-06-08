@@ -27,7 +27,7 @@ export default function FeaturesPage() {
             <span className={styles.titleGold}>Modern Transportation</span>
           </h1>
           <p className={styles.lead}>
-            Discover the technology and features that make SK Voyage the smart choice for corporate transportation
+            Discover the technology and features that make SK Voyages the smart choice for corporate transportation
           </p>
         </div>
       </div>
