@@ -605,12 +605,12 @@ export default function BookingForm() {
         <span>
           For Exclusive Bookings and Corporate Inquiries, Please Contact us at:{" "}
           <a
-            href="https://wa.me/917807818119"
+            href="https://wa.me/919886897555"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.whatsappLink}
           >
-            +91 7807818119
+            +91 9886897555
           </a>
         </span>
       </div>

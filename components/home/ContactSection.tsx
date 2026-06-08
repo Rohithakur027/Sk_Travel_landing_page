@@ -46,7 +46,7 @@ export default function ContactSection() {
               </div>
               <div className={styles.infoTextGroup}>
                 <p className={styles.infoLabel}>Call Us</p>
-                <h4 className={styles.infoValue}>+1 (555) 123-4567</h4>
+                <h4 className={styles.infoValue}>+91 9886897555</h4>
                 <p className={styles.infoSubtitle}>24/7 Operational Support</p>
               </div>
             </div>
