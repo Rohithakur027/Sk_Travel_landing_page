@@ -23,9 +23,9 @@ export default function Footer() {
           <div className={styles.brandCol}>
             <Link href="/" className={styles.brand}>
               <div className={styles.logoBox}>
-                <Image src="/icons/sklogofinal.png" alt="Sk Voyage Logo" width={60} height={32} className={styles.logoImg} />
+                <Image src="/icons/sklogoreal3.png" alt="Sk Voyage Logo" width={60} height={32} className={styles.logoImg} />
               </div>
-              <span className={styles.brandName}>Sk Voyage</span>
+              <span className={styles.brandName}>Sk Voyages</span>
             </Link>
             <p className={styles.brandText}>
               Professional corporate<br />
@@ -96,7 +96,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.bottom}>
-          <div>© {new Date().getFullYear()} Sk Voyage. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} Sk Voyages. All rights reserved.</div>
           <div>Designed with ♥ for corporate travelers</div>
         </div>
       </div>

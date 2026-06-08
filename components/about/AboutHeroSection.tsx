@@ -6,7 +6,7 @@ export default function AboutHeroSection() {
       <div className="container">
         <div className={styles.content}>
           <div className={styles.badge}>
-            About SK Voyage
+            About SK Voyages
           </div>
           <h1 className={styles.heading}>
             Redefining Corporate<br />

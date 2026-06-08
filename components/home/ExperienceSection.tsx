@@ -10,7 +10,7 @@ export default function ExperienceSection() {
       <div className="container">
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Experience Premium Corporate Transportation</h2>
-          <p className={styles.sectionSubtitle}>Discover why leading companies trust SK Voyage for their transportation needs</p>
+          <p className={styles.sectionSubtitle}>Discover why leading companies trust SK Voyages for their transportation needs</p>
         </div>
 
         
