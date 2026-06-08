@@ -219,7 +219,7 @@ export default function CONTACT() {
                 </div>
                 <div>
                   <div className={styles.contactLabel}>Visit Us</div>
-                  <div className={styles.contactText}>SK Voyage Headquarters<br />Andheri East, Mumbai<br />Maharashtra 400069, India</div>
+                  <div className={styles.contactText}>SK Voyages Headquarters<br />Andheri East, Mumbai<br />Maharashtra 400069, India</div>
                 </div>
               </div>
             </div>
@@ -275,7 +275,7 @@ export default function CONTACT() {
           <p className={styles.faqSubtitle}>Quick answers to questions you may have</p>
           <div className={styles.faqList}>
             <details>
-              <summary>How do I get started with SK Voyage?</summary>
+              <summary>How do I get started with SK Voyages?</summary>
               <p>Simply fill out the contact form above or call us directly. We'll schedule a consultation to understand your needs and provide a customized solution.</p>
             </details>
             <details>

@@ -19,7 +19,7 @@ export default function CTASection() {
             Ready to Transform Your<br />Corporate Transportation?
           </h2>
           <p className={styles.subtitle}>
-            Join hundreds of companies already using Sk Voyage for their employee<br />transportation needs. Experience the difference today.
+            Join hundreds of companies already using Sk Voyages for their employee<br />transportation needs. Experience the difference today.
           </p>
           
           <div className={styles.actions}>

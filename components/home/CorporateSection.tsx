@@ -19,8 +19,8 @@ export default function CorporateSection() {
         <div className={styles.imgCol}>
           <div className={styles.imgWrapper}>
             <Image
-              src="/images/corporatesec_indian_corp.png"
-              alt="SK Voyage driver"
+              src="/images/cardriver.png"
+              alt="SK Voyages driver"
               fill
               className={styles.img}
             />
@@ -34,12 +34,12 @@ export default function CorporateSection() {
 
         {/* Right: Text content */}
         <div className={styles.textCol}>
-          <span className={styles.eyebrow}>About SK Voyage</span>
+          <span className={styles.eyebrow}>About SK Voyages</span>
           <h2 className={styles.heading}>
             We Redefine Corporate Transportation
           </h2>
           <p className={styles.body}>
-            At SK Voyage, we understand that your time is valuable. That's why
+            At SK Voyages, we understand that your time is valuable. That's why
             we've built a transportation service that prioritizes reliability,
             comfort, and professionalism. With over 8 years of experience
             serving corporate clients, we've perfected the art of seamless
