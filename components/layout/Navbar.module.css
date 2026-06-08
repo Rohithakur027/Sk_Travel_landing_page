@@ -56,7 +56,7 @@
   }
   
   .logoImg {
-    height: 1.8rem;
+    height: 4rem;
   }
 
   .mobileNav {
@@ -99,13 +99,13 @@
 }
 
 .logoImg {
-  height: 2.5rem;
+  height: 6rem;
   width: auto;
 }
 
 @media (min-width: 768px) {
   .logoImg {
-    height: 3rem;
+    height: 8rem;
   }
 }
 
