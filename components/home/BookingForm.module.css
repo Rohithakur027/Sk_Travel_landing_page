@@ -116,50 +116,36 @@
   }
 }
 
-.grid {
+.grid,
+.instantGrid,
+.scheduledGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
-.grid > * {
-  grid-column: span 2;
-}
-
-@media (min-width: 1024px) {
-  .grid > * {
-    grid-column: span 1;
-  }
-}
-
-@media (min-width: 641px) and (max-width: 1023px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (min-width: 800px) and (max-width: 1160px) {
+  .grid,
+  .instantGrid,
+  .scheduledGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 1.5rem;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1161px) {
   .grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
   }
-}
-
-.instantGrid {
-  grid-template-columns: repeat(3, 1fr) !important;
-}
-
-.instantGrid > * {
-  grid-column: span 1 !important;
 }
 
 .wideField {
   grid-column: span 1.5 !important;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1161px) {
   .wideField {
     grid-column: span 1 !important;
   }
@@ -169,7 +155,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1161px) {
   .instantGrid {
     grid-template-columns: repeat(6, 1fr) !important;
   }
@@ -183,7 +169,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 799px) {
   .grid, .instantGrid, .scheduledGrid {
     grid-template-columns: 1fr !important;
     gap: 1.25rem !important;
@@ -202,7 +188,14 @@
   margin-bottom: 0;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 800px) and (max-width: 1160px) {
+  .contactGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1161px) {
   .contactGrid {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
@@ -598,6 +591,26 @@
 
 .inputGroup:focus-within .counterWrapper {
   border-color: rgba(226, 232, 240, 0.8);
+}
+
+@media (min-width: 1024px) and (max-width: 1160px) {
+  .counterWrapper {
+    padding-right: 1rem;
+    padding-left: 2.9rem;
+  }
+
+  .counterLabel {
+    margin-left: 0.55rem;
+  }
+
+  .counterControls {
+    gap: 0.55rem;
+  }
+
+  .counterBtn {
+    width: 2rem;
+    height: 2rem;
+  }
 }
 
 .counterLabel {

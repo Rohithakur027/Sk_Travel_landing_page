@@ -38,10 +38,10 @@ export default function Navbar() {
           <div className={styles.logoWrapper}>
             <Link href="/" className={styles.logo}>
               <Image
-                src="/icons/SKlogo.svg"
+                src="/icons/sklogofinal.png"
                 alt="SK Travel Logo"
-                width={140}
-                height={48}
+                width={500}
+                height={500}
                 className={styles.logoImg}
                 priority
               />
