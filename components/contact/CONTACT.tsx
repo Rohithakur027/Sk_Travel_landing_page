@@ -141,7 +141,7 @@ export default function CONTACT() {
                   <input 
                     name="phone" 
                     type="tel" 
-                    placeholder="+91 98765 43210" 
+                    placeholder="+91 9886897555"
                     required 
                     value={formData.phone}
                     onChange={handleChange}
@@ -206,7 +206,7 @@ export default function CONTACT() {
                 </div>
                 <div>
                   <div className={styles.contactLabel}>Call Us</div>
-                  <div className={styles.contactText}>+91 98765 43210<br />24/7 Operational Support</div>
+                  <div className={styles.contactText}>+91 9886897555<br />24/7 Operational Support</div>
                 </div>
               </div>
 
@@ -243,7 +243,7 @@ export default function CONTACT() {
 
           <div className={styles.officeGrid}>
             {[
-              { city: 'Mumbai', address: 'Andheri East, Mumbai 400069', phone: '+91 98765 43210' },
+              { city: 'Mumbai', address: 'Andheri East, Mumbai 400069', phone: '+91 9886897555' },
               { city: 'Delhi NCR', address: 'Gurgaon, Haryana 122001', phone: '+91 98765 43211' },
               { city: 'Bangalore', address: 'Whitefield, Bangalore 560066', phone: '+91 98765 43212' },
               { city: 'Pune', address: 'Hinjewadi, Pune 411057', phone: '+91 98765 43213' },
