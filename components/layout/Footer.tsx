@@ -23,7 +23,7 @@ export default function Footer() {
           <div className={styles.brandCol}>
             <Link href="/" className={styles.brand}>
               <div className={styles.logoBox}>
-                <Image src="/icons/SKlogo.svg" alt="Sk Voyage Logo" width={60} height={32} className={styles.logoImg} />
+                <Image src="/icons/sklogofinal.png" alt="Sk Voyage Logo" width={60} height={32} className={styles.logoImg} />
               </div>
               <span className={styles.brandName}>Sk Voyage</span>
             </Link>
