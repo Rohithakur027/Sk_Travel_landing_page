@@ -46,7 +46,7 @@ export default function CTASection() {
           <div className={styles.statsContainer}>
             <div className={styles.statItem}>
               <h3 className={styles.statValue}>500+</h3>
-              <p className={styles.statLabel}>Happy Clients</p>
+              <p className={styles.statLabel}>Happy Users</p>
             </div>
             <div className={styles.divider} />
             <div className={styles.statItem}>

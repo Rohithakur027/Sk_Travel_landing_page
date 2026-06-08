@@ -26,7 +26,7 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.3rem;
   margin-bottom: 1.5rem;
   text-decoration: none;
   line-height: normal; /* Fixes potential vertical offset from inherited line-height */
@@ -35,14 +35,21 @@
 .logoBox {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 2.5rem; /* Match logo height for perfect centering box */
+  /* The PNG has large transparent padding baked in. The box height crops the
+     vertical padding (overflow hidden, no clip on the glyph itself), and the
+     negative side margins pull the box left to align the pin with the paragraph
+     below and pull the text in close on the right. */
+  height: 3.5rem;
+  overflow: hidden;
+  margin-left: -0.8rem;
+  margin-right: -1.8rem;
 }
 
 .logoImg {
   width: auto;
-  height: 2.5rem;
+  height: 7.5rem; /* glyph renders at the approved size */
   display: block;
+  flex-shrink: 0;
 }
 
 .brandName {
@@ -52,8 +59,10 @@
   color: #ffffff;
   display: flex;
   align-items: center;
-  margin-bottom: 5.5px;
+  margin-bottom: 0;
   line-height: 1;
+  /* Nudge the wordmark slightly up and to the right for visual balance */
+  transform: translate(0.8rem, -0.3rem);
 }
 
 .brandText {
