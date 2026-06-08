@@ -3,14 +3,14 @@ import styles from './TeamSection.module.css';
 const LEADERS = [
   {
     initials: 'H',
-    name: 'Hemanth',
+    name: 'Hemantha Kumara M',
     color: '#f59e0b',
     message:
       "Running seamless operations is the backbone of great travel experiences. My focus is on ensuring that every vehicle is road-ready, every driver is trained, and every booking is fulfilled without a hitch. Behind the scenes, our team works tirelessly so that the only thing you experience is a smooth, on-time ride. We take pride in the details — because the details are what make the difference.",
   },
   {
     initials: 'R',
-    name: 'Ravi',
+    name: 'Ravi S',
     color: '#f59e0b',
     message:
       "At SK Travels, our mission has always been simple — make every journey comfortable, reliable, and stress-free. We built this company with the belief that transportation should never be a burden. Whether you're heading to a wedding, a corporate event, or exploring the country, we want you to arrive feeling taken care of. That's the promise I make to every traveler who trusts us.",

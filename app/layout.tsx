@@ -6,6 +6,17 @@ import Footer from '@/components/layout/Footer';
 export const metadata: Metadata = {
   title: 'SK Travel - Premium Travel Services',
   description: 'Your trusted travel partner for premium transportation services.',
+  icons: {
+    icon: [
+      { url: '/icons/favicon_io/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icons/favicon_io/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icons/favicon_io/favicon.ico' },
+    ],
+    apple: '/icons/favicon_io/apple-touch-icon.png',
+    other: [
+      { rel: 'manifest', url: '/icons/favicon_io/site.webmanifest' },
+    ],
+  },
 };
 
 import { ToastProvider } from '@/lib/context/ToastContext';
