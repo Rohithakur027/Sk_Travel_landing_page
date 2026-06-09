@@ -30,7 +30,7 @@ export default function FleetSection() {
 
           <div className={cardClassName}>
             <Image
-              src="/images/corporatesuttlenew.jpeg"
+              src="/images/corporateshuttlefinal.png"
               alt="Corporate Shuttles"
               fill
               className={imageClassName}

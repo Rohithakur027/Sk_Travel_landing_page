@@ -19,7 +19,7 @@ export default function ExperienceSection() {
             Experience Premium Corporate Transportation
           </h2>
           <p className="mx-auto max-w-[42rem] text-[1.25rem] leading-[1.5] text-gray-500">
-            Discover why leading companies trust SK Voyage for their transportation needs
+            Discover why leading companies trust SK Voyages for their transportation needs
           </p>
         </div>
 

@@ -1,5 +1,5 @@
 /* =========================================
-   SK Voyage Design System — CSS Design Tokens
+   SK Voyages Design System — CSS Design Tokens
    ========================================= */
 
 :root {
@@ -42,7 +42,7 @@
   --font-heading: "Outfit", "Inter", system-ui, sans-serif;
   --font-mono: "Fira Code", "Courier New", monospace;
 
-  /* Type scale — matches SK Voyage spec      */
+  /* Type scale — matches SK Voyages spec      */
   --text-xs: 0.75rem; /* 12px */
   --text-sm: 0.875rem; /* 14px */
   --text-base: 1rem; /* 16px */

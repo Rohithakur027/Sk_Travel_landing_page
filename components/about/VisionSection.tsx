@@ -8,7 +8,7 @@ const iconWrapClassName =
 export default function VisionSection() {
   return (
     <section className="bg-[rgb(253,252,248)] py-16 text-center">
-      <div className="mx-auto w-full max-w-[1800px] px-6 lg:max-w-[1200px] lg:px-16 2xl:px-32">
+      <div className="mx-auto w-full max-w-[1800px] px-6 lg:max-w-[1400px] lg:px-16 2xl:px-32">
         <div className="mx-auto mb-12 max-w-[48rem] md:mb-16">
           <h2 className="mb-4 font-heading text-[2.25rem] font-extrabold text-[#1F2937] md:text-[3rem]">
             Our Mission &amp; Vision
@@ -18,7 +18,7 @@ export default function VisionSection() {
           </p>
         </div>
 
-        <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-8">
+        <div className="mx-auto grid w-full max-w-[1400px] grid-cols-1 gap-8">
           <div className={cardClassName}>
             <div className="md:w-[220px] md:flex-none">
               <div className={iconWrapClassName}>

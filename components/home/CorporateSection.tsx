@@ -15,8 +15,8 @@ export default function CorporateSection() {
         <div className="relative">
           <div className="relative h-[22rem] w-full overflow-hidden rounded-3xl md:h-[30rem] lg:h-[35rem]">
             <Image
-              src="/images/corporatesec_indian_corp.png"
-              alt="SK Voyage driver"
+              src="/images/caranddriverfinal.png"
+              alt="SK Voyages driver"
               fill
               className="object-cover"
             />
@@ -28,12 +28,12 @@ export default function CorporateSection() {
         </div>
 
         <div className="flex flex-col gap-8">
-          <span className="text-base font-bold uppercase tracking-[2px] text-amber-400">About SK Voyage</span>
+          <span className="text-base font-bold uppercase tracking-[2px] text-amber-400">About SK Voyages</span>
           <h2 className="font-sans text-[2.25rem] font-bold leading-[1.15] tracking-[-0.02em] text-[rgba(45,49,66,1)] md:text-[2.5rem]">
             We Redefine Corporate Transportation
           </h2>
           <p className="text-[1.1rem] leading-[1.6] text-gray-600">
-            At SK Voyage, we understand that your time is valuable. That&apos;s why we&apos;ve built a transportation service that prioritizes reliability,
+            At SK Voyages, we understand that your time is valuable. That&apos;s why we&apos;ve built a transportation service that prioritizes reliability,
             comfort, and professionalism. With over 8 years of experience serving corporate clients, we&apos;ve perfected the art of seamless
             employee transportation.
           </p>

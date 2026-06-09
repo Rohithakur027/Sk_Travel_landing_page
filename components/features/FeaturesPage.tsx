@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Pill from '@/components/ui/Pill';
 
 const FEATURE_CARDS = [
   { title: 'Smart Scheduling', desc: 'Automated scheduling with recurring trip support and flexible booking options', icon: '/Container (12).png' },
@@ -13,10 +14,6 @@ const FEATURE_CARDS = [
   { title: 'Vehicle Variety', desc: 'Multiple vehicle types from sedans to buses for different needs', icon: '/Container (20).png' },
 ];
 
-const pillClassName =
-  'inline-flex items-center justify-center rounded-full border border-[rgba(255,210,63,0.3)] bg-[linear-gradient(168.37deg,rgba(255,210,63,0.15)_6.78%,rgba(255,210,63,0.08)_93.22%)] px-6 py-2 text-sm font-bold';
-const lightPillClassName = `${pillClassName} text-white`;
-const darkPillClassName = `${pillClassName} px-3 py-[0.3rem] text-[#111827]`;
 const containerClassName = 'mx-auto w-full max-w-[1200px] px-6';
 const heroRowClassName = 'my-12 flex flex-col items-center gap-8 md:my-16 md:gap-8 lg:flex-row';
 const imageCardClassName = 'relative h-[280px] w-full overflow-hidden rounded-3xl md:h-[450px] lg:w-[494px]';
@@ -25,14 +22,9 @@ const sectionTitleClassName = 'text-[30px] font-extrabold leading-[1.12] text-[#
 export default function FeaturesPage() {
   return (
     <section className="bg-white">
-      <div className="flex min-h-[580px] w-screen items-center justify-center bg-[#2d3142] px-4 py-8 text-center max-md:min-h-0 max-md:px-6 max-md:pb-12 max-md:pt-28">
+      <div className="flex min-h-[480px] w-screen items-center justify-center bg-[#2d3142] px-4 py-8 text-center max-md:min-h-0 max-md:px-6 max-md:pb-12 max-md:pt-28">
         <div>
-          <div className="mb-8 hidden md:inline-flex">
-            <div className={lightPillClassName}>Platform Features</div>
-          </div>
-          <div className="mb-8 inline-flex md:hidden">
-            <div className={lightPillClassName}>Platform Features</div>
-          </div>
+          <Pill className="mb-8">Platform Features</Pill>
           <h1 className="m-0 font-heading text-[2.25rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.1]">
             Advanced Features for
             <br />
@@ -41,7 +33,7 @@ export default function FeaturesPage() {
             </span>
           </h1>
           <p className="mx-auto mt-6 max-w-[680px] text-[0.95rem] leading-[1.6] text-white/50 md:text-base">
-            Discover the technology and features that make SK Voyage the smart choice for corporate transportation
+            Discover the technology and features that make SK Voyages the smart choice for corporate transportation
           </p>
         </div>
       </div>
@@ -49,12 +41,7 @@ export default function FeaturesPage() {
       <div className={containerClassName}>
         <div className={heroRowClassName}>
           <div className="flex-1">
-            <div className="mb-6 hidden md:inline-flex">
-              <span className={darkPillClassName}>Real-Time Intelligence</span>
-            </div>
-            <div className="mb-4 inline-flex md:hidden">
-              <span className={darkPillClassName}>Real-Time Intelligence</span>
-            </div>
+            <Pill variant="dark" className="mb-5">Real-Time Intelligence</Pill>
             <h2 className="mb-3 text-[2rem] font-bold text-[#111827] md:text-[2.5rem]">
               Track Every Journey <span className="inline whitespace-nowrap md:block">in Real-Time</span>
             </h2>
@@ -132,12 +119,7 @@ export default function FeaturesPage() {
           </div>
 
           <div className="order-1 flex-1 lg:order-2">
-            <div className="mb-6 hidden md:inline-flex">
-              <span className={darkPillClassName}>Safety First</span>
-            </div>
-            <div className="mb-4 inline-flex md:hidden">
-              <span className={darkPillClassName}>Safety First</span>
-            </div>
+            <Pill variant="dark" className="mb-5">Safety First</Pill>
             <h2 className="mb-3 text-[2rem] font-bold text-[#111827] md:text-[2.5rem]">
               Your Safety is Our Priority
             </h2>

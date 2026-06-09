@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Pill from '@/components/ui/Pill';
 import {
   CreditCard,
   Headphones,
@@ -109,9 +110,7 @@ export default function ServicesSection() {
       <section id="services" className="bg-white">
         <div className="bg-[rgba(45,49,66,1)] px-6 pb-16 pt-[var(--navbar-height)] text-center md:pb-16">
           <div className="mx-auto flex max-w-[48rem] flex-col items-center gap-6">
-            <div className="inline-block rounded-full border border-[rgba(255,210,63,0.3)] bg-[linear-gradient(168.37deg,rgba(255,210,63,0.15)_6.78%,rgba(255,210,63,0.08)_93.22%)] px-6 py-2 text-sm font-bold text-white">
-              Our Services
-            </div>
+            <Pill>Our Services</Pill>
             <h1 className="m-0 whitespace-normal font-heading text-[2.7rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.1]">
               Comprehensive
               <br />

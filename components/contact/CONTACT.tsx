@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useToast } from '@/lib/context/ToastContext';
+import Pill from '@/components/ui/Pill';
 
 function getErrorMessage(error: unknown) {
   if (error instanceof Error) {
@@ -80,9 +81,7 @@ export default function CONTACT() {
       label: 'Email Us',
       text: (
         <>
-          info@skvoyage.com
-          <br />
-          support@skvoyage.com
+          support@skvoyages.in
         </>
       ),
       icon: (
@@ -97,9 +96,9 @@ export default function CONTACT() {
       label: 'Call Us',
       text: (
         <>
-          +91 98765 43210
+          +91 9886897555
           <br />
-          Mon-Sat 9:00 AM - 6:00 PM
+          24/7 Operational Support
         </>
       ),
       icon: (
@@ -113,7 +112,7 @@ export default function CONTACT() {
       label: 'Visit Us',
       text: (
         <>
-          SK Voyage Headquarters
+          SK Voyages Headquarters
           <br />
           Andheri East, Mumbai
           <br />
@@ -134,9 +133,7 @@ export default function CONTACT() {
       <header className="flex min-h-[420px] items-center justify-center bg-[#2D3142] px-6 py-16 text-center md:min-h-[550px]">
         <div className="mx-auto w-full max-w-[1244px] px-4">
           <div className="mb-2 flex justify-center">
-            <div className="inline-flex items-center justify-center rounded-full border border-[rgba(255,210,63,0.3)] bg-[linear-gradient(168.37deg,rgba(255,210,63,0.15)_6.78%,rgba(255,210,63,0.08)_93.22%)] px-8 py-2 text-base font-bold text-white">
-              Get In Touch
-            </div>
+            <Pill>Get In Touch</Pill>
           </div>
 
           <h1 className="mb-6 text-center font-heading font-black tracking-[-0.02em]">
@@ -233,7 +230,7 @@ export default function CONTACT() {
                   <input
                     name="phone"
                     type="tel"
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 9886897555"
                     required
                     value={formData.phone}
                     onChange={handleChange}
@@ -281,17 +278,17 @@ export default function CONTACT() {
           </form>
 
           <aside className="flex flex-col gap-4">
-            <div className="flex flex-col rounded-3xl bg-white px-8 pb-2 pt-8 shadow-[0_18px_40px_rgba(2,6,23,0.07)]">
-              <h3 className="mb-4 text-[28px] font-extrabold text-[#111827]">Contact Information</h3>
+            <div className="flex flex-col rounded-[32px] bg-white px-10 pb-6 pt-9 shadow-[0_18px_40px_rgba(2,6,23,0.07)]">
+              <h3 className="mb-6 text-[32px] font-extrabold leading-tight text-[#111827] md:text-[34px]">Contact Information</h3>
 
               {contactItems.map((item) => (
-                <div key={item.key} className="flex items-start gap-4 py-5 last:pb-0">
-                  <div className="mt-[6px] flex h-14 w-14 flex-none items-center justify-center rounded-[14px] bg-[linear-gradient(180deg,rgba(255,210,63,0.15)_0%,rgba(255,210,63,0.08)_100%)] shadow-[0_10px_28px_rgba(2,6,23,0.06)]">
+                <div key={item.key} className="flex items-start gap-5 py-6 last:pb-0">
+                  <div className="mt-1 flex h-[70px] w-[70px] flex-none items-center justify-center rounded-[20px] bg-[linear-gradient(180deg,rgba(255,210,63,0.16)_0%,rgba(255,210,63,0.08)_100%)] shadow-[0_10px_28px_rgba(2,6,23,0.06)]">
                     {item.icon}
                   </div>
-                  <div className="flex min-h-20 flex-col justify-start">
-                    <div className="text-[15px] font-extrabold text-[#2D3142]">{item.label}</div>
-                    <div className="mt-1 text-[13px] text-[#6b7280]">{item.text}</div>
+                  <div className="flex min-h-[88px] flex-col justify-center">
+                    <div className="text-[16px] font-extrabold text-[#2D3142] md:text-[18px]">{item.label}</div>
+                    <div className="mt-2 text-[15px] leading-[1.55] text-[#64748b] md:text-[16px]">{item.text}</div>
                   </div>
                 </div>
               ))}
@@ -304,45 +301,6 @@ export default function CONTACT() {
         </div>
       </div>
 
-      <section className="bg-[#FDF9F6] px-4 py-20">
-        <div className="mx-auto w-full max-w-[1244px]">
-          <div className="mb-12 text-center">
-            <h2 className="mb-3 text-[36px] font-extrabold text-[#2D3142]">Our Office Locations</h2>
-            <p className="text-base leading-[1.5] text-[#6B7280]">
-              We operate across major metropolitan cities in India to be closer to you
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            {[
-              { city: 'Mumbai', address: 'Andheri East, Mumbai 400069', phone: '+91 98765 43210' },
-              { city: 'Delhi NCR', address: 'Gurgaon, Haryana 122001', phone: '+91 98765 43211' },
-              { city: 'Bangalore', address: 'Whitefield, Bangalore 560066', phone: '+91 98765 43212' },
-              { city: 'Pune', address: 'Hinjewadi, Pune 411057', phone: '+91 98765 43213' },
-              { city: 'Hyderabad', address: 'HITEC City, Hyderabad 500081', phone: '+91 98765 43214' },
-              { city: 'Chennai', address: 'OMR, Chennai 600096', phone: '+91 98765 43215' }
-            ].map((office) => (
-              <div
-                key={office.city}
-                className="flex items-center gap-4 rounded-3xl border border-[rgba(243,244,246,1)] bg-white px-[18px] py-5 text-left shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-200 ease-out hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] lg:flex-col lg:items-start"
-              >
-                <div className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#fff9e6_0%,#fff3cc_100%)]">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#FFD23F" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                    <circle cx="12" cy="9" r="2.2" stroke="#FFD23F" strokeWidth="1.6" fill="none" />
-                  </svg>
-                </div>
-                <div className="flex flex-1 flex-col gap-1">
-                  <h4 className="m-0 text-[18px] font-bold leading-none text-[#2D3142]">{office.city}</h4>
-                  <p className="m-0 text-sm leading-[1.4] text-[#6B7280]">{office.address}</p>
-                  <p className="m-0 text-sm font-semibold leading-[21px] text-[#2D3142]">{office.phone}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="mt-10 bg-white px-4 py-[60px]">
         <div className="mx-auto w-full max-w-[1244px]">
           <h2 className="mx-auto mb-2 max-w-[1052px] text-center text-[32px] font-extrabold leading-[42px] text-[#2D3142] md:text-[48px] md:leading-[63px]">
@@ -353,7 +311,7 @@ export default function CONTACT() {
           </p>
           <div className="mx-auto max-w-[1052px]">
             {[
-              ['How do I get started with SK Voyage?', "Simply fill out the contact form above or call us directly. We'll schedule a consultation to understand your needs and provide a customized solution."],
+              ['How do I get started with SK Voyages?', "Simply fill out the contact form above or call us directly. We'll schedule a consultation to understand your needs and provide a customized solution."],
               ['What areas do you service?', "We currently operate in Mumbai, Delhi NCR, Bangalore, Pune, Hyderabad, and Chennai. We're expanding to more cities across India."],
               ['Do you offer customized transportation solutions?', 'Yes — we understand every business is unique. We create tailored transportation plans based on your specific requirements, routes, and schedules.'],
               ['How do you ensure driver quality and safety?', 'All our drivers undergo thorough background verification, police checks, and professional training. Vehicles are regularly maintained and inspected.'],

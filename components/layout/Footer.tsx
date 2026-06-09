@@ -33,10 +33,10 @@ export default function Footer() {
           <div className="flex flex-col">
             <Link href="/" className="mb-6 flex items-center gap-[0.7rem] leading-none">
               <div className="flex h-10 items-center justify-center">
-                <Image src="/icons/SKlogo.svg" alt="Sk Voyage Logo" width={60} height={32} className="h-10 w-auto" />
+                <Image src="/icons/SKlogo.svg" alt="Sk Voyages Logo" width={60} height={32} className="h-10 w-auto" />
               </div>
               <span className="flex items-center font-heading text-[2rem] font-bold leading-none text-white [margin-bottom:5.5px]">
-                Sk Voyage
+                Sk Voyages
               </span>
             </Link>
             <p className="mb-8 text-[0.95rem] leading-[1.7] text-[#9ba3af]">
@@ -98,7 +98,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-[#3d4150] pt-8 text-sm text-[#9ba3af] md:flex-row">
-          <div>© {new Date().getFullYear()} Sk Voyage. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} Sk Voyages. All rights reserved.</div>
           <div>Designed with ♥ for corporate travelers</div>
         </div>
       </div>

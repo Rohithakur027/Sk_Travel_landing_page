@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Pill from '@/components/ui/Pill';
 
 export default function StorySection() {
   return (
@@ -17,22 +18,20 @@ export default function StorySection() {
           </div>
 
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            <div className="mb-8 inline-block rounded-full border border-[#FDE68A] bg-[#FFF9E6] px-6 py-2 text-sm font-bold text-[#1F2937]">
-              Our Story
-            </div>
+            <Pill variant="dark" className="mb-8">Our Story</Pill>
             <h2 className="mb-8 font-heading text-[2.25rem] font-extrabold leading-[1.15] tracking-[-0.02em] text-[#2D303E] lg:text-[3.5rem]">
               Building Trust Through Excellence
             </h2>
 
             <div className="flex flex-col gap-6">
               <p className="text-base leading-[1.7] text-[#6B7280] lg:text-[1.15rem]">
-                Founded in 2015, SK Voyage emerged from a simple vision: to transform corporate employee transportation in India. We recognized that businesses needed a reliable, professional, and scalable solution for their daily commute challenges.
+                Founded in 2015, SK Voyages emerged from a simple vision: to transform corporate employee transportation in India. We recognized that businesses needed a reliable, professional, and scalable solution for their daily commute challenges.
               </p>
               <p className="text-base leading-[1.7] text-[#6B7280] lg:text-[1.15rem]">
                 Over the years, we&apos;ve grown from a small fleet serving local businesses to a comprehensive transportation partner for enterprises across major Indian cities. Our commitment to safety, punctuality, and customer satisfaction has made us the preferred choice for over 500+ companies.
               </p>
               <p className="text-base leading-[1.7] text-[#6B7280] lg:text-[1.15rem]">
-                Today, SK Voyage operates with a fleet of modern, well-maintained vehicles driven by thoroughly verified and professionally trained drivers, ensuring every journey is safe and comfortable.
+                Today, SK Voyages operates with a fleet of modern, well-maintained vehicles driven by thoroughly verified and professionally trained drivers, ensuring every journey is safe and comfortable.
               </p>
             </div>
           </div>

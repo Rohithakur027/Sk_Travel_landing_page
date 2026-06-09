@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Pill from '@/components/ui/Pill';
 
 const SERVICES = [
   {
@@ -13,7 +14,7 @@ const SERVICES = [
     title: 'Corporate Shuttles',
     description:
       'Daily commute solutions for your employees with scheduled routes, dedicated vehicles, and professional drivers.',
-    image: '/images/corporatesuttlenew.jpeg',
+    image: '/images/corporateshuttlefinal.png',
     imagePosition: 'right center',
     badge: 'Best Value',
   },
@@ -32,9 +33,7 @@ export default function ServicesSection() {
     <section id="services" className="bg-[rgb(253,252,248)] py-16 lg:py-24">
       <div className="mx-auto w-full max-w-[1600px] px-6 lg:px-8 2xl:px-16">
         <div className="mb-14 text-center">
-          <span className="mb-8 inline-block rounded-full border border-[#fde68a] bg-[#fff9e6] px-6 py-2 text-sm font-bold text-gray-800">
-            Our Services
-          </span>
+          <Pill variant="dark" className="mb-8">Our Services</Pill>
           <h2 className="font-heading text-[clamp(2rem,4vw,2.75rem)] font-extrabold leading-[1.35] text-gray-900">
             Transportation Solutions
             <br />

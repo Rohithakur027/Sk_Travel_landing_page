@@ -43,8 +43,8 @@ export default function ContactSection() {
                 </div>
                 <div className="flex flex-col sm:items-start">
                   <p className="mb-1 text-sm font-semibold capitalize text-gray-600">Call Us</p>
-                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-gray-800 sm:text-xl">+1 (555) 123-4567</h4>
-                  <p className="text-sm text-gray-400">Mon-Fri 9am-6pm</p>
+                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-gray-800 sm:text-xl">+91 9886897555</h4>
+                  <p className="text-sm text-gray-400">24/7 Operational Support</p>
                 </div>
               </div>
 
@@ -54,7 +54,7 @@ export default function ContactSection() {
                 </div>
                 <div className="flex flex-col sm:items-start">
                   <p className="mb-1 text-sm font-semibold capitalize text-gray-600">Email Us</p>
-                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-gray-800 sm:text-xl">contact@skvoyage.com</h4>
+                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-gray-800 sm:text-xl">support@skvoyages.in</h4>
                   <p className="text-sm text-gray-400">We reply within 24 hours</p>
                 </div>
               </div>

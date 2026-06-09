@@ -1,19 +1,17 @@
 const LEADERS = [
   {
-    initials: 'R',
-    name: 'Ravi',
-    role: 'Chief Executive Officer',
-    color: '#f59e0b',
-    message:
-      "At SK Travels, our mission has always been simple — make every journey comfortable, reliable, and stress-free. We built this company with the belief that transportation should never be a burden. Whether you're heading to a wedding, a corporate event, or exploring the country, we want you to arrive feeling taken care of. That's the promise I make to every traveler who trusts us.",
-  },
-  {
     initials: 'H',
-    name: 'Hemanth',
-    role: 'Chief Operating Officer',
+    name: 'Hemantha Kumara M',
     color: '#f59e0b',
     message:
       "Running seamless operations is the backbone of great travel experiences. My focus is on ensuring that every vehicle is road-ready, every driver is trained, and every booking is fulfilled without a hitch. Behind the scenes, our team works tirelessly so that the only thing you experience is a smooth, on-time ride. We take pride in the details — because the details are what make the difference.",
+  },
+  {
+    initials: 'R',
+    name: 'Ravi S',
+    color: '#f59e0b',
+    message:
+      "At SK Voyages, our mission has always been simple — make every journey comfortable, reliable, and stress-free. We built this company with the belief that transportation should never be a burden. Whether you're heading to a wedding, a corporate event, or exploring the country, we want you to arrive feeling taken care of. That's the promise I make to every traveler who trusts us.",
   },
 ];
 
@@ -48,9 +46,6 @@ export default function TeamSection() {
                 <h3 className="mb-1 font-heading text-[1.375rem] font-extrabold text-[#1f2937]">
                   {leader.name}
                 </h3>
-                <p className="text-[0.9rem] font-semibold uppercase tracking-[0.08em] text-[#9ca3af]">
-                  {leader.role}
-                </p>
                 <span className="my-5 block h-[3px] w-10 rounded-[2px] bg-[linear-gradient(90deg,#f59e0b,#d97706)]" />
                 <blockquote className="m-0 text-left text-[0.975rem] italic leading-[1.75] text-[#4b5563]">
                   <span className="mx-[0.15rem] text-[1.25rem] font-bold not-italic text-[#d1d5db]">&ldquo;</span>
