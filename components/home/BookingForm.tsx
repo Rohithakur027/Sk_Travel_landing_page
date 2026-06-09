@@ -109,16 +109,6 @@ const Select = ({ id, options, leftIcon, value, onChange, required }: SelectProp
   );
 };
 
-const vehicleOptions = [
-  { value: "", label: "Vehicle Type" },
-  { value: "Sedan", label: "Sedan" },
-  { value: "SUV", label: "SUV" },
-  { value: "Hatchback", label: "Hatchback" },
-  { value: "Innova", label: "Innova" },
-  { value: "Tempo", label: "Tempo Traveller" },
-  { value: "Mini", label: "Mini" },
-];
-
 const serviceOptions = [
   { value: "", label: "Booking Type" },
   { value: "within_city", label: "Within City" },
@@ -126,18 +116,176 @@ const serviceOptions = [
   { value: "out_station", label: "Out Station" },
 ];
 
-const vehiclePassengerLimits: Record<string, number> = {
-  Sedan: 3,
-  SUV: 5,
-  Hatchback: 3,
-  Innova: 5,
-  Tempo: 12,
-  Mini: 4,
-};
-
-function getMaxPassengers(vehicle: string): number {
-  return vehiclePassengerLimits[vehicle] ?? 10;
+// ─── Vehicle categories ───────────────────────────────────────────────────────
+// Top-level category = vehicle_type. Subtype = vehicle_label (Sedan has no
+// subtype, so its label falls back to "Sedan"). Passenger limit comes from the
+// chosen subtype (or the category itself for Sedan).
+interface VehicleSubtype {
+  label: string;
+  passengers: number;
 }
+interface VehicleCategory {
+  value: string;
+  label: string;
+  passengers?: number;
+  subtypes: VehicleSubtype[];
+}
+
+const VEHICLE_CATEGORIES: VehicleCategory[] = [
+  { value: "Sedan", label: "Sedan", passengers: 3, subtypes: [] },
+  {
+    value: "SUV",
+    label: "SUV",
+    subtypes: [
+      { label: "Ertiga", passengers: 5 },
+      { label: "Innova", passengers: 5 },
+    ],
+  },
+  {
+    value: "LMV",
+    label: "LMV",
+    subtypes: [
+      { label: "12 Seater", passengers: 12 },
+      { label: "16 Seater", passengers: 16 },
+    ],
+  },
+  {
+    value: "HMV",
+    label: "HMV",
+    subtypes: [
+      { label: "26 Seater", passengers: 26 },
+      { label: "30 Seater", passengers: 30 },
+      { label: "40 Seater", passengers: 40 },
+    ],
+  },
+];
+
+function getMaxPassengers(category: string, label: string): number {
+  const cat = VEHICLE_CATEGORIES.find((c) => c.value === category);
+  if (!cat) return 10;
+  if (cat.subtypes.length === 0) return cat.passengers ?? 10;
+  const sub = cat.subtypes.find((s) => s.label === label);
+  return sub?.passengers ?? cat.subtypes[0].passengers;
+}
+
+interface VehicleSelectProps {
+  category: string;
+  label: string;
+  onSelect: (category: string, label: string) => void;
+}
+
+// Two-level vehicle picker. On desktop, hovering a category reveals its
+// subtypes; on touch devices, tapping the category expands them inline.
+const VehicleSelect = ({ category, label, onSelect }: VehicleSelectProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+        setExpanded(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const display = !category
+    ? "Vehicle Type"
+    : label && label !== category
+      ? `${category} · ${label}`
+      : category;
+
+  const choose = (cat: string, lbl: string) => {
+    onSelect(cat, lbl);
+    setIsOpen(false);
+    setExpanded(null);
+  };
+
+  return (
+    <div className={styles.inputGroup} ref={containerRef}>
+      <div className={styles.inputWrapper}>
+        <div
+          className={`${styles.select} ${styles.hasIcon} ${
+            !category ? styles.isPlaceholder : ""
+          } ${isOpen ? styles.selectOpen : ""}`}
+          onClick={() => setIsOpen((o) => !o)}
+        >
+          <div className={styles.iconLeft}>
+            <Car size={20} />
+          </div>
+          <span className={styles.selectedLabel}>{display}</span>
+          <div className={styles.chevron}>
+            <ChevronDown
+              size={18}
+              className={`${styles.chevronIcon} ${isOpen ? styles.chevronRotate : ""}`}
+            />
+          </div>
+        </div>
+
+        {isOpen && (
+          <div className={styles.dropdownList}>
+            {VEHICLE_CATEGORIES.map((cat) => {
+              if (cat.subtypes.length === 0) {
+                return (
+                  <div
+                    key={cat.value}
+                    className={`${styles.dropdownItem} ${
+                      category === cat.value ? styles.dropdownItemSelected : ""
+                    }`}
+                    onClick={() => choose(cat.value, cat.label)}
+                  >
+                    {cat.label}
+                  </div>
+                );
+              }
+              const isExpanded = expanded === cat.value;
+              return (
+                <div
+                  key={cat.value}
+                  className={styles.vehicleGroup}
+                  onMouseEnter={() => setExpanded(cat.value)}
+                >
+                  <div
+                    className={`${styles.dropdownItem} ${styles.vehicleParent} ${
+                      category === cat.value ? styles.dropdownItemSelected : ""
+                    }`}
+                    onClick={() => setExpanded(isExpanded ? null : cat.value)}
+                  >
+                    <span>{cat.label}</span>
+                    <ChevronDown
+                      size={16}
+                      className={`${styles.subChevron} ${isExpanded ? styles.chevronRotate : ""}`}
+                    />
+                  </div>
+                  {isExpanded && (
+                    <div className={styles.subList}>
+                      {cat.subtypes.map((sub) => (
+                        <div
+                          key={sub.label}
+                          className={`${styles.dropdownItem} ${styles.subItem} ${
+                            category === cat.value && label === sub.label
+                              ? styles.dropdownItemSelected
+                              : ""
+                          }`}
+                          onClick={() => choose(cat.value, sub.label)}
+                        >
+                          {sub.label}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 /** "2024-05-24T14:30" → "2024-05-24, 02:30 PM" */
 function formatDateTimeDisplay(dt: string): string {
@@ -165,6 +313,7 @@ export default function BookingForm() {
   const [destinationCoords, setDestinationCoords] = useState<[number, number] | null>(null);
   const [distanceKm, setDistanceKm] = useState<number | null>(null);
   const [vehicleType, setVehicleType] = useState("");
+  const [vehicleLabel, setVehicleLabel] = useState("");
   const [serviceType, setServiceType] = useState("");
   const [isReturnTrip, setIsReturnTrip] = useState(false);
   const [returnDate, setReturnDate] = useState("");
@@ -212,6 +361,7 @@ export default function BookingForm() {
       pickup_location: pickup.trim(),
       destination: destination.trim(),
       vehicle_type: vehicleType,
+      vehicle_label: vehicleLabel || vehicleType,
       booking_category: serviceType,
       is_return_trip: serviceType === "airport_taxis" ? isReturnTrip : false,
       ...(serviceType === "airport_taxis" && isReturnTrip && returnDate && { return_date: returnDate }),
@@ -262,9 +412,9 @@ export default function BookingForm() {
 
     // Validate passenger count against vehicle type
     if (vehicleType) {
-      const max = getMaxPassengers(vehicleType);
+      const max = getMaxPassengers(vehicleType, vehicleLabel);
       if (passengers > max) {
-        const label = vehicleOptions.find((o) => o.value === vehicleType)?.label ?? vehicleType;
+        const label = vehicleLabel || vehicleType;
         setPassengerError(`Max ${max} passengers allowed for ${label}.`);
         return;
       }
@@ -420,28 +570,20 @@ export default function BookingForm() {
           </div>
 
           <div>
-            <Select
-              id="vehicleType"
-              options={vehicleOptions}
-              leftIcon={<Car size={20} />}
-              value={vehicleType}
-              onChange={(e) => {
-                const v = e.target.value;
-                setVehicleType(v);
-                if (v) {
-                  const max = getMaxPassengers(v);
-                  if (passengers > max) {
-                    setPassengers(max);
-                    const label = vehicleOptions.find((o) => o.value === v)?.label ?? v;
-                    setPassengerError(`Max ${max} passengers for ${label}. Count adjusted.`);
-                  } else {
-                    setPassengerError("");
-                  }
+            <VehicleSelect
+              category={vehicleType}
+              label={vehicleLabel}
+              onSelect={(cat, lbl) => {
+                setVehicleType(cat);
+                setVehicleLabel(lbl);
+                const max = getMaxPassengers(cat, lbl);
+                if (passengers > max) {
+                  setPassengers(max);
+                  setPassengerError(`Max ${max} passengers for ${lbl}. Count adjusted.`);
                 } else {
                   setPassengerError("");
                 }
               }}
-              required
             />
           </div>
 
@@ -513,12 +655,12 @@ export default function BookingForm() {
                 <button
                   type="button"
                   onClick={() => {
-                    const max = vehicleType ? getMaxPassengers(vehicleType) : 10;
+                    const max = vehicleType ? getMaxPassengers(vehicleType, vehicleLabel) : 10;
                     if (passengers < max) {
                       setPassengers(passengers + 1);
                       setPassengerError("");
                     } else {
-                      const label = vehicleOptions.find((o) => o.value === vehicleType)?.label ?? vehicleType ?? "this vehicle";
+                      const label = vehicleLabel || vehicleType || "this vehicle";
                       setPassengerError(`Max ${max} passengers allowed for ${label}.`);
                     }
                   }}

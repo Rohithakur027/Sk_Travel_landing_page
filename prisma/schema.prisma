@@ -23,6 +23,7 @@ model website_booking_enquiries {
   booking_type        String?
   booking_category    String?
   vehicle_type        String?
+  vehicle_label       String?
   passengers          Int
   is_scheduled        Boolean   @default(false)
   pickup_date_time    DateTime? @db.Timestamptz(6)

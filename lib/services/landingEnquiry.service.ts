@@ -9,6 +9,7 @@ export interface BaseEnquiryData {
   pickup_location: string;
   destination: string;
   vehicle_type: string;
+  vehicle_label?: string;
   passengers: number;
   name: string;
   email: string;
@@ -79,11 +80,11 @@ const SCHEDULED_TAB = 'Scheduled Bookings';
 const GENERAL_ENQUIRIES_TAB = 'General Enquiries';
 
 /**
- * Instant Bookings columns (A–K):
- *   Submitted At | Name | Email | Phone | Pickup | Destination | Vehicle Type | Passengers | Category | Return Trip | Return Date
+ * Instant Bookings columns:
+ *   Submitted At | Name | Email | Phone | Pickup | Destination | Time | Vehicle Type | Passengers | Category | Return Trip | Return Date | Return Time | Vehicle Label
  *
- * Scheduled Bookings columns (A–M):
- *   Submitted At | Name | Email | Phone | Pickup | Destination | Date | Time | Vehicle Type | Passengers | Category | Return Trip | Return Date
+ * Scheduled Bookings columns:
+ *   Submitted At | Name | Email | Phone | Pickup | Destination | Date | Time | Vehicle Type | Passengers | Category | Return Trip | Return Date | Return Time | Vehicle Label
  *
  * General Enquiries columns (A–G):
  *   Submitted At | Name | Email | Mobile | Company | Message
@@ -110,6 +111,7 @@ export async function appendToGoogleSheet(data: BookingEnquiryData): Promise<voi
       data.is_return_trip ? 'Yes' : 'No',
       data.is_return_trip && data.return_date ? data.return_date : '',
       data.is_return_trip && data.return_time ? data.return_time : '',
+      data.vehicle_label ?? '',
     ];
   } else if (data.type === 'scheduled') {
     sheetTab = SCHEDULED_TAB;
@@ -128,6 +130,7 @@ export async function appendToGoogleSheet(data: BookingEnquiryData): Promise<voi
       data.is_return_trip ? 'Yes' : 'No',
       data.is_return_trip && data.return_date ? data.return_date : '',
       data.is_return_trip && data.return_time ? data.return_time : '',
+      data.vehicle_label ?? '',
     ];
   } else {
     sheetTab = GENERAL_ENQUIRIES_TAB;
@@ -314,6 +317,7 @@ export async function saveToDatabase(data: BookingEnquiryData): Promise<void> {
       destination: data.destination,
       passengers: data.passengers,
       vehicle_type: data.vehicle_type,
+      vehicle_label: data.vehicle_label ?? null,
       customer_name: data.name,
       customer_email: data.email,
       customer_mobile: data.phone,

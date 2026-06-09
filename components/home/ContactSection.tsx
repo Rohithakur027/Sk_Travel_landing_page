@@ -57,7 +57,7 @@ export default function ContactSection() {
               </div>
               <div className={styles.infoTextGroup}>
                 <p className={styles.infoLabel}>Email Us</p>
-                <h4 className={styles.infoValue}>contact@skvoyages.in</h4>
+                <h4 className={styles.infoValue}>support@gmail.com</h4>
                 <p className={styles.infoSubtitle}>We reply within 24 hours</p>
               </div>
             </div>
@@ -68,8 +68,8 @@ export default function ContactSection() {
               </div>
               <div className={styles.infoTextGroup}>
                 <p className={styles.infoLabel}>Visit Us</p>
-                <h4 className={styles.infoValue}>123 Business Ave, Suite 100</h4>
-                <p className={styles.infoSubtitle}>New York, NY 10001</p>
+                <h4 className={styles.infoValue}>H No 57, Shop Number 7, Pai Layout</h4>
+                <p className={styles.infoSubtitle}>6th Cross, Hulimavu Main Road, Gate, BG Road, Hulimavu, Bangalore 560076</p>
               </div>
             </div>
             

@@ -242,9 +242,10 @@
 .sectionSubtitle {
   font-size: 1.25rem;
   color: #6b7280;
-  max-width: 42rem;
+  max-width: none;
   margin-inline: auto;
   line-height: 1.5;
+  white-space: nowrap;
 }
 
 /* --- MEDIA QUERIES AT THE END --- */
@@ -254,7 +255,11 @@
     padding: 2rem 0 2.5rem;
     margin-top: 0;
   }
-  
+
+  .sectionSubtitle {
+    white-space: normal;
+  }
+
   .premiumComfort { order: 1; }
   .expertDrivers { order: 2; }
   .airportTransfers { order: 3; }

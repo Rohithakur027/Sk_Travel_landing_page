@@ -32,7 +32,7 @@ export default function FleetSection() {
           
           <div className={styles.card}>
             <Image 
-              src="/images/corporatesuttlenew.jpeg"
+              src="/images/corporateshuttlefinal.png"
               alt="Corporate Shuttles"
               fill
               className={styles.bgImg}
@@ -48,14 +48,14 @@ export default function FleetSection() {
           {/* ROW 2 */}
           <div className={styles.card}>
             <Image 
-              src="/images/expertdrivers.jpeg" 
-              alt="Expert Drivers" 
+              src="/images/experienced_driversfinal.jpeg"
+              alt="Experienced Drivers"
               fill 
               className={styles.bgImg} 
             />
             <div className={styles.overlay} />
             <div className={styles.content}>
-              <h3>Expert Drivers</h3>
+              <h3>Experienced Drivers</h3>
               <p>Professional and experienced drivers</p>
             </div>
           </div>

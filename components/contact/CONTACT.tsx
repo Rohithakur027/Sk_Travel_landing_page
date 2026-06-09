@@ -194,7 +194,7 @@ export default function CONTACT() {
                 </div>
                 <div>
                   <div className={styles.contactLabel}>Email Us</div>
-                  <div className={styles.contactText}>contact@skvoayges.in</div>
+                  <div className={styles.contactText}>support@gmail.com</div>
                 </div>
               </div>
 
@@ -219,7 +219,7 @@ export default function CONTACT() {
                 </div>
                 <div>
                   <div className={styles.contactLabel}>Visit Us</div>
-                  <div className={styles.contactText}>SK Voyages Headquarters<br />Andheri East, Mumbai<br />Maharashtra 400069, India</div>
+                  <div className={styles.contactText}>H No 57, Shop Number 7, Pai Layout<br />6th Cross, Hulimavu Main Road, Gate<br />BG Road, Hulimavu, Bangalore 560076</div>
                 </div>
               </div>
             </div>
@@ -233,42 +233,7 @@ export default function CONTACT() {
         {/* FAQ section removed per request */}
       </div>
 
-      {/* Office Locations Section */}
-      <section className={styles.officeSection}>
-        <div className={styles.container}>
-          <div className={styles.officeSectionHeader}>
-            <h2 className={styles.officeTitle}>Our Office Locations</h2>
-            <p className={styles.officeSubtitle}>We operate across major metropolitan cities in India to be closer to you</p>
-          </div>
-
-          <div className={styles.officeGrid}>
-            {[
-              { city: 'Mumbai', address: 'Andheri East, Mumbai 400069', phone: '+91 9886897555' },
-              { city: 'Delhi NCR', address: 'Gurgaon, Haryana 122001', phone: '+91 98765 43211' },
-              { city: 'Bangalore', address: 'Whitefield, Bangalore 560066', phone: '+91 98765 43212' },
-              { city: 'Pune', address: 'Hinjewadi, Pune 411057', phone: '+91 98765 43213' },
-              { city: 'Hyderabad', address: 'HITEC City, Hyderabad 500081', phone: '+91 98765 43214' },
-              { city: 'Chennai', address: 'OMR, Chennai 600096', phone: '+91 98765 43215' }
-            ].map((office, idx) => (
-              <div className={styles.officeCard} key={idx}>
-                <div className={styles.officeIconWrap}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#FFD23F" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                    <circle cx="12" cy="9" r="2.2" stroke="#FFD23F" strokeWidth="1.6" fill="none" />
-                  </svg>
-                </div>
-                <div className={styles.officeInfo}>
-                  <h4 className={styles.officeCity}>{office.city}</h4>
-                  <p className={styles.officeAddress}>{office.address}</p>
-                  <p className={styles.officePhone}>{office.phone}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section (below office locations) */}
+      {/* FAQ Section */}
       <section className={styles.faqSection}>
         <div className={styles.container}>
           <h2 className={styles.faqHeading}>Frequently Asked Questions</h2>

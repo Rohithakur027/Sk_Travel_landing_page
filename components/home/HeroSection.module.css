@@ -34,8 +34,10 @@
   animation: zoomOutEffect 16s ease-out forwards;
 }
 
-/* Mobile-specific: crop and shift the background so unwanted lower portion doesn't render */
-@media (max-width: 768px) {
+/* Tablet & mobile: in flow-mode (<=1024px) the absolutely-positioned background
+   peeks out below the white form. Crop and shift it so the unwanted lower
+   portion doesn't render (same approach used for mobile). */
+@media (max-width: 1024px) {
   .bg {
     /* keep the focal area visible near the top */
     background-position: center top !important;

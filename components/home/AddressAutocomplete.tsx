@@ -147,8 +147,8 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   };
 
   const handleSuggestionClick = async (suggestion: any) => {
-    // Show the chosen label immediately and close the list.
-    onChange(suggestion.display_name);
+    // Show the place title (primary label) in the input and close the list.
+    onChange(suggestion.name);
     setSuggestions([]);
     setShowSuggestions(false);
 
@@ -174,9 +174,10 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
       const feature = response.data.features?.[0];
       const coords = feature?.geometry?.coordinates as [number, number] | undefined;
       onCoordinatesChange?.(coords ?? null);
-      // Prefer the fuller address from the retrieved feature if available.
-      const full = feature?.properties?.full_address;
-      if (full) onChange(full);
+      // Keep the place title in the input; prefer the retrieved feature's name
+      // if available (don't overwrite with the full address).
+      const title = feature?.properties?.name;
+      if (title) onChange(title);
     } catch (error) {
       console.error("Mapbox Search Box retrieve error:", error);
       onCoordinatesChange?.(null);

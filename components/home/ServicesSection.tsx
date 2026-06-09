@@ -15,7 +15,7 @@ const SERVICES = [
     title: "Corporate Shuttles",
     description:
       "Daily commute solutions for your employees with scheduled routes, dedicated vehicles, and professional drivers.",
-    image: "/images/corporatesuttlenew.jpeg",
+    image: "/images/corporateshuttlefinal.png",
     imagePosition: "right center",
     badge: "Best Value",
     badgeClass: styles.badgeBestValue,
