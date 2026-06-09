@@ -3,11 +3,11 @@ import Pill from '@/components/ui/Pill';
 
 export default function StorySection() {
   return (
-    <section className="bg-white py-16 lg:py-16">
+    <section className="bg-white pb-16 pt-8 lg:pb-24 lg:pt-12">
       <div className="mx-auto w-full max-w-[1800px] px-6 lg:max-w-[1200px] lg:px-16 2xl:px-32">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-16 2xl:gap-24">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 2xl:gap-24">
           <div className="relative w-full">
-            <div className="relative h-[320px] w-full overflow-hidden rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] lg:h-[580px]">
+            <div className="relative h-[400px] w-full overflow-hidden rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] lg:h-[720px]">
               <Image
                 src="/images/aboutstory.jpeg"
                 alt="Story Image"

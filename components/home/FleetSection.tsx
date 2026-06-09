@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 const cardClassName =
@@ -10,7 +11,7 @@ export default function FleetSection() {
     <section id="fleet" className="bg-white pb-16 pt-4">
       <div className="mx-auto w-full px-6 md:px-8 lg:px-12 2xl:px-16">
         <div className="mb-12 text-center">
-          <h2 className="mb-4 font-heading text-[2.25rem] font-bold text-gray-900 md:text-5xl">
+          <h2 className="mb-4 font-heading text-[2.25rem] font-bold text-[#2D3142] md:text-5xl">
             Our Premium Fleet
           </h2>
           <p className="mx-auto max-w-[42rem] text-[1.25rem] leading-[1.5] text-gray-500">
@@ -44,10 +45,10 @@ export default function FleetSection() {
           </div>
 
           <div className={cardClassName}>
-            <Image src="/images/expertdrivers.jpeg" alt="Expert Drivers" fill className={imageClassName} />
+            <Image src="/images/experienced_driversfinal.jpeg" alt="Experienced Drivers" fill className={imageClassName} />
             <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(to_bottom,transparent_30%,rgba(0,0,0,0.85)_100%)]" />
             <div className="relative z-10 p-10 text-white">
-              <h3 className="mb-2 text-[1.75rem] font-extrabold tracking-[-0.02em] lg:text-[1.8rem] 2xl:text-[2.2rem]">Expert Drivers</h3>
+              <h3 className="mb-2 text-[1.75rem] font-extrabold tracking-[-0.02em] lg:text-[1.8rem] 2xl:text-[2.2rem]">Experienced Drivers</h3>
               <p className="text-base leading-[1.5] text-gray-200">Professional and experienced drivers</p>
             </div>
           </div>
@@ -59,9 +60,9 @@ export default function FleetSection() {
               <span className="mb-3 inline-block text-base font-extrabold uppercase tracking-[0.1em] text-amber-400">Featured</span>
               <h3 className="mb-2 text-[1.75rem] font-extrabold tracking-[-0.02em] lg:text-[1.8rem] 2xl:text-[2.2rem]">Executive Sedans</h3>
               <p className="text-base leading-[1.5] text-gray-200">Premium comfort for 1-4 passengers</p>
-              <button className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[rgba(255,210,63,1)] px-6 py-3 text-base font-bold text-[#111827] transition-colors duration-200 hover:bg-amber-500">
+              <Link href="/services" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[rgba(255,210,63,1)] px-6 py-3 text-base font-bold text-[#111827] transition-colors duration-200 hover:bg-amber-500">
                 View Details <ArrowRight size={18} />
-              </button>
+              </Link>
             </div>
           </div>
         </div>

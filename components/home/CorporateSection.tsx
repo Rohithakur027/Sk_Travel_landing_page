@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { BadgeCheck } from 'lucide-react';
 
 const FEATURES = [
@@ -32,12 +33,12 @@ export default function CorporateSection() {
           <h2 className="font-sans text-[2.25rem] font-bold leading-[1.15] tracking-[-0.02em] text-[rgba(45,49,66,1)] md:text-[2.5rem]">
             We Redefine Corporate Transportation
           </h2>
-          <p className="text-[1.1rem] leading-[1.6] text-gray-600">
+          <p className="text-[1.1rem] leading-[1.6] text-[#6B7280]">
             At SK Voyages, we understand that your time is valuable. That&apos;s why we&apos;ve built a transportation service that prioritizes reliability,
             comfort, and professionalism. With over 8 years of experience serving corporate clients, we&apos;ve perfected the art of seamless
             employee transportation.
           </p>
-          <p className="text-[1.1rem] leading-[1.6] text-gray-600">
+          <p className="text-[1.1rem] leading-[1.6] text-[#6B7280]">
             Our fleet of modern vehicles and team of professional drivers ensure that your employees arrive safely, comfortably, and on time, every
             time.
           </p>
@@ -57,9 +58,9 @@ export default function CorporateSection() {
             ))}
           </ul>
 
-          <button className="self-start rounded-xl border-2 border-[rgba(255,210,63,1)] bg-transparent px-8 py-[0.9rem] text-base font-bold text-[rgba(45,49,66,1)] transition-all duration-200 ease-out hover:bg-[rgba(255,210,63,0.2)]">
+          <Link href="/about" className="self-start rounded-xl border-2 border-[rgba(255,210,63,1)] bg-transparent px-8 py-[0.9rem] text-base font-bold text-[rgba(45,49,66,1)] transition-all duration-200 ease-out hover:bg-[rgba(255,210,63,0.2)]">
             Learn More About Us
-          </button>
+          </Link>
         </div>
       </div>
     </section>

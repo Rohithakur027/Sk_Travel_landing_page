@@ -48,7 +48,7 @@ export default function CTASection() {
           <div className="hidden w-full max-w-[48rem] flex-col items-center gap-8 md:flex md:flex-row md:justify-between md:gap-0">
             <div className="flex flex-1 flex-col items-center">
               <h3 className="mb-2 font-sans text-[2.25rem] font-bold text-gray-800">500+</h3>
-              <p className="text-sm font-medium text-gray-500">Users</p>
+              <p className="text-sm font-medium text-gray-500">Happy Users</p>
             </div>
             <div className="hidden h-12 w-px bg-gray-200 md:block" />
             <div className="flex flex-1 flex-col items-center">

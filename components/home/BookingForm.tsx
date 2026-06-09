@@ -37,7 +37,7 @@ function isValidPhone(v: string) {
 }
 
 const cardClassName =
-  "relative z-10 mx-auto mb-16 w-full max-w-[85rem] rounded-[1.25rem] border border-[rgba(255,255,255,0.4)] bg-[rgba(255,255,255,0.88)] p-4 shadow-[0_30px_70px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.6)] backdrop-blur-[20px] transition-[box-shadow,border-color] duration-300 ease-out hover:border-[rgba(255,255,255,0.5)] hover:shadow-[0_35px_80px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.8)] sm:p-[1.5rem] md:p-[3.5rem] max-[480px]:rounded-2xl max-[480px]:px-4 max-[480px]:py-5";
+  "relative z-10 mx-auto mb-0 w-full max-w-[85rem] lg:mb-16 rounded-[1.25rem] border border-[rgba(255,255,255,0.4)] bg-[rgba(255,255,255,0.88)] p-4 shadow-[0_30px_70px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.6)] backdrop-blur-[20px] transition-[box-shadow,border-color] duration-300 ease-out hover:border-[rgba(255,255,255,0.5)] hover:shadow-[0_35px_80px_rgba(0,0,0,0.22),inset_0_1px_0_rgba(255,255,255,0.8)] sm:p-[1.5rem] md:p-[3.5rem] max-[480px]:rounded-2xl max-[480px]:px-4 max-[480px]:py-5";
 const toggleClassName =
   "relative mb-5 flex w-full rounded-full border border-[rgba(226,232,240,0.8)] bg-[rgba(241,245,249,0.65)] p-[0.15rem] sm:mb-6 sm:w-fit sm:p-[0.2rem]";
 const toggleButtonClassName =
@@ -546,30 +546,33 @@ export default function BookingForm() {
 
           <div className={gridItemClassName}>
             <div className="flex w-full flex-col gap-1">
-              <div
-                className={[
-                  "group relative flex min-h-[3.6rem] w-full items-center rounded-xl border-[1.5px] border-[rgba(226,232,240,0.8)] bg-[rgba(248,250,252,0.7)] px-5 py-[0.85rem] pl-[3.25rem] text-[1.05rem] transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] max-sm:px-4 max-sm:pl-10",
-                  passengerError ? "border-[#f87171] bg-[#fffafb] shadow-[0_0_0_4px_rgba(248,113,113,0.15)]" : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-              >
+              <div className="group relative w-full">
                 <div className={iconClassName}>
                   <Users size={20} />
                 </div>
-                <span className="ml-[0.9rem] flex-1 font-medium text-slate-400">Passengers *</span>
-                <div className="flex items-center gap-[0.85rem]">
+                <div
+                  className={[
+                    overlayFieldClassName,
+                    "pl-14 pr-[7rem] text-slate-400 max-sm:pl-10 max-sm:pr-24",
+                    passengerError ? "border-[#f87171] bg-[#fffafb] shadow-[0_0_0_4px_rgba(248,113,113,0.15)]" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                >
+                  Passengers *
+                </div>
+                <div className="absolute inset-y-0 right-4 z-10 flex items-center gap-3 max-sm:right-3 max-sm:gap-2">
                   <button
                     type="button"
                     onClick={() => {
                       setPassengers(Math.max(1, passengers - 1));
                       setPassengerError("");
                     }}
-                    className="flex h-[2.2rem] w-[2.2rem] items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-all duration-200 ease-out hover:-translate-y-px hover:border-[rgba(249,115,22,0.3)] hover:bg-[rgba(249,115,22,0.08)] hover:text-[var(--color-primary-dark)] max-sm:h-8 max-sm:w-8"
+                    className="flex h-[2rem] w-[2rem] items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-all duration-200 ease-out hover:-translate-y-px hover:border-[rgba(249,115,22,0.3)] hover:bg-[rgba(249,115,22,0.08)] hover:text-[var(--color-primary-dark)] max-sm:h-7 max-sm:w-7"
                   >
-                    <Minus size={18} />
+                    <Minus size={16} />
                   </button>
-                  <span className="min-w-4 text-center text-[1.15rem] font-bold text-slate-950 max-sm:text-[1.05rem]">{passengers}</span>
+                  <span className="min-w-[1rem] text-center text-[1.15rem] font-bold text-slate-950 max-sm:text-[0.95rem]">{passengers}</span>
                   <button
                     type="button"
                     onClick={() => {
@@ -585,9 +588,9 @@ export default function BookingForm() {
                         setPassengerError(`Max ${max} passengers allowed for ${label}.`);
                       }
                     }}
-                    className="flex h-[2.2rem] w-[2.2rem] items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-all duration-200 ease-out hover:-translate-y-px hover:border-[rgba(249,115,22,0.3)] hover:bg-[rgba(249,115,22,0.08)] hover:text-[var(--color-primary-dark)] max-sm:h-8 max-sm:w-8"
+                    className="flex h-[2rem] w-[2rem] items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-all duration-200 ease-out hover:-translate-y-px hover:border-[rgba(249,115,22,0.3)] hover:bg-[rgba(249,115,22,0.08)] hover:text-[var(--color-primary-dark)] max-sm:h-7 max-sm:w-7"
                   >
-                    <Plus size={18} />
+                    <Plus size={16} />
                   </button>
                 </div>
               </div>
@@ -677,12 +680,12 @@ export default function BookingForm() {
         <span>
           For Exclusive Bookings and Corporate Inquiries, Please Contact us at{" "}
           <a
-            href="https://wa.me/917807818119"
+            href="https://wa.me/919886897555"
             target="_blank"
             rel="noopener noreferrer"
             className="font-bold text-[var(--color-primary)] transition-all duration-200 ease-out hover:border-b hover:border-[var(--color-primary)] hover:brightness-110"
           >
-            +91 7807818119
+            +91 9886897555
           </a>
         </span>
       </div>

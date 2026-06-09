@@ -7,7 +7,7 @@ export default function ContactSection() {
     <section id="contact" className="bg-[rgb(254,253,248)] px-0 py-10 max-[400px]:py-10 md:py-16 max-md:px-0 max-md:py-12">
       <div className="mx-auto w-full max-w-[1480px] px-6 max-[400px]:px-3 max-md:px-6">
         <div className="mb-8 px-4 text-center md:mb-14 md:px-0">
-          <h2 className="mb-4 font-sans text-[1.875rem] font-extrabold text-gray-800 max-[400px]:px-2 md:text-[3rem]">
+          <h2 className="mb-4 font-sans text-[1.875rem] font-extrabold text-[#2D3142] max-[400px]:px-2 md:text-[3rem]">
             Get in Touch
           </h2>
           <p className="mx-auto max-w-[500px] text-base leading-[1.6] text-gray-500">
@@ -17,7 +17,7 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:gap-14">
           <div className="order-1 flex flex-col rounded-3xl bg-white p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] md:p-8 lg:p-12">
-            <h3 className="mb-2 font-sans text-2xl font-extrabold text-gray-800">Send us a Message</h3>
+            <h3 className="mb-2 font-sans text-2xl font-extrabold text-[#2D3142]">Send us a Message</h3>
             <p className="mb-8 text-sm text-gray-500">Fill out the form below and we&apos;ll get back to you shortly</p>
             <ContactForm />
           </div>
@@ -42,8 +42,8 @@ export default function ContactSection() {
                   <Phone size={30} />
                 </div>
                 <div className="flex flex-col sm:items-start">
-                  <p className="mb-1 text-sm font-semibold capitalize text-gray-600">Call Us</p>
-                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-gray-800 sm:text-xl">+91 9886897555</h4>
+                  <p className="mb-1 text-sm font-semibold capitalize text-[#6B7280]">Call Us</p>
+                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-[#2D3142] sm:text-xl">+91 9886897555</h4>
                   <p className="text-sm text-gray-400">24/7 Operational Support</p>
                 </div>
               </div>
@@ -53,8 +53,8 @@ export default function ContactSection() {
                   <Mail size={30} />
                 </div>
                 <div className="flex flex-col sm:items-start">
-                  <p className="mb-1 text-sm font-semibold capitalize text-gray-600">Email Us</p>
-                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-gray-800 sm:text-xl">support@skvoyages.in</h4>
+                  <p className="mb-1 text-sm font-semibold capitalize text-[#6B7280]">Email Us</p>
+                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-[#2D3142] sm:text-xl">support@skvoyages.in</h4>
                   <p className="text-sm text-gray-400">We reply within 24 hours</p>
                 </div>
               </div>
@@ -64,9 +64,9 @@ export default function ContactSection() {
                   <MapPin size={30} />
                 </div>
                 <div className="flex flex-col sm:items-start">
-                  <p className="mb-1 text-sm font-semibold capitalize text-gray-600">Visit Us</p>
-                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-gray-800 sm:text-xl">123 Business Ave, Suite 100</h4>
-                  <p className="text-sm text-gray-400">New York, NY 10001</p>
+                  <p className="mb-1 text-sm font-semibold capitalize text-[#6B7280]">Visit Us</p>
+                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-[#2D3142] sm:text-xl">H.No.57, Shop No. 7, PAI Layout, 6th Cross</h4>
+                  <p className="text-sm text-gray-400">Hulimavu Main Road, B.G. Road, Hulimavu, Bangalore - 560076</p>
                 </div>
               </div>
             </div>

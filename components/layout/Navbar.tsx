@@ -45,16 +45,16 @@ export default function Navbar() {
 
   return (
     <header className={headerClassName}>
-      <div className="relative mx-auto mt-4 flex h-[4.5rem] w-full max-w-[1480px] items-center justify-between rounded-[20px] border border-[rgba(241,243,245,0.6)] bg-white px-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] max-[360px]:mt-2 max-[360px]:h-[3.75rem] max-[360px]:rounded-[12px] max-[360px]:px-3">
+      <div className="relative mx-auto mt-3 flex h-[4.5rem] w-full max-w-[1480px] items-center justify-between rounded-[20px] border border-[rgba(241,243,245,0.6)] bg-white px-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] max-[360px]:mt-2 max-[360px]:h-[3.85rem] max-[360px]:rounded-[12px] max-[360px]:px-3 md:mt-4 md:h-[5.5rem]">
         <div className="flex items-center gap-[4.5rem]">
           <div className="flex items-center">
             <Link href="/" className="shrink-0">
               <Image
-                src="/icons/SKlogo.svg"
-                alt="SK Travel Logo"
+                src="/icons/sklogoreal3.png"
+                alt="SK Voyages Logo"
                 width={140}
                 height={48}
-                className="h-10 w-auto max-[360px]:h-[1.8rem] md:h-12"
+                className="h-[78px] w-auto max-[360px]:h-[3.35rem] md:h-[112px]"
                 priority
               />
             </Link>
@@ -104,7 +104,7 @@ export default function Navbar() {
       </div>
 
       {isOpen && (
-        <div className="fixed left-4 right-4 top-[5.5rem] z-[110] flex animate-slide-down flex-col gap-4 rounded-[20px] border border-[rgba(241,243,245,1)] bg-white p-6 shadow-[0_20px_40px_rgba(0,0,0,0.2)] lg:hidden max-[360px]:top-[5.25rem] max-[360px]:rounded-2xl max-[360px]:p-4">
+        <div className="fixed left-4 right-4 top-[4.75rem] z-[110] flex animate-slide-down flex-col gap-4 rounded-[20px] border border-[rgba(241,243,245,1)] bg-white p-6 shadow-[0_20px_40px_rgba(0,0,0,0.2)] lg:hidden max-[360px]:top-[4.85rem] max-[360px]:rounded-2xl max-[360px]:p-4 md:top-[5.5rem]">
           <nav className="flex flex-col gap-2">
             {NAV_LINKS.map((link) => (
               <Link

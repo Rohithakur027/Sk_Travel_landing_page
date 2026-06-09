@@ -44,7 +44,7 @@ const MAIN_SERVICES = [
     description:
       "Provide your employees with a reliable and comfortable daily commute. Our shuttle services are designed to maximize productivity and employee satisfaction.",
     iconSrc: "/Container (5).png",
-    image: "/images/corporatesuttlenew.jpeg",
+    image: "/images/corporateshuttlefinal.png",
     imagePosition: "right center",
     features: [
       "Fixed route scheduling",
@@ -218,17 +218,13 @@ export default function ServicesSection() {
         </div>
       </section>
 
-      <section id="cta" className="flex min-h-0 items-center justify-center bg-white px-8 pb-8 pt-6 max-md:px-4">
-        <div className="mx-auto mt-6 w-full max-w-[920px] rounded-[20px] border border-black/5 bg-white px-7 py-8 text-center shadow-[0_18px_48px_rgba(0,0,0,0.06)] min-[700px]:-translate-y-10">
+      <section id="cta" className="flex min-h-0 items-center justify-center bg-white px-8 py-10 max-md:px-4">
+        <div className="mx-auto w-full max-w-[920px] rounded-[20px] border border-black/5 bg-white px-7 py-8 text-center shadow-[0_18px_48px_rgba(0,0,0,0.06)]">
           <h3 className="mb-3 text-[1.7rem] font-extrabold text-[#111827]">
             Ready to Get Started?
           </h3>
           <p className="mx-auto mb-4 max-w-[40rem] text-[0.97rem] leading-[1.6] text-[#6b7280]">
-            Contact us today to discuss your corporate
-            <span className="block w-full text-center"> transportation needs and get a</span>
-            <span className="block w-full text-center mt-1 font-semibold min-[481px]:font-normal">
-              customized quote
-            </span>
+            Contact us today to discuss your corporate transportation needs and get a customized quote
           </p>
           <Link
             href="/contact#booking"

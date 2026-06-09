@@ -22,7 +22,7 @@ const sectionTitleClassName = 'text-[30px] font-extrabold leading-[1.12] text-[#
 export default function FeaturesPage() {
   return (
     <section className="bg-white">
-      <div className="flex min-h-[480px] w-screen items-center justify-center bg-[#2d3142] px-4 py-8 text-center max-md:min-h-0 max-md:px-6 max-md:pb-12 max-md:pt-28">
+      <div className="flex min-h-[480px] w-screen items-start justify-center bg-[#2d3142] px-4 pb-12 pt-[calc(var(--navbar-height)+2rem)] text-center max-md:min-h-0 max-md:px-6 md:items-center md:py-8 md:pt-[calc(var(--navbar-height)+4rem)]">
         <div>
           <Pill className="mb-8">Platform Features</Pill>
           <h1 className="m-0 font-heading text-[2.25rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.1]">
@@ -69,7 +69,7 @@ export default function FeaturesPage() {
             </ul>
           </div>
 
-          <div className="flex justify-center lg:w-[494px]">
+          <div className="flex w-full justify-center lg:w-[494px]">
             <div className={imageCardClassName}>
               <Image src="/images/featuretop.png" alt="Traffic" fill className="object-cover scale-110" priority />
             </div>
@@ -91,7 +91,7 @@ export default function FeaturesPage() {
             {FEATURE_CARDS.map((card) => (
               <div
                 key={card.title}
-                className="flex min-h-[254px] flex-row items-center rounded-2xl bg-white p-4 shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:min-h-0 md:flex-col md:items-start md:rounded-3xl md:p-7"
+                className="flex flex-row items-center rounded-2xl bg-white p-4 shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:flex-col md:items-start md:rounded-3xl md:p-7"
               >
                 <div className="mr-3 flex h-12 w-12 flex-none items-center justify-center overflow-hidden rounded-[14px] md:mb-[14px] md:mr-0 md:h-14 md:w-14">
                   <Image src={card.icon} alt={card.title} width={56} height={56} className="h-full w-full rounded-xl object-cover" />
@@ -112,13 +112,13 @@ export default function FeaturesPage() {
 
       <div className={containerClassName}>
         <div className={heroRowClassName}>
-          <div className="order-2 flex justify-center lg:order-1 lg:w-[494px]">
+          <div className="order-1 flex w-full justify-center lg:order-1 lg:w-[494px]">
             <div className={imageCardClassName}>
               <Image src="/images/safetyprior.png" alt="Car" fill className="object-cover scale-110" priority />
             </div>
           </div>
 
-          <div className="order-1 flex-1 lg:order-2">
+          <div className="order-2 flex-1 lg:order-2">
             <Pill variant="dark" className="mb-5">Safety First</Pill>
             <h2 className="mb-3 text-[2rem] font-bold text-[#111827] md:text-[2.5rem]">
               Your Safety is Our Priority
@@ -183,19 +183,21 @@ export default function FeaturesPage() {
         </div>
       </div>
 
-      <div className="mx-auto my-10 max-w-[1052px] rounded-[32px] bg-white px-5 py-7 text-center shadow-[0_12px_32px_rgba(2,6,23,0.05)] md:px-12 md:py-14">
-        <h3 className={sectionTitleClassName}>Experience These Features</h3>
-        <p className="mx-auto mt-2 max-w-[520px] text-sm leading-[1.4] text-[#6b7280]">
-          Schedule a demo to see how our platform can transform your
-          <span className="block max-[600px]:inline"> corporate transportation</span>
-        </p>
-        <div className="mt-6">
-          <Link
-            href="/contact#booking"
-            className="inline-flex items-center gap-3 rounded-lg bg-[linear-gradient(180deg,#FFD23F,#FFA726)] px-7 py-3 text-base font-bold text-[#111827] shadow-[0_8px_24px_rgba(255,210,63,0.4)]"
-          >
-            Send an Enquiry →
-          </Link>
+      <div className={containerClassName}>
+        <div className="mx-auto my-10 max-w-[1052px] rounded-[32px] bg-white px-5 py-7 text-center shadow-[0_12px_32px_rgba(2,6,23,0.05)] md:px-12 md:py-14">
+          <h3 className={sectionTitleClassName}>Experience These Features</h3>
+          <p className="mx-auto mt-2 max-w-[520px] text-sm leading-[1.4] text-[#6b7280]">
+            Schedule a demo to see how our platform can transform your
+            <span className="block max-[600px]:inline"> corporate transportation</span>
+          </p>
+          <div className="mt-6">
+            <Link
+              href="/contact#booking"
+              className="inline-flex items-center gap-3 rounded-lg bg-[linear-gradient(180deg,#FFD23F,#FFA726)] px-7 py-3 text-base font-bold text-[#111827] shadow-[0_8px_24px_rgba(255,210,63,0.4)]"
+            >
+              Send an Enquiry →
+            </Link>
+          </div>
         </div>
       </div>
     </section>

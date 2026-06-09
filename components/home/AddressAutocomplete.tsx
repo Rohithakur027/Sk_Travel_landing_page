@@ -14,33 +14,32 @@ interface AddressAutocompleteProps {
   iconClassName?: string;
 }
 
-interface MapboxFeature {
-  id?: string;
-  text?: string;
-  place_name?: string;
-  center: [number, number];
-  place_type?: string[];
-}
-
 interface AddressSuggestion {
   id: string;
+  mapbox_id: string;
+  name: string;
+  address: string;
   display_name: string;
-  center: [number, number];
 }
 
+const SEARCHBOX_BASE = 'https://api.mapbox.com/search/searchbox/v1';
 const BANGALORE_PROXIMITY = '77.5946,12.9716';
-const BANGALORE_KEYWORDS = ['bangalore', 'bengaluru', 'karnataka'];
-
-const BIG_CITIES_OUTSIDE_BANGALORE = new Set([
-  'mumbai', 'delhi', 'new delhi', 'chennai', 'hyderabad', 'kolkata',
-  'pune', 'ahmedabad', 'jaipur', 'lucknow', 'surat', 'kanpur', 'nagpur',
-  'indore', 'bhopal', 'visakhapatnam', 'patna', 'vadodara', 'ghaziabad',
-  'ludhiana', 'agra', 'nashik', 'faridabad', 'meerut', 'rajkot', 'varanasi',
-  'coimbatore', 'kochi', 'chandigarh', 'mysore', 'mysuru', 'mangalore', 'mangaluru',
-]);
+const BANGALORE_BBOX = '75.75,11.16,79.44,14.78';
 
 const suggestionsListClass =
   'absolute left-0 right-0 top-full z-[1000] mt-2 max-h-[250px] list-none overflow-y-auto rounded-xl border border-[#eef2f6] bg-[#fdfdfd] p-2 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)]';
+
+function newSessionToken(): string {
+  try {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+  } catch {
+    // Fall back when the runtime cannot generate a UUID.
+  }
+
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
 
 export default function AddressAutocomplete({
   id,
@@ -60,6 +59,7 @@ export default function AddressAutocomplete({
   const containerRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const requestIdRef = useRef(0);
+  const sessionTokenRef = useRef<string>(newSessionToken());
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -81,7 +81,7 @@ export default function AddressAutocomplete({
   }, []);
 
   const fetchSuggestions = async (rawQuery: string) => {
-    const query = rawQuery.trim();
+    const query = rawQuery.trim().replace(/\s+/g, ' ').replace(/[^\w\s,.-]/g, '');
     if (query.length < 2) {
       setSuggestions([]);
       setShowSuggestions(false);
@@ -94,61 +94,42 @@ export default function AddressAutocomplete({
       return;
     }
 
-    const lowered = query.toLowerCase();
-    const hasBangaloreHint = BANGALORE_KEYWORDS.some((kw) => lowered.includes(kw));
-    const hasBigCityHint = Array.from(BIG_CITIES_OUTSIDE_BANGALORE).some((c) => lowered.includes(c));
-    const searchQuery = hasBangaloreHint || hasBigCityHint ? query : `${query}, Bangalore`;
-
     const currentRequest = ++requestIdRef.current;
     setLoading(true);
 
     try {
-      const response = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchQuery)}.json`,
-        {
-          params: {
-            access_token: mapboxToken,
-            limit: 10,
-            country: 'IN',
-            proximity: BANGALORE_PROXIMITY,
-            language: 'en',
-            autocomplete: true,
-            types: 'place,locality,neighborhood,address,poi,district,postcode',
-          },
-        }
-      );
+      const response = await axios.get(`${SEARCHBOX_BASE}/suggest`, {
+        params: {
+          q: query,
+          access_token: mapboxToken,
+          session_token: sessionTokenRef.current,
+          limit: 5,
+          country: 'IN',
+          language: 'en',
+          proximity: BANGALORE_PROXIMITY,
+          bbox: BANGALORE_BBOX,
+        },
+      });
 
       if (currentRequest !== requestIdRef.current) {
         return;
       }
 
-      const features = ((response.data.features || []) as MapboxFeature[])
-        .filter((feature) => {
-          const name = (feature.place_name || '').toLowerCase();
-          const text = (feature.text || '').toLowerCase();
-          const placeTypes: string[] = feature.place_type || [];
+      const nextSuggestions = (response.data.suggestions || []).map((suggestion: any) => ({
+        id: suggestion.mapbox_id,
+        mapbox_id: suggestion.mapbox_id,
+        name: suggestion.name,
+        address: suggestion.place_formatted || '',
+        display_name:
+          suggestion.full_address ||
+          (suggestion.place_formatted ? `${suggestion.name}, ${suggestion.place_formatted}` : suggestion.name),
+      }));
 
-          if (BANGALORE_KEYWORDS.some((kw) => name.includes(kw))) {
-            return true;
-          }
-
-          if (placeTypes.includes('place') && BIG_CITIES_OUTSIDE_BANGALORE.has(text)) {
-            return true;
-          }
-
-          return false;
-        })
-        .map((feature) => ({
-          id: feature.id || feature.center.join(','),
-          display_name: feature.place_name || feature.text || "",
-          center: feature.center,
-        }));
-
-      setSuggestions(features);
-      setShowSuggestions(features.length > 0);
+      setSuggestions(nextSuggestions);
+      setShowSuggestions(nextSuggestions.length > 0);
     } catch (error) {
       if (currentRequest === requestIdRef.current) {
-        console.error('Mapbox API error:', error);
+        console.error('Mapbox Search Box error:', error);
         setSuggestions([]);
         setShowSuggestions(false);
       }
@@ -160,28 +141,58 @@ export default function AddressAutocomplete({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    onChange(newValue);
+    const nextValue = e.target.value;
+    onChange(nextValue);
     onCoordinatesChange?.(null);
 
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
 
-    debounceRef.current = setTimeout(() => fetchSuggestions(newValue), 250);
+    debounceRef.current = setTimeout(() => fetchSuggestions(nextValue), 250);
   };
 
-  const handleSuggestionClick = (suggestion: AddressSuggestion) => {
-    onChange(suggestion.display_name);
-    onCoordinatesChange?.(suggestion.center ?? null);
+  const handleSuggestionClick = async (suggestion: AddressSuggestion) => {
+    onChange(suggestion.name);
     setSuggestions([]);
     setShowSuggestions(false);
+
+    const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+    if (!mapboxToken || !suggestion.mapbox_id) {
+      onCoordinatesChange?.(null);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.get(`${SEARCHBOX_BASE}/retrieve/${suggestion.mapbox_id}`, {
+        params: {
+          access_token: mapboxToken,
+          session_token: sessionTokenRef.current,
+        },
+      });
+
+      const feature = response.data.features?.[0];
+      const coords = feature?.geometry?.coordinates as [number, number] | undefined;
+
+      onCoordinatesChange?.(coords ?? null);
+    } catch (error) {
+      console.error('Mapbox Search Box retrieve error:', error);
+      onCoordinatesChange?.(null);
+    } finally {
+      setLoading(false);
+      sessionTokenRef.current = newSessionToken();
+    }
   };
 
   return (
     <div className={`relative w-full ${wrapperClassName || ''}`} ref={containerRef}>
       <div className="relative w-full">
-        {leftIcon && <div className={`pointer-events-none absolute inset-y-0 left-0 z-[1] flex items-center ${iconClassName || ''}`}>{leftIcon}</div>}
+        {leftIcon && (
+          <div className={`pointer-events-none absolute inset-y-0 left-0 z-[1] flex items-center ${iconClassName || ''}`}>
+            {leftIcon}
+          </div>
+        )}
         <input
           id={id}
           type="text"
@@ -202,11 +213,12 @@ export default function AddressAutocomplete({
         <ul className={suggestionsListClass}>
           {suggestions.map((suggestion, index) => (
             <li
-              key={`${suggestion.id}-${index}`}
+              key={suggestion.mapbox_id || `suggestion-${index}`}
               onClick={() => handleSuggestionClick(suggestion)}
-              className="cursor-pointer rounded-lg px-4 py-[0.85rem] text-[0.95rem] text-slate-700 transition-all duration-200 ease-out hover:translate-x-1 hover:bg-[rgba(255,200,57,0.9)] hover:text-black"
+              className="cursor-pointer rounded-lg px-4 py-[0.85rem] transition-all duration-200 ease-out hover:translate-x-1 hover:bg-[rgba(255,200,57,0.9)]"
             >
-              {suggestion.display_name}
+              <span className="block text-[0.95rem] font-semibold text-slate-800">{suggestion.name}</span>
+              <span className="mt-1 block text-[0.85rem] text-slate-500">{suggestion.address}</span>
             </li>
           ))}
         </ul>

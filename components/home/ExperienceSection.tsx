@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowRight, Clock, Star } from 'lucide-react';
 
 const mediaCardClassName =
@@ -12,10 +13,10 @@ const textClassName = 'max-w-[90%] text-[1.2rem] leading-[1.5] text-gray-300 lg:
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="-mt-32 bg-white px-0 pb-10 pt-8 md:mt-0 md:py-24">
+    <section id="experience" className="bg-white px-0 pb-10 pt-12 md:py-24">
       <div className="mx-auto w-full px-6 md:px-8 lg:px-12 2xl:px-16">
         <div className="mb-12 text-center">
-          <h2 className="mb-4 font-heading text-[2.25rem] font-bold text-gray-900 md:text-5xl">
+          <h2 className="mb-4 font-heading text-[2.25rem] font-bold text-[#2D3142] md:text-5xl">
             Experience Premium Corporate Transportation
           </h2>
           <p className="mx-auto max-w-[42rem] text-[1.25rem] leading-[1.5] text-gray-500">
@@ -92,16 +93,18 @@ export default function ExperienceSection() {
           </div>
 
           <div className="order-7 lg:[grid-column:1/2] lg:[grid-row:4/5]">
-            <div className="flex h-full min-h-[24rem] flex-col justify-evenly rounded-3xl bg-[linear-gradient(135deg,#FFD23F_0%,#FFA726_100%)] p-8 text-center text-[#111827] shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] md:min-h-[20rem] lg:min-h-0 lg:p-5 2xl:p-7">
-              <div className="flex items-center justify-center lg:justify-start">
-                <div className="mr-5 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[rgba(45,49,66,0.15)] text-amber-400 lg:mr-3 lg:h-9 lg:w-9 2xl:mr-5 2xl:h-12 2xl:w-12">
-                  <Star fill="rgba(45,49,66,1)" size={32} />
+            <div className="flex h-full min-h-[24rem] flex-col rounded-3xl bg-[linear-gradient(135deg,#FFD23F_0%,#FFA726_100%)] px-8 py-10 text-left text-[#111827] shadow-[0_12px_30px_rgba(249,115,22,0.18)] md:min-h-[20rem] lg:min-h-0 lg:px-5 lg:py-6 2xl:px-7 2xl:py-8">
+              <div className="flex items-center gap-5 lg:gap-3 2xl:gap-4">
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[rgba(45,49,66,0.12)] text-[#2D3142] lg:h-9 lg:w-9 2xl:h-12 2xl:w-12">
+                  <Star fill="none" size={30} strokeWidth={2.4} />
                 </div>
                 <span className="font-sans text-[2.75rem] font-black leading-none lg:text-[2rem] 2xl:text-[2.75rem]">4.9/5</span>
               </div>
-              <div>
-                <h4 className="mb-2 font-sans text-[2rem] font-bold lg:mb-1 lg:text-[1.2rem] 2xl:text-2xl">Customer Satisfaction</h4>
-                <p className="text-base text-gray-700 lg:text-[0.8rem] lg:leading-[1.3] 2xl:text-[0.9rem]">
+              <div className="mt-10 lg:mt-6 2xl:mt-8">
+                <h4 className="font-sans text-[2rem] font-bold leading-[1.18] lg:text-[1.2rem] 2xl:text-2xl">
+                  Customer Satisfaction
+                </h4>
+                <p className="mt-4 max-w-[16rem] text-[1.18rem] leading-[1.35] text-[#2D3142]/80 lg:mt-3 lg:max-w-[11rem] lg:text-[0.8rem] 2xl:max-w-[14rem] 2xl:text-[0.95rem]">
                   Based on 10,000+ verified reviews from our corporate clients
                 </p>
               </div>
@@ -128,9 +131,9 @@ export default function ExperienceSection() {
                 <p className={textClassName}>
                   Seamless group transportation for corporate events and daily commutes
                 </p>
-                <button className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[rgba(255,210,63,1)] px-5 py-2.5 font-bold text-[#111827] transition-all duration-200 ease-out hover:-translate-y-px hover:bg-[rgba(255,190,40,1)]">
+                <Link href="/#contact" className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[rgba(255,210,63,1)] px-5 py-2.5 font-bold text-[#111827] transition-all duration-200 ease-out hover:-translate-y-px hover:bg-[rgba(255,190,40,1)]">
                   Learn More <ArrowRight size={18} />
-                </button>
+                </Link>
               </div>
             </div>
           </div>

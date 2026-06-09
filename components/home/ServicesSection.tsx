@@ -34,13 +34,14 @@ export default function ServicesSection() {
       <div className="mx-auto w-full max-w-[1600px] px-6 lg:px-8 2xl:px-16">
         <div className="mb-14 text-center">
           <Pill variant="dark" className="mb-8">Our Services</Pill>
-          <h2 className="font-heading text-[clamp(2rem,4vw,2.75rem)] font-extrabold leading-[1.35] text-gray-900">
+          <h2 className="font-heading text-[clamp(2rem,4vw,2.75rem)] font-extrabold leading-[1.35] text-[#2D3142]">
             Transportation Solutions
             <br />
             Tailored for Business
           </h2>
-          <p className="mx-auto mt-4 max-w-[34rem] text-base leading-[1.75] text-gray-500">
-            From daily commutes to special events, we provide comprehensive transportation services for modern businesses
+          <p className="mx-auto mt-4 max-w-[36rem] text-base leading-[1.75] text-gray-500">
+            From daily commutes to special events, we provide comprehensive{' '}
+            <span className="whitespace-nowrap">transportation</span> services for modern businesses
           </p>
         </div>
 
@@ -65,7 +66,7 @@ export default function ServicesSection() {
               </div>
 
               <div className="p-8 lg:px-9 lg:pb-9">
-                <h3 className="font-heading text-[1.875rem] font-bold text-gray-900">{service.title}</h3>
+                <h3 className="font-heading text-[1.875rem] font-bold text-[#2D3142]">{service.title}</h3>
                 <p className="mb-6 text-base leading-[1.75] text-gray-500 lg:text-[1.125rem]">{service.description}</p>
                 <a
                   href="#contact"

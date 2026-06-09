@@ -112,11 +112,11 @@ export default function CONTACT() {
       label: 'Visit Us',
       text: (
         <>
-          SK Voyages Headquarters
+          H.No.57, Shop No. 7, PAI Layout
           <br />
-          Andheri East, Mumbai
+          6th Cross, Hulimavu Main Road, B.G. Road
           <br />
-          Maharashtra 400069, India
+          Hulimavu, Bangalore - 560076
         </>
       ),
       icon: (
@@ -130,7 +130,7 @@ export default function CONTACT() {
 
   return (
     <section className="pt-0">
-      <header className="flex min-h-[420px] items-center justify-center bg-[#2D3142] px-6 py-16 text-center md:min-h-[550px]">
+      <header className="flex min-h-[420px] items-start justify-center bg-[#2D3142] px-6 pb-16 pt-[calc(var(--navbar-height)+2rem)] text-center md:min-h-[550px] md:pt-[calc(var(--navbar-height)+4rem)]">
         <div className="mx-auto w-full max-w-[1244px] px-4">
           <div className="mb-2 flex justify-center">
             <Pill>Get In Touch</Pill>

@@ -27,15 +27,15 @@ export default function Footer() {
     ].join(' ');
 
   return (
-    <footer className="bg-[#2d303e] py-10 text-[#9ba3af]">
+    <footer className="bg-[#2d303e] py-16 text-[#9ba3af]">
       <div className="mx-auto w-full max-w-[1480px] px-6">
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-[2.5fr_1fr_1fr_1fr] md:gap-8">
           <div className="flex flex-col">
-            <Link href="/" className="mb-6 flex items-center gap-[0.7rem] leading-none">
-              <div className="flex h-10 items-center justify-center">
-                <Image src="/icons/SKlogo.svg" alt="Sk Voyages Logo" width={60} height={32} className="h-10 w-auto" />
+            <Link href="/" className="mb-6 flex items-center gap-3 leading-none">
+              <div className="flex h-[72px] items-center justify-center">
+                <Image src="/icons/sklogoreal3.png" alt="SK Voyages Logo" width={92} height={72} className="h-[72px] w-auto" />
               </div>
-              <span className="flex items-center font-heading text-[2rem] font-bold leading-none text-white [margin-bottom:5.5px]">
+              <span className="flex items-center self-center font-heading text-[2rem] font-bold leading-none text-white">
                 Sk Voyages
               </span>
             </Link>

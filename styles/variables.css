@@ -39,7 +39,7 @@
 
   /* ─── Typography ─────────────────────────  */
   --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
-  --font-heading: "Outfit", "Inter", system-ui, sans-serif;
+  --font-heading: "Inter", "Segoe UI", system-ui, sans-serif;
   --font-mono: "Fira Code", "Courier New", monospace;
 
   /* Type scale — matches SK Voyages spec      */
@@ -133,8 +133,14 @@
   --z-toast: 500;
 
   /* ─── Layout ─────────────────────────────  */
-   --container-max-width: 1480px;
-   --container-padding: var(--space-6);
-   --navbar-height: 5rem;
+  --container-max-width: 1480px;
+  --container-padding: var(--space-6);
+  --navbar-height: 6.5rem;
   --section-padding-y: var(--space-20);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --navbar-height: 5.15rem;
+  }
 }

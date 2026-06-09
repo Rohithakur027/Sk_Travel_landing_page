@@ -2,8 +2,8 @@ import Pill from '@/components/ui/Pill';
 
 export default function AboutHeroSection() {
   return (
-    <section className="bg-[rgba(45,49,66,1)] px-6 pb-16 pt-[var(--page-top-padding)] text-center md:pb-24">
-      <div className="mx-auto flex max-w-[48rem] flex-col items-center pt-6 md:pt-12">
+    <section className="bg-[rgba(45,49,66,1)] px-6 pb-24 pt-[var(--navbar-height)] text-center md:pb-32">
+      <div className="mx-auto flex max-w-[48rem] flex-col items-center pt-14 md:pt-20">
         <Pill className="mb-8">About SK Voyages</Pill>
         <h1 className="mb-6 font-heading text-[2.7rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.1]">
           Redefining Corporate
