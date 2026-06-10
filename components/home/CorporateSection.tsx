@@ -19,7 +19,7 @@ export default function CorporateSection() {
         <div className={styles.imgCol}>
           <div className={styles.imgWrapper}>
             <Image
-              src="/images/cardriver.png"
+              src="/images/caranddriverfinal.png"
               alt="SK Voyages driver"
               fill
               className={styles.img}
@@ -41,7 +41,7 @@ export default function CorporateSection() {
           <p className={styles.body}>
             At SK Voyages, we understand that your time is valuable. That's why
             we've built a transportation service that prioritizes reliability,
-            comfort, and professionalism. With over 8 years of experience
+            comfort, and professionalism. With over 10 years of experience
             serving corporate clients, we've perfected the art of seamless
             employee transportation.
           </p>
