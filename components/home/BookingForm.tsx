@@ -356,6 +356,12 @@ export default function BookingForm() {
     e.preventDefault();
     if (isSubmitting) return;
 
+    const isAirportReturnTrip = serviceType === "airport_taxis" && isReturnTrip;
+    const submittedDistanceKm =
+      distanceKm !== null
+        ? Math.round(distanceKm * (isAirportReturnTrip ? 2 : 1) * 100) / 100
+        : null;
+
     const body = {
       type: bookingType,
       pickup_location: pickup.trim(),
@@ -363,9 +369,9 @@ export default function BookingForm() {
       vehicle_type: vehicleType,
       vehicle_label: vehicleLabel || vehicleType,
       booking_category: serviceType,
-      is_return_trip: serviceType === "airport_taxis" ? isReturnTrip : false,
-      ...(serviceType === "airport_taxis" && isReturnTrip && returnDate && { return_date: returnDate }),
-      ...(serviceType === "airport_taxis" && isReturnTrip && returnTime && { return_time: returnTime }),
+      is_return_trip: isAirportReturnTrip,
+      ...(isAirportReturnTrip && returnDate && { return_date: returnDate }),
+      ...(isAirportReturnTrip && returnTime && { return_time: returnTime }),
       passengers,
       name:  name.trim(),
       email: email.trim(),
@@ -378,7 +384,7 @@ export default function BookingForm() {
         destination_lng: destinationCoords[0],
         destination_lat: destinationCoords[1],
       }),
-      ...(distanceKm !== null && { distance_km: distanceKm }),
+      ...(submittedDistanceKm !== null && { distance_km: submittedDistanceKm }),
       ...(bookingType === "instant" && instantTime && { time: instantTime }),
       ...(bookingType === "scheduled" && dateTime && {
         date: dateTime.split("T")[0],

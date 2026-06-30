@@ -8,6 +8,46 @@
   width: 100%;
 }
 
+.selectedInput {
+  min-height: 4.35rem;
+  color: transparent !important;
+  caret-color: #0f172a;
+}
+
+.selectedAddress {
+  position: absolute;
+  top: 50%;
+  left: 3.75rem;
+  right: 1.25rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  pointer-events: none;
+  min-width: 0;
+  z-index: 1;
+}
+
+.selectedTitle {
+  color: #0f172a;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectedSubaddress {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .suggestionsList {
   position: absolute;
   top: 100%;
@@ -112,6 +152,28 @@
   border-top: 2px solid #ffc839;
   border-radius: 50%;
   animation: autocomplete_spin 1s linear infinite;
+}
+
+@media (max-width: 640px) {
+  .selectedInput {
+    min-height: 4rem;
+  }
+
+  .selectedAddress {
+    left: 3.05rem;
+    right: 1rem;
+    gap: 0.12rem;
+  }
+
+  .selectedTitle {
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .selectedSubaddress {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
 }
 
 @keyframes autocomplete_spin {

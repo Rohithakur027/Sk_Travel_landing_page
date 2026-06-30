@@ -15,6 +15,42 @@ interface AddressAutocompleteProps {
   iconClassName?: string;
 }
 
+interface SearchboxPlace {
+  mapbox_id?: string;
+  name?: string;
+  full_address?: string;
+  place_formatted?: string;
+  properties?: {
+    name?: string;
+    full_address?: string;
+    place_formatted?: string;
+  };
+  geometry?: {
+    coordinates?: [number, number];
+  };
+}
+
+interface SearchboxSuggestResponse {
+  suggestions?: SearchboxPlace[];
+}
+
+interface SearchboxRetrieveResponse {
+  features?: SearchboxPlace[];
+}
+
+interface AddressSuggestion {
+  id?: string;
+  mapbox_id?: string;
+  name: string;
+  address: string;
+  display_name: string;
+}
+
+interface SelectedAddressDisplay {
+  title: string;
+  address: string;
+}
+
 // Search Box API endpoints.
 const SEARCHBOX_BASE = "https://api.mapbox.com/search/searchbox/v1";
 
@@ -37,6 +73,29 @@ function newSessionToken(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
+function getFullAddress(place?: SearchboxPlace): string {
+  const name = place?.name || place?.properties?.name || "";
+  const fullAddress = place?.full_address || place?.properties?.full_address;
+  if (fullAddress) return fullAddress;
+
+  const formatted = place?.place_formatted || place?.properties?.place_formatted || "";
+  return formatted && name ? `${name}, ${formatted}` : name || formatted;
+}
+
+function getAddressDisplay(place?: SearchboxPlace): SelectedAddressDisplay | null {
+  const title = place?.name || place?.properties?.name || "";
+  const fullAddress = place?.full_address || place?.properties?.full_address || "";
+  const formatted = place?.place_formatted || place?.properties?.place_formatted || "";
+  const address =
+    formatted ||
+    (title && fullAddress.startsWith(`${title}, `)
+      ? fullAddress.slice(title.length + 2)
+      : fullAddress);
+
+  if (!title && !address) return null;
+  return { title: title || address, address: title ? address : "" };
+}
+
 const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   id,
   placeholder,
@@ -49,9 +108,10 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
   wrapperClassName,
   iconClassName,
 }) => {
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedDisplay, setSelectedDisplay] = useState<SelectedAddressDisplay | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const requestIdRef = useRef(0);
@@ -74,6 +134,10 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (!value) setSelectedDisplay(null);
+  }, [value]);
+
   const fetchSuggestions = async (rawQuery: string) => {
     // Normalize: collapse whitespace and strip characters Mapbox can't use
     const query = rawQuery.trim().replace(/\s+/g, " ").replace(/[^\w\s,.-]/g, "");
@@ -95,7 +159,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     const currentRequest = ++requestIdRef.current;
     setLoading(true);
     try {
-      const response = await axios.get(`${SEARCHBOX_BASE}/suggest`, {
+      const response = await axios.get<SearchboxSuggestResponse>(`${SEARCHBOX_BASE}/suggest`, {
         params: {
           q: query,
           access_token: mapboxToken,
@@ -111,18 +175,16 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
       // Drop stale responses if the user kept typing.
       if (currentRequest !== requestIdRef.current) return;
 
-      const features = (response.data.suggestions || []).map((s: any) => ({
+      const features = (response.data.suggestions || []).map((s) => ({
         id: s.mapbox_id,
         mapbox_id: s.mapbox_id,
         // `name` is the primary label (rendered as the title); `place_formatted`
         // is the rest of the address (rendered below). Kept separate so the
         // dropdown can show a two-line title + address layout.
-        name: s.name,
+        name: s.name || "",
         address: s.place_formatted || "",
         // Combined label written into the input when the suggestion is picked.
-        display_name:
-          s.full_address ||
-          (s.place_formatted ? `${s.name}, ${s.place_formatted}` : s.name),
+        display_name: getFullAddress(s),
       }));
 
       setSuggestions(features);
@@ -140,15 +202,19 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
+    setSelectedDisplay(null);
     onChange(newValue);
     onCoordinatesChange?.(null); // reset coords when user types manually
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => fetchSuggestions(newValue), 250);
   };
 
-  const handleSuggestionClick = async (suggestion: any) => {
-    // Show the place title (primary label) in the input and close the list.
-    onChange(suggestion.name);
+  const handleSuggestionClick = async (suggestion: AddressSuggestion) => {
+    setSelectedDisplay({
+      title: suggestion.name,
+      address: suggestion.address,
+    });
+    onChange(suggestion.display_name || suggestion.name);
     setSuggestions([]);
     setShowSuggestions(false);
 
@@ -162,7 +228,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
     // This call closes the billing session, so we rotate the session token.
     setLoading(true);
     try {
-      const response = await axios.get(
+      const response = await axios.get<SearchboxRetrieveResponse>(
         `${SEARCHBOX_BASE}/retrieve/${suggestion.mapbox_id}`,
         {
           params: {
@@ -172,12 +238,12 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
         }
       );
       const feature = response.data.features?.[0];
-      const coords = feature?.geometry?.coordinates as [number, number] | undefined;
+      const coords = feature?.geometry?.coordinates;
       onCoordinatesChange?.(coords ?? null);
-      // Keep the place title in the input; prefer the retrieved feature's name
-      // if available (don't overwrite with the full address).
-      const title = feature?.properties?.name;
-      if (title) onChange(title);
+      const fullAddress = getFullAddress(feature);
+      const display = getAddressDisplay(feature);
+      if (fullAddress) onChange(fullAddress);
+      if (display) setSelectedDisplay(display);
     } catch (error) {
       console.error("Mapbox Search Box retrieve error:", error);
       onCoordinatesChange?.(null);
@@ -198,10 +264,18 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
           value={value}
           onChange={handleInputChange}
           onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-          className={`${styles.input} ${className || ""}`}
+          className={`${styles.input} ${selectedDisplay && value ? styles.selectedInput : ""} ${className || ""}`}
           required={required}
           autoComplete="off"
         />
+        {selectedDisplay && value && (
+          <div className={styles.selectedAddress} aria-hidden="true">
+            <span className={styles.selectedTitle}>{selectedDisplay.title}</span>
+            {selectedDisplay.address && (
+              <span className={styles.selectedSubaddress}>{selectedDisplay.address}</span>
+            )}
+          </div>
+        )}
         {loading && <div className={styles.loader}></div>}
       </div>
       {showSuggestions && suggestions.length > 0 && (
