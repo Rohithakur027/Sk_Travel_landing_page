@@ -37,6 +37,41 @@ function isRateLimited(ip: string): boolean {
 
 // ─── Validation ───────────────────────────────────────────────────────────────
 
+function toLocalInputDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function normalizeTime(time: string): string | null {
+  const trimmed = time.trim();
+  const twelveHour = trimmed.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (twelveHour) {
+    let hours = Number(twelveHour[1]);
+    const minutes = Number(twelveHour[2]);
+    const period = twelveHour[3].toUpperCase();
+    if (hours < 1 || hours > 12 || minutes > 59) return null;
+    if (period === 'PM' && hours < 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+  }
+
+  const twentyFourHour = trimmed.match(/^(\d{1,2}):(\d{2})$/);
+  if (!twentyFourHour) return null;
+  const hours = Number(twentyFourHour[1]);
+  const minutes = Number(twentyFourHour[2]);
+  if (hours > 23 || minutes > 59) return null;
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+}
+
+function parseLocalDateTime(date: string, time: string): Date | null {
+  const normalizedTime = normalizeTime(time);
+  if (!normalizedTime) return null;
+  const parsed = new Date(`${date}T${normalizedTime}:00`);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
 function validate(body: Record<string, unknown>): string[] {
   const errors: string[] = [];
 
@@ -92,6 +127,38 @@ function validate(body: Record<string, unknown>): string[] {
   if (body.type === 'scheduled') {
     if (!body.date || typeof body.date !== 'string' || !body.date.trim()) {
       errors.push('date is required for scheduled bookings');
+    }
+  }
+
+  const time = typeof body.time === 'string' ? body.time : '';
+  const pickupDate =
+    body.type === 'scheduled' && typeof body.date === 'string'
+      ? body.date.trim()
+      : toLocalInputDate(new Date());
+
+  if (time && pickupDate) {
+    const pickupDateTime = parseLocalDateTime(pickupDate, time);
+    if (!pickupDateTime) {
+      errors.push('time must be a valid time');
+    } else if (pickupDateTime.getTime() < Date.now()) {
+      errors.push('Past dates and times are not allowed.');
+    }
+  }
+
+  if (body.is_return_trip === true) {
+    if (!body.return_date || typeof body.return_date !== 'string' || !body.return_date.trim()) {
+      errors.push('return_date is required for return trips');
+    }
+    if (!body.return_time || typeof body.return_time !== 'string' || !body.return_time.trim()) {
+      errors.push('return_time is required for return trips');
+    }
+    if (typeof body.return_date === 'string' && typeof body.return_time === 'string') {
+      const returnDateTime = parseLocalDateTime(body.return_date.trim(), body.return_time);
+      if (!returnDateTime) {
+        errors.push('return_time must be a valid time');
+      } else if (returnDateTime.getTime() < Date.now()) {
+        errors.push('Past return dates and times are not allowed.');
+      }
     }
   }
 
@@ -180,6 +247,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     vehicleLabel && vehicleLabel !== data.vehicle_type
       ? `${data.vehicle_type} - ${vehicleLabel}`
       : data.vehicle_type;
+  const scheduledDateTime = data.type === 'scheduled' ? `${data.date}, ${data.time}` : '';
 
   // Send email confirmation
   try {
@@ -191,7 +259,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       from: `"SK Voyages" <${process.env.SMTP_USER}>`,
       to: data.email,
       subject: `Booking Enquiry Received - SK Voyages`,
-      text: `Dear ${data.name},\n\nThank you for reaching out to SK Voyages. We have successfully received your booking enquiry.\n\nSummary of your request:\n- Pickup: ${data.pickup_location}\n- Destination: ${data.destination}\n- Vehicle Type: ${vehicleDisplay}\n- Passengers: ${data.passengers}\n${data.type === 'scheduled' ? `- Date & Time: ${(data as any).date}, ${(data as any).time}\n` : ''}${data.booking_category ? `- Booking Type: ${formattedCategory}\n` : ''}${data.is_return_trip ? `- Return Trip: Yes (Date: ${data.return_date || 'N/A'}, Time: ${data.return_time || 'N/A'})\n` : ''}${data.distance_km ? `- Distance: ${data.distance_km} km\n` : ''}\nAn executive will contact you shortly at ${data.phone} to confirm availability and provide a quotation.\n\nWarm regards,\nSK Voyages Team`,
+      text: `Dear ${data.name},\n\nThank you for reaching out to SK Voyages. We have successfully received your booking enquiry.\n\nSummary of your request:\n- Pickup: ${data.pickup_location}\n- Destination: ${data.destination}\n- Vehicle Type: ${vehicleDisplay}\n- Passengers: ${data.passengers}\n${data.type === 'scheduled' ? `- Date & Time: ${scheduledDateTime}\n` : ''}${data.booking_category ? `- Booking Type: ${formattedCategory}\n` : ''}${data.is_return_trip ? `- Return Trip: Yes (Date: ${data.return_date || 'N/A'}, Time: ${data.return_time || 'N/A'})\n` : ''}${data.distance_km ? `- Distance: ${data.distance_km} km\n` : ''}\nAn executive will contact you shortly at ${data.phone} to confirm availability and provide a quotation.\n\nWarm regards,\nSK Voyages Team`,
       html: `
         <div style="font-family: 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; background-color: #ffffff; border: 1px solid #eef2f6; border-radius: 12px; color: #1e293b; line-height: 1.6;">
           <div style="text-align: center; border-bottom: 2px solid #ffc839; padding-bottom: 20px; margin-bottom: 25px;">
@@ -229,7 +297,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               ${data.type === 'scheduled' ? `
               <tr>
                 <td style="padding: 6px 0; color: #64748b;"><strong>Date & Time</strong></td>
-                <td style="padding: 6px 0; color: #0f172a;">${(data as any).date}, ${(data as any).time}</td>
+                <td style="padding: 6px 0; color: #0f172a;">${scheduledDateTime}</td>
               </tr>
               ` : ''}
               ${data.booking_category ? `
@@ -279,7 +347,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       from: `"SK Voyages System" <${process.env.SMTP_USER}>`,
       to: companyEmail,
       subject: `[New Booking Enquiry] - ${data.name} (${data.type === 'scheduled' ? 'Scheduled Chauffeur' : 'Instant Ride'})`,
-      text: `Hello Team,\n\nA new booking enquiry has been received via the landing page.\n\nSummary of details:\n- Name: ${data.name}\n- Email: ${data.email}\n- Phone: ${data.phone}\n- Pickup: ${data.pickup_location}\n- Destination: ${data.destination}\n- Vehicle Type: ${vehicleDisplay}\n- Passengers: ${data.passengers}\n${data.type === 'scheduled' ? `- Date & Time: ${(data as any).date}, ${(data as any).time}\n` : ''}${data.booking_category ? `- Booking Type: ${formattedCategory}\n` : ''}${data.is_return_trip ? `- Return Trip: Yes (Date: ${data.return_date || 'N/A'}, Time: ${data.return_time || 'N/A'})\n` : ''}${data.distance_km ? `- Distance: ${data.distance_km} km\n` : ''}\nPlease review this request in the administration panel and follow up with the client at your earliest convenience.\n\nBest regards,\nSK Voyages Booking System`,
+      text: `Hello Team,\n\nA new booking enquiry has been received via the landing page.\n\nSummary of details:\n- Name: ${data.name}\n- Email: ${data.email}\n- Phone: ${data.phone}\n- Pickup: ${data.pickup_location}\n- Destination: ${data.destination}\n- Vehicle Type: ${vehicleDisplay}\n- Passengers: ${data.passengers}\n${data.type === 'scheduled' ? `- Date & Time: ${scheduledDateTime}\n` : ''}${data.booking_category ? `- Booking Type: ${formattedCategory}\n` : ''}${data.is_return_trip ? `- Return Trip: Yes (Date: ${data.return_date || 'N/A'}, Time: ${data.return_time || 'N/A'})\n` : ''}${data.distance_km ? `- Distance: ${data.distance_km} km\n` : ''}\nPlease review this request in the administration panel and follow up with the client at your earliest convenience.\n\nBest regards,\nSK Voyages Booking System`,
       html: `
         <div style="font-family: 'Inter', 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; background-color: #ffffff; border: 1px solid #eef2f6; border-radius: 12px; color: #1e293b; line-height: 1.6;">
           <div style="text-align: center; border-bottom: 2px solid #ef4444; padding-bottom: 20px; margin-bottom: 25px;">
@@ -332,7 +400,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
               ${data.type === 'scheduled' ? `
               <tr>
                 <td style="padding: 6px 0; color: #64748b;"><strong>Date & Time</strong></td>
-                <td style="padding: 6px 0; color: #0f172a;">${(data as any).date}, ${(data as any).time}</td>
+                <td style="padding: 6px 0; color: #0f172a;">${scheduledDateTime}</td>
               </tr>
               ` : ''}
               ${data.booking_category ? `

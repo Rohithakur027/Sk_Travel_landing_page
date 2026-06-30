@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useToast } from "@/lib/context/ToastContext";
-import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus, CheckCircle, XCircle, Loader2, User, Mail, Phone, ChevronDown } from "lucide-react";
+import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus, Loader2, User, Mail, Phone, ChevronDown } from "lucide-react";
 import styles from "./BookingForm.module.css";
 import AddressAutocomplete from "./AddressAutocomplete";
 
@@ -15,6 +15,46 @@ function isValidEmail(v: string) {
 
 function isValidPhone(v: string) {
   return /^\d{10}$/.test(v.trim());
+}
+
+function toLocalInputDate(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function toLocalInputTime(date: Date) {
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+}
+
+function getNextMinute() {
+  const date = new Date();
+  date.setSeconds(0, 0);
+  date.setMinutes(date.getMinutes() + 1);
+  return date;
+}
+
+function toLocalDateTimeInput(date: Date) {
+  return `${toLocalInputDate(date)}T${toLocalInputTime(date)}`;
+}
+
+function parseLocalDateTime(value: string) {
+  if (!value) return null;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function parseLocalDateAndTime(dateValue: string, timeValue: string) {
+  if (!dateValue || !timeValue) return null;
+  const date = new Date(`${dateValue}T${timeValue}`);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function isPastDateTime(date: Date) {
+  return date.getTime() < Date.now();
 }
 
 // Local sub-components to reduce dependencies
@@ -47,7 +87,7 @@ interface SelectProps {
   required?: boolean;
 }
 
-const Select = ({ id, options, leftIcon, value, onChange, required }: SelectProps) => {
+const Select = ({ id, options, leftIcon, value, onChange }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -298,7 +338,7 @@ function formatDateTimeDisplay(dt: string): string {
     hours = hours % 12 || 12;
     const formattedTime = `${hours.toString().padStart(2, "0")}:${m} ${ampm}`;
     return `${datePart}, ${formattedTime}`;
-  } catch (err) {
+  } catch {
     return dt;
   }
 }
@@ -328,6 +368,9 @@ export default function BookingForm() {
   const [passengerError, setPassengerError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { showToast } = useToast();
+  const minimumBookingDateTime = toLocalDateTimeInput(getNextMinute());
+  const minimumBookingDate = minimumBookingDateTime.split("T")[0];
+  const minimumBookingTime = minimumBookingDateTime.split("T")[1];
 
   useEffect(() => {
     if (!pickupCoords || !destinationCoords) {
@@ -415,6 +458,24 @@ export default function BookingForm() {
       return;
     }
     setFieldErrors({ email: "", phone: "" });
+
+    const pickupDateTime =
+      bookingType === "scheduled"
+        ? parseLocalDateTime(dateTime)
+        : parseLocalDateAndTime(toLocalInputDate(new Date()), instantTime);
+
+    if (!pickupDateTime || isPastDateTime(pickupDateTime)) {
+      showToast("error", "Past dates and times are not allowed.");
+      return;
+    }
+
+    if (isAirportReturnTrip) {
+      const returnDateTime = parseLocalDateAndTime(returnDate, returnTime);
+      if (!returnDateTime || isPastDateTime(returnDateTime)) {
+        showToast("error", "Past return dates and times are not allowed.");
+        return;
+      }
+    }
 
     // Validate passenger count against vehicle type
     if (vehicleType) {
@@ -544,8 +605,20 @@ export default function BookingForm() {
                     id="returnDate"
                     type="date"
                     value={returnDate}
-                    min={new Date().toISOString().split("T")[0]}
-                    onChange={(e) => setReturnDate(e.target.value)}
+                    min={minimumBookingDate}
+                    onChange={(e) => {
+                      const selectedDate = e.target.value;
+                      const selectedDateTime = parseLocalDateAndTime(
+                        selectedDate,
+                        returnTime || "23:59",
+                      );
+                      if (selectedDateTime && isPastDateTime(selectedDateTime)) {
+                        setReturnDate("");
+                        showToast("error", "Past return dates and times are not allowed.");
+                        return;
+                      }
+                      setReturnDate(selectedDate);
+                    }}
                     onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
                     className={`${styles.input} ${styles.returnDateInput}`}
                   />
@@ -561,7 +634,20 @@ export default function BookingForm() {
                     id="returnTime"
                     type="time"
                     value={returnTime}
-                    onChange={(e) => setReturnTime(e.target.value)}
+                    min={returnDate === minimumBookingDate ? minimumBookingTime : undefined}
+                    onChange={(e) => {
+                      const selectedTime = e.target.value;
+                      const selectedDateTime = parseLocalDateAndTime(
+                        returnDate || minimumBookingDate,
+                        selectedTime,
+                      );
+                      if (selectedDateTime && isPastDateTime(selectedDateTime)) {
+                        setReturnTime("");
+                        showToast("error", "Past return dates and times are not allowed.");
+                        return;
+                      }
+                      setReturnTime(selectedTime);
+                    }}
                     onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
                     className={`${styles.input} ${styles.returnDateInput}`}
                   />
@@ -604,7 +690,20 @@ export default function BookingForm() {
                   id="instantTime"
                   type="time"
                   value={instantTime}
-                  onChange={(e) => setInstantTime(e.target.value)}
+                  min={minimumBookingTime}
+                  onChange={(e) => {
+                    const selectedTime = e.target.value;
+                    const selectedDateTime = parseLocalDateAndTime(
+                      minimumBookingDate,
+                      selectedTime,
+                    );
+                    if (selectedDateTime && isPastDateTime(selectedDateTime)) {
+                      setInstantTime("");
+                      showToast("error", "Past dates and times are not allowed.");
+                      return;
+                    }
+                    setInstantTime(selectedTime);
+                  }}
                   onClick={(e) => { try { e.currentTarget.showPicker(); } catch {} }}
                   className={`${styles.input} ${styles.hasIcon} ${styles.datetimeInput}`}
                 />
@@ -628,11 +727,20 @@ export default function BookingForm() {
                   id="dateTime"
                   type="datetime-local"
                   value={dateTime}
-                  onChange={(e) => setDateTime(e.target.value)}
+                  min={minimumBookingDateTime}
+                  onChange={(e) => {
+                    const selectedDateTime = parseLocalDateTime(e.target.value);
+                    if (selectedDateTime && isPastDateTime(selectedDateTime)) {
+                      setDateTime("");
+                      showToast("error", "Past dates and times are not allowed.");
+                      return;
+                    }
+                    setDateTime(e.target.value);
+                  }}
                   onClick={(e) => {
                     try {
                       e.currentTarget.showPicker();
-                    } catch (err) {}
+                    } catch {}
                   }}
                   className={`${styles.input} ${styles.hasIcon} ${styles.datetimeInput}`}
                 />
