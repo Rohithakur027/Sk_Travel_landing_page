@@ -153,7 +153,7 @@ export default function AddressAutocomplete({
   };
 
   const handleSuggestionClick = async (suggestion: AddressSuggestion) => {
-    onChange(suggestion.name);
+    onChange(suggestion.display_name);
     setSuggestions([]);
     setShowSuggestions(false);
 
@@ -176,6 +176,12 @@ export default function AddressAutocomplete({
       const coords = feature?.geometry?.coordinates as [number, number] | undefined;
 
       onCoordinatesChange?.(coords ?? null);
+
+      // Prefer the fuller address from the retrieved feature when available.
+      const full = feature?.properties?.full_address;
+      if (full) {
+        onChange(full);
+      }
     } catch (error) {
       console.error('Mapbox Search Box retrieve error:', error);
       onCoordinatesChange?.(null);

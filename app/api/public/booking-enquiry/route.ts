@@ -249,7 +249,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           <p style="font-size: 15px;"><strong>What happens next?</strong></p>
           <p style="font-size: 14px; margin-bottom: 20px;">A reservation executive will contact you shortly at <strong>${data.phone}</strong> or via email to confirm the booking details, provide the pricing quotation, and complete the reservation.</p>
           
-          <p style="font-size: 14px; color: #64748b; margin-bottom: 30px;">If you have any urgent changes or questions in the meantime, feel free to contact our round-the-clock desk on WhatsApp at <a href="https://wa.me/917807818119" style="color: #ffc839; text-decoration: none; font-weight: bold;">+91 7807818119</a>.</p>
+          <p style="font-size: 14px; color: #64748b; margin-bottom: 30px;">If you have any urgent changes or questions in the meantime, feel free to contact our round-the-clock desk on WhatsApp at <a href="https://wa.me/919886897555" style="color: #ffc839; text-decoration: none; font-weight: bold;">+91 9886897555</a>.</p>
           
           <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;" />
           

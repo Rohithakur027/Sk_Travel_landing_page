@@ -50,6 +50,23 @@ const config: Config = {
           "0%": { transform: "translateY(-50%) rotate(0deg)" },
           "100%": { transform: "translateY(-50%) rotate(360deg)" },
         },
+        "location-fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+        "location-slide-up": {
+          from: { transform: "translateY(32px) scale(0.96)", opacity: "0" },
+          to: { transform: "translateY(0) scale(1)", opacity: "1" },
+        },
+        "location-shake": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "15%": { transform: "translateX(-6px)" },
+          "30%": { transform: "translateX(6px)" },
+          "45%": { transform: "translateX(-4px)" },
+          "60%": { transform: "translateX(4px)" },
+          "75%": { transform: "translateX(-2px)" },
+          "90%": { transform: "translateX(2px)" },
+        },
       },
       animation: {
         "zoom-out": "zoom-out 16s ease-out forwards",
@@ -61,6 +78,9 @@ const config: Config = {
         "dropdown-slide": "dropdown-slide 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
         spin: "spin 0.8s linear infinite",
         "autocomplete-spin": "autocomplete-spin 1s linear infinite",
+        "location-fade-in": "location-fade-in 0.2s ease",
+        "location-slide-up": "location-slide-up 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "location-shake": "location-shake 0.55s ease",
       },
     },
   },

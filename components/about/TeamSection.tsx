@@ -24,7 +24,7 @@ export default function TeamSection() {
             A Message From Our Team
           </h2>
           <p className="text-[1.125rem] leading-[1.6] text-[#6b7280]">
-            The vision and values behind SK Travels, in the words of those who built it
+            The vision and values behind SK Voyages, in the words of those who built it
           </p>
         </div>
 

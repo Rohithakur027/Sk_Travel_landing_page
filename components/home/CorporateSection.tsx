@@ -16,7 +16,7 @@ export default function CorporateSection() {
         <div className="relative">
           <div className="relative h-[22rem] w-full overflow-hidden rounded-3xl md:h-[30rem] lg:h-[35rem]">
             <Image
-              src="/images/caranddriverfinal.png"
+              src="/images/cardriver.png"
               alt="SK Voyages driver"
               fill
               className="object-cover"
@@ -58,7 +58,7 @@ export default function CorporateSection() {
             ))}
           </ul>
 
-          <Link href="/about" className="self-start rounded-xl border-2 border-[rgba(255,210,63,1)] bg-transparent px-8 py-[0.9rem] text-base font-bold text-[rgba(45,49,66,1)] transition-all duration-200 ease-out hover:bg-[rgba(255,210,63,0.2)]">
+          <Link href="/#contact" className="self-start rounded-xl border-2 border-[rgba(255,210,63,1)] bg-transparent px-8 py-[0.9rem] text-base font-bold text-[rgba(45,49,66,1)] transition-all duration-200 ease-out hover:bg-[rgba(255,210,63,0.2)]">
             Learn More About Us
           </Link>
         </div>

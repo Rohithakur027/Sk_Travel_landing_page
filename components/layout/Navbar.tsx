@@ -50,11 +50,11 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="shrink-0">
               <Image
-                src="/icons/sklogoreal3.png"
-                alt="SK Voyages Logo"
-                width={140}
-                height={48}
-                className="h-[78px] w-auto max-[360px]:h-[3.35rem] md:h-[112px]"
+                src="/icons/sklogofinal.png"
+                alt="SK Travel Logo"
+                width={500}
+                height={500}
+                className="h-24 w-auto max-[360px]:h-[5.25rem] md:h-[7.5rem] lg:h-36"
                 priority
               />
             </Link>

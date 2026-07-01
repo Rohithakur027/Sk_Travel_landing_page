@@ -20,7 +20,7 @@ export default function HeroSection() {
           <svg className="h-[1.1rem] w-[1.1rem]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor" />
           </svg>
-          Loved by 500K+ users
+          Loved by 500+ users
         </div>
 
         <h1 className="mx-auto mb-4 w-full max-w-[1300px] translate-y-[30px] px-4 font-heading text-[1.85rem] font-bold leading-[1.3] tracking-[-0.5px] text-white opacity-0 [text-shadow:0_4px_24px_rgba(0,0,0,0.45)] animate-[fade-in-up_1s_cubic-bezier(0.16,1,0.3,1)_0.15s_forwards] sm:text-[2.25rem] sm:leading-[1.2] sm:tracking-[-1px] lg:mb-10 lg:px-0 lg:text-[3rem] lg:leading-[1.2] lg:tracking-[-1.5px] xl:text-[6.2rem] xl:leading-[1.1] xl:tracking-[-3.5px]">

@@ -249,7 +249,7 @@ export async function sendTeamNotification(data: BookingEnquiryData): Promise<vo
     </tbody>
   </table>
   <p style="margin-top:24px;font-size:12px;color:#888;border-top:1px solid #eee;padding-top:12px;">
-    Submitted at ${submittedAt} IST via SK Travels Landing Page
+    Submitted at ${submittedAt} IST via SK Voyages Landing Page
   </p>
 </body>
 </html>

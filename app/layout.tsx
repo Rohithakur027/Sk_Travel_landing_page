@@ -4,16 +4,23 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'SK Voyages - Premium Corporate Transportation',
-  description: 'Your trusted partner for premium corporate transportation services.',
+  title: 'SK Voyages - Premium Travel Services',
+  description: 'Your trusted voyages partner for premium transportation services.',
   icons: {
-    icon: '/icons/favicon_io/favicon.ico',
-    shortcut: '/icons/favicon_io/favicon-32x32.png',
+    icon: [
+      { url: '/icons/favicon_io/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icons/favicon_io/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icons/favicon_io/favicon.ico' },
+    ],
     apple: '/icons/favicon_io/apple-touch-icon.png',
+    other: [
+      { rel: 'manifest', url: '/icons/favicon_io/site.webmanifest' },
+    ],
   },
 };
 
 import { ToastProvider } from '@/lib/context/ToastContext';
+import { LocationProvider } from '@/lib/context/LocationContext';
 
 export default function RootLayout({
   children,
@@ -24,9 +31,11 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning>
         <ToastProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
+          <LocationProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </LocationProvider>
         </ToastProvider>
       </body>
     </html>
