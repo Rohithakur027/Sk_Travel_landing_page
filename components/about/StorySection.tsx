@@ -26,7 +26,7 @@ export default function StorySection() {
             
             <div className={styles.paragraphs}>
               <p>
-                Founded in 2015, SK Voyages emerged from a simple vision: to transform corporate employee transportation in India. We recognized that businesses needed a reliable, professional, and scalable solution for their daily commute challenges.
+                Founded in 2016, SK Voyages emerged from a simple vision: to transform corporate employee transportation in India. We recognized that businesses needed a reliable, professional, and scalable solution for their daily commute challenges.
               </p>
               <p>
                 Over the years, we've grown from a small fleet serving local businesses to a comprehensive transportation partner for enterprises across major Indian cities. Our commitment to safety, punctuality, and customer satisfaction has made us the preferred choice for over 500+ companies.

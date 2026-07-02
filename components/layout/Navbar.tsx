@@ -38,7 +38,7 @@ export default function Navbar() {
           <div className={styles.logoWrapper}>
             <Link href="/" className={styles.logo}>
               <Image
-                src="/icons/sklogofinal.png"
+                src="/images/logofinal.png"
                 alt="SK Travel Logo"
                 width={500}
                 height={500}

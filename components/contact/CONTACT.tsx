@@ -219,7 +219,7 @@ export default function CONTACT() {
                 </div>
                 <div>
                   <div className={styles.contactLabel}>Visit Us</div>
-                  <div className={styles.contactText}>H No 57, Shop Number 7, Pai Layout<br />6th Cross, Hulimavu Main Road, Gate<br />BG Road, Hulimavu, Bangalore 560076</div>
+                  <div className={styles.contactText}>H No 57, Shop Number 7, <br className={styles.mobileBr} />Pai Layout<br />6th Cross, Hulimavu Main Road, Gate<br />BG Road, Hulimavu, Bangalore 560076</div>
                 </div>
               </div>
             </div>

@@ -45,7 +45,7 @@ const MAIN_SERVICES = [
     description:
       "Provide your employees with a reliable and comfortable daily commute. Our shuttle services are designed to maximize productivity and employee satisfaction.",
     iconSrc: "/Container (5).png",
-    image: "/images/corporatesuttlenew.jpeg",
+    image: "/images/corporateshuttleupdated.png",
     imagePosition: "right center",
     features: [
       "Fixed route scheduling",

@@ -35,21 +35,19 @@
 .logoBox {
   display: flex;
   align-items: center;
-  /* The PNG has large transparent padding baked in. The box height crops the
-     vertical padding (overflow hidden, no clip on the glyph itself), and the
-     negative side margins pull the box left to align the pin with the paragraph
-     below and pull the text in close on the right. */
-  height: 3.5rem;
-  overflow: hidden;
-  margin-left: -0.8rem;
-  margin-right: -1.8rem;
 }
 
 .logoImg {
   width: auto;
-  height: 7.5rem; /* glyph renders at the approved size */
+  height: 3rem;
   display: block;
   flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .logoImg {
+    height: 4rem;
+  }
 }
 
 .brandName {

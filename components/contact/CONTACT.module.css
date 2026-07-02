@@ -9,6 +9,17 @@
   margin-top: 6px;
 }
 
+/* Break "Pai Layout" onto its own line only on mobile */
+.mobileBr {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .mobileBr {
+    display: inline;
+  }
+}
+
 .container {
   max-width: 1244px;
   margin: 0 auto;

@@ -4,7 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'SK Voyages - Premium Travel Services',
+  title: 'Travellink-Powered by Sk Voyages',
   description: 'Your trusted voyages partner for premium transportation services.',
   icons: {
     icon: [
@@ -20,7 +20,6 @@ export const metadata: Metadata = {
 };
 
 import { ToastProvider } from '@/lib/context/ToastContext';
-import { LocationProvider } from '@/lib/context/LocationContext';
 
 export default function RootLayout({
   children,
@@ -31,11 +30,9 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning>
         <ToastProvider>
-          <LocationProvider>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </LocationProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
         </ToastProvider>
       </body>
     </html>
