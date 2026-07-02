@@ -187,7 +187,7 @@ export default function ServicesSection() {
 
         <div className="bg-[#FFFBF0]">
           <div className={containerClassName}>
-            <div className="px-0 pb-6 pt-14 text-center">
+            <div className="px-0 pb-0 pt-14 text-center">
               <h3 className="mb-[0.6rem] text-[1.75rem] font-extrabold text-[#111827]">
                 Additional Services
               </h3>
@@ -218,7 +218,7 @@ export default function ServicesSection() {
         </div>
       </section>
 
-      <section id="cta" className="flex min-h-0 items-center justify-center bg-white px-8 py-10 max-md:px-4">
+      <section id="cta" className="flex min-h-0 items-center justify-center bg-white px-8 py-12 max-md:px-4">
         <div className="mx-auto w-full max-w-[920px] rounded-[20px] border border-black/5 bg-white px-7 py-8 text-center shadow-[0_18px_48px_rgba(0,0,0,0.06)]">
           <h3 className="mb-3 text-[1.7rem] font-extrabold text-[#111827]">
             Ready to Get Started?

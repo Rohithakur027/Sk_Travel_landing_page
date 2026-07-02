@@ -14,7 +14,7 @@ export default function CorporateSection() {
     <section id="about" className="bg-[rgb(253,255,255)] py-16 md:py-28">
       <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 items-center gap-8 px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
         <div className="relative">
-          <div className="relative h-[22rem] w-full overflow-hidden rounded-3xl md:h-[30rem] lg:h-[35rem]">
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl">
             <Image
               src="/images/cardriver.png"
               alt="SK Voyages driver"

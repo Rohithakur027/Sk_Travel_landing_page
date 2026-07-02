@@ -22,7 +22,7 @@ const sectionTitleClassName = 'text-[30px] font-extrabold leading-[1.12] text-[#
 export default function FeaturesPage() {
   return (
     <section className="bg-white">
-      <div className="flex min-h-[480px] w-screen items-start justify-center bg-[#2d3142] px-4 pb-12 pt-[calc(var(--navbar-height)+2rem)] text-center max-md:min-h-0 max-md:px-6 md:items-center md:py-8 md:pt-[calc(var(--navbar-height)+4rem)]">
+      <div className="flex min-h-[480px] w-screen items-start justify-center bg-[#2d3142] px-4 pb-12 pt-[calc(var(--navbar-height)+2rem)] text-center max-md:min-h-0 max-md:px-6 md:min-h-[600px] md:items-center md:py-8 md:pt-[calc(var(--navbar-height)+4rem)]">
         <div>
           <Pill className="mb-8">Platform Features</Pill>
           <h1 className="m-0 font-heading text-[2.25rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.1]">
