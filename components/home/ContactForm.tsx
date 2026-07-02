@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useToast } from '@/lib/context/ToastContext';
 import { CheckCircle, XCircle } from 'lucide-react';
 import styles from './ContactForm.module.css';
+import { apiUrl } from '@/lib/apiBase';
 
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -46,7 +47,7 @@ export default function ContactForm() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch('/api/public/special-booking', {
+      const response = await fetch(apiUrl('/api/public/special-booking'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -5,6 +5,7 @@ import { useToast } from "@/lib/context/ToastContext";
 import { MapPin, Calendar, Clock, Car, Users, ArrowRight, Navigation, Plus, Minus, Loader2, User, Mail, Phone, ChevronDown } from "lucide-react";
 import styles from "./BookingForm.module.css";
 import AddressAutocomplete from "./AddressAutocomplete";
+import { apiUrl } from "@/lib/apiBase";
 
 
 // ─── Validation helpers ───────────────────────────────────────────────────────
@@ -489,7 +490,7 @@ export default function BookingForm() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/public/booking-enquiry", {
+      const res = await fetch(apiUrl("/api/public/booking-enquiry"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

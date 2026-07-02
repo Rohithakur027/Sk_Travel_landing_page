@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '@/lib/context/ToastContext';
 import styles from './CONTACT.module.css';
+import { apiUrl } from '@/lib/apiBase';
 
 
 export default function CONTACT() {
@@ -33,7 +34,7 @@ export default function CONTACT() {
       const firstName = names[0] || '';
       const lastName = names.slice(1).join(' ') || '-';
 
-      const response = await fetch('/api/public/special-booking', {
+      const response = await fetch(apiUrl('/api/public/special-booking'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
