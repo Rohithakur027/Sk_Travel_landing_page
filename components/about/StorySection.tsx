@@ -4,10 +4,10 @@ import Pill from '@/components/ui/Pill';
 export default function StorySection() {
   return (
     <section className="bg-white pb-16 pt-8 lg:pb-24 lg:pt-12">
-      <div className="mx-auto w-full max-w-[1800px] px-6 lg:max-w-[1200px] lg:px-16 2xl:px-32">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 2xl:gap-24">
+      <div className="mx-auto w-full max-w-[1800px] px-6 lg:px-16 2xl:px-32">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 2xl:gap-24">
           <div className="relative w-full">
-            <div className="relative h-[400px] w-full overflow-hidden rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] lg:h-[720px]">
+            <div className="relative aspect-[1.25/1] w-full overflow-hidden rounded-[2rem] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] sm:aspect-[1.35/1] lg:aspect-[1.25/1] xl:aspect-[1.35/1]">
               <Image
                 src="/images/aboutstory.jpeg"
                 alt="Story Image"
@@ -25,7 +25,7 @@ export default function StorySection() {
 
             <div className="flex flex-col gap-6">
               <p className="text-base leading-[1.7] text-[#6B7280] lg:text-[1.15rem]">
-                Founded in 2015, SK Voyages emerged from a simple vision: to transform corporate employee transportation in India. We recognized that businesses needed a reliable, professional, and scalable solution for their daily commute challenges.
+                Founded in 2016, SK Voyages emerged from a simple vision: to transform corporate employee transportation in India. We recognized that businesses needed a reliable, professional, and scalable solution for their daily commute challenges.
               </p>
               <p className="text-base leading-[1.7] text-[#6B7280] lg:text-[1.15rem]">
                 Over the years, we&apos;ve grown from a small fleet serving local businesses to a comprehensive transportation partner for enterprises across major Indian cities. Our commitment to safety, punctuality, and customer satisfaction has made us the preferred choice for over 500+ companies.

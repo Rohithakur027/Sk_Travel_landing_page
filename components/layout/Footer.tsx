@@ -32,12 +32,9 @@ export default function Footer() {
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-[2.5fr_1fr_1fr_1fr] md:gap-8">
           <div className="flex flex-col">
             <Link href="/" className="mb-6 flex items-center gap-3 leading-none">
-              <div className="flex h-[72px] items-center justify-center">
-                <Image src="/icons/sklogoreal3.png" alt="SK Voyages Logo" width={92} height={72} className="h-[72px] w-auto" />
+              <div className="flex items-center justify-center">
+                <Image src="/images/logofinal.png" alt="SK Voyages Logo" width={800} height={201} className="h-10 w-auto md:h-14" />
               </div>
-              <span className="flex items-center self-center font-heading text-[2rem] font-bold leading-none text-white">
-                Sk Voyages
-              </span>
             </Link>
             <p className="mb-8 text-[0.95rem] leading-[1.7] text-[#9ba3af]">
               Professional corporate

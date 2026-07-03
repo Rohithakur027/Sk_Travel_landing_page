@@ -26,6 +26,7 @@ import {
   Users,
 } from "lucide-react";
 import { useToast } from "@/lib/context/ToastContext";
+import { apiUrl } from "@/lib/apiBase";
 import AddressAutocomplete from "./AddressAutocomplete";
 
 function isValidEmail(v: string) {
@@ -43,11 +44,11 @@ const toggleClassName =
 const toggleButtonClassName =
   "relative z-[1] flex-1 whitespace-nowrap rounded-full bg-transparent px-1 py-3 text-sm font-bold text-slate-500 transition-all duration-300 ease-out hover:text-slate-800 sm:px-[2.2rem] sm:py-[0.85rem] sm:text-[0.95rem]";
 const fieldBaseClassName =
-  "w-full rounded-xl border-[1.5px] border-[rgba(226,232,240,0.8)] bg-[rgba(248,250,252,0.7)] px-5 py-[1.15rem] text-[1.05rem] text-slate-900 shadow-[inset_0_1px_2px_rgba(0,0,0,0.01)] outline-none transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] placeholder:text-slate-400 focus:border-[rgba(249,115,22,0.5)] focus:bg-white focus:shadow-[0_0_0_4px_rgba(249,115,22,0.12)] max-sm:rounded-[0.6rem] max-sm:px-4 max-sm:py-3 max-sm:text-[0.95rem]";
+  "w-full rounded-xl border-[1.5px] border-[rgba(226,232,240,0.8)] bg-[rgba(248,250,252,0.7)] px-5 py-[1.15rem] text-[1.05rem] text-slate-900 shadow-[inset_0_1px_2px_rgba(0,0,0,0.01)] outline-none transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] placeholder:text-slate-400 focus:border-[rgba(148,163,184,0.6)] focus:bg-white max-sm:rounded-[0.6rem] max-sm:px-4 max-sm:py-3 max-sm:text-[0.95rem]";
 const inputClassName = `${fieldBaseClassName} cursor-text`;
 const selectTriggerClassName = `${fieldBaseClassName} flex cursor-pointer select-none items-center`;
 const overlayFieldClassName =
-  "flex w-full items-center rounded-xl border-[1.5px] border-[rgba(226,232,240,0.8)] bg-[rgba(248,250,252,0.7)] px-5 py-[1.15rem] text-[1.05rem] shadow-[inset_0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] peer-focus:border-[rgba(249,115,22,0.5)] peer-focus:bg-white peer-focus:shadow-[0_0_0_4px_rgba(249,115,22,0.12)] max-sm:rounded-[0.6rem] max-sm:px-4 max-sm:py-3 max-sm:text-[0.95rem]";
+  "flex w-full items-center rounded-xl border-[1.5px] border-[rgba(226,232,240,0.8)] bg-[rgba(248,250,252,0.7)] px-5 py-[1.15rem] text-[1.05rem] shadow-[inset_0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] peer-focus:border-[rgba(148,163,184,0.6)] peer-focus:bg-white max-sm:rounded-[0.6rem] max-sm:px-4 max-sm:py-3 max-sm:text-[0.95rem]";
 const iconClassName =
   "pointer-events-none absolute inset-y-0 left-0 z-[1] flex items-center pl-5 text-[rgba(255,200,57,1)] transition-all duration-200 ease-out group-focus-within:scale-105 max-sm:pl-[0.85rem]";
 const dropdownListClassName =
@@ -324,7 +325,7 @@ export default function BookingForm() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("/api/public/booking-enquiry", {
+      const res = await fetch(apiUrl("/api/public/booking-enquiry"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

@@ -4,7 +4,7 @@ import BookingForm from './BookingForm';
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative isolate mb-0 w-full bg-black lg:mb-[24rem] lg:min-h-[800px]">
+    <section id="hero" className="relative isolate mb-0 w-full overflow-hidden bg-black py-0 lg:mb-[24rem] lg:min-h-[800px] lg:overflow-visible">
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-95 animate-zoom-out max-md:bg-[center_top]"
         style={{ backgroundImage: 'url(/images/herosection_enhanced.png)' }}
@@ -50,7 +50,7 @@ export default function HeroSection() {
         </svg>
       </div>
 
-      <div className="relative z-[2] bg-white px-4 py-4 lg:absolute lg:inset-x-0 lg:bottom-0 lg:z-20 lg:bg-transparent lg:px-6 lg:py-0 lg:translate-y-1/2">
+      <div className="relative z-[2] bg-white px-4 pb-0 pt-4 lg:absolute lg:inset-x-0 lg:bottom-0 lg:z-20 lg:bg-transparent lg:px-6 lg:py-0 lg:translate-y-1/2">
         <BookingForm />
       </div>
     </section>

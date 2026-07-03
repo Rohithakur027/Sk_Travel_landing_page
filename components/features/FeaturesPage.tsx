@@ -22,18 +22,20 @@ const sectionTitleClassName = 'text-[30px] font-extrabold leading-[1.12] text-[#
 export default function FeaturesPage() {
   return (
     <section className="bg-white">
-      <div className="flex min-h-[480px] w-screen items-start justify-center bg-[#2d3142] px-4 pb-12 pt-[calc(var(--navbar-height)+2rem)] text-center max-md:min-h-0 max-md:px-6 md:min-h-[600px] md:items-center md:py-8 md:pt-[calc(var(--navbar-height)+4rem)]">
-        <div>
-          <Pill className="mb-8">Platform Features</Pill>
-          <h1 className="m-0 font-heading text-[2.25rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.1]">
+      <div className="flex min-h-[480px] w-screen items-start justify-center bg-[#2d3142] px-4 pb-14 pt-[calc(var(--navbar-height)+2rem)] text-center max-md:min-h-0 max-md:px-6 md:min-h-[560px] md:pt-[calc(var(--navbar-height)+1.8rem)]">
+        <div className="mx-auto w-full max-w-[1040px]">
+          <Pill className="mb-12">Platform Features</Pill>
+          <h1 className="m-0 font-heading text-[2.25rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.08]">
             Advanced Features for
             <br />
             <span className="inline-block bg-[linear-gradient(171.05deg,#FFD23F_5.73%,#FFA726_94.27%)] bg-clip-text text-transparent">
               Modern Transportation
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-[680px] text-[0.95rem] leading-[1.6] text-white/50 md:text-base">
-            Discover the technology and features that make SK Voyages the smart choice for corporate transportation
+          <p className="mx-auto mt-8 max-w-[760px] text-[0.95rem] leading-[1.6] text-white/50 md:text-[1.15rem]">
+            Discover the technology and features that make SK Voyages the smart choice for corpo-
+            <br className="hidden md:block" />
+            rate transportation
           </p>
         </div>
       </div>

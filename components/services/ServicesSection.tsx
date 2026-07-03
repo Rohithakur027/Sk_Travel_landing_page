@@ -44,7 +44,7 @@ const MAIN_SERVICES = [
     description:
       "Provide your employees with a reliable and comfortable daily commute. Our shuttle services are designed to maximize productivity and employee satisfaction.",
     iconSrc: "/Container (5).png",
-    image: "/images/corporateshuttlefinal.png",
+    image: "/images/corporateshuttleupdated.png",
     imagePosition: "right center",
     features: [
       "Fixed route scheduling",
@@ -187,7 +187,7 @@ export default function ServicesSection() {
 
         <div className="bg-[#FFFBF0]">
           <div className={containerClassName}>
-            <div className="px-0 pb-0 pt-14 text-center">
+            <div className="px-0 pb-14 pt-14 text-center max-md:pb-12">
               <h3 className="mb-[0.6rem] text-[1.75rem] font-extrabold text-[#111827]">
                 Additional Services
               </h3>
@@ -195,7 +195,7 @@ export default function ServicesSection() {
                 Extra features to enhance your transportation experience
               </p>
 
-              <div className="grid grid-cols-1 gap-6 text-left sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-8 text-left sm:grid-cols-2 lg:grid-cols-3">
                 {ADDITIONAL_SERVICES.map((service) => (
                   <div
                     key={service.title}
@@ -226,12 +226,14 @@ export default function ServicesSection() {
           <p className="mx-auto mb-4 max-w-[40rem] text-[0.97rem] leading-[1.6] text-[#6b7280]">
             Contact us today to discuss your corporate transportation needs and get a customized quote
           </p>
-          <Link
-            href="/contact#booking"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[linear-gradient(135deg,#FFD23F_0%,#FFA726_100%)] px-10 py-3 text-base font-bold text-[#1a1a1a] shadow-[0_8px_24px_rgba(255,210,63,0.4)] transition-all duration-150 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(255,210,63,0.55)]"
-          >
-            Send an Enquiry →
-          </Link>
+          <div className="flex justify-center">
+            <Link
+              href="/contact#booking"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[linear-gradient(135deg,#FFD23F_0%,#FFA726_100%)] px-10 py-3 text-base font-bold text-[#1a1a1a] shadow-[0_8px_24px_rgba(255,210,63,0.4)] transition-all duration-150 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_32px_rgba(255,210,63,0.55)]"
+            >
+              Send an Enquiry →
+            </Link>
+          </div>
         </div>
       </section>
     </>

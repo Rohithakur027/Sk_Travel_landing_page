@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useToast } from "@/lib/context/ToastContext";
+import { apiUrl } from "@/lib/apiBase";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
@@ -53,7 +54,7 @@ export default function ContactForm() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch("/api/public/special-booking", {
+      const response = await fetch(apiUrl("/api/public/special-booking"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

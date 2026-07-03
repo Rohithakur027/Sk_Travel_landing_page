@@ -38,7 +38,7 @@ export default function Navbar() {
   const headerClassName = [
     'fixed left-0 top-0 z-[100] w-full px-4 transition-all duration-300 ease-out max-[360px]:px-2',
     isHome ? 'bg-transparent' : 'bg-[rgba(45,49,66,1)]',
-    isScrolled ? 'bg-transparent lg:bg-[rgba(45,49,66,1)]' : '',
+    isScrolled ? 'bg-transparent' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -50,11 +50,11 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="shrink-0">
               <Image
-                src="/icons/sklogofinal.png"
+                src="/images/logofinal.png"
                 alt="SK Travel Logo"
                 width={500}
                 height={500}
-                className="h-24 w-auto max-[360px]:h-[5.25rem] md:h-[7.5rem] lg:h-36"
+                className="h-11 w-auto max-[360px]:h-9 md:h-14 lg:h-16"
                 priority
               />
             </Link>

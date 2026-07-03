@@ -22,6 +22,19 @@ interface AddressSuggestion {
   display_name: string;
 }
 
+interface SelectedAddressDisplay {
+  title: string;
+  address: string;
+  displayName: string;
+}
+
+interface MapboxSuggestion {
+  mapbox_id: string;
+  name: string;
+  place_formatted?: string;
+  full_address?: string;
+}
+
 const SEARCHBOX_BASE = 'https://api.mapbox.com/search/searchbox/v1';
 const BANGALORE_PROXIMITY = '77.5946,12.9716';
 const BANGALORE_BBOX = '75.75,11.16,79.44,14.78';
@@ -41,6 +54,21 @@ function newSessionToken(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
+function toSelectedAddressDisplay(title: string, address: string, displayName: string): SelectedAddressDisplay {
+  const trimmedTitle = title.trim();
+  const trimmedDisplayName = displayName.trim();
+  const trimmedAddress = address.trim();
+  const addressFromDisplay = trimmedDisplayName.startsWith(`${trimmedTitle},`)
+    ? trimmedDisplayName.slice(trimmedTitle.length + 1).trim()
+    : trimmedAddress;
+
+  return {
+    title: trimmedTitle || trimmedDisplayName,
+    address: addressFromDisplay || trimmedAddress,
+    displayName: trimmedDisplayName,
+  };
+}
+
 export default function AddressAutocomplete({
   id,
   placeholder,
@@ -56,6 +84,8 @@ export default function AddressAutocomplete({
   const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [selectedDisplay, setSelectedDisplay] = useState<SelectedAddressDisplay | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const requestIdRef = useRef(0);
@@ -115,7 +145,7 @@ export default function AddressAutocomplete({
         return;
       }
 
-      const nextSuggestions = (response.data.suggestions || []).map((suggestion: any) => ({
+      const nextSuggestions = ((response.data.suggestions || []) as MapboxSuggestion[]).map((suggestion) => ({
         id: suggestion.mapbox_id,
         mapbox_id: suggestion.mapbox_id,
         name: suggestion.name,
@@ -144,6 +174,7 @@ export default function AddressAutocomplete({
     const nextValue = e.target.value;
     onChange(nextValue);
     onCoordinatesChange?.(null);
+    setSelectedDisplay(null);
 
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
@@ -154,6 +185,7 @@ export default function AddressAutocomplete({
 
   const handleSuggestionClick = async (suggestion: AddressSuggestion) => {
     onChange(suggestion.display_name);
+    setSelectedDisplay(toSelectedAddressDisplay(suggestion.name, suggestion.address, suggestion.display_name));
     setSuggestions([]);
     setShowSuggestions(false);
 
@@ -181,6 +213,7 @@ export default function AddressAutocomplete({
       const full = feature?.properties?.full_address;
       if (full) {
         onChange(full);
+        setSelectedDisplay(toSelectedAddressDisplay(suggestion.name, suggestion.address, full));
       }
     } catch (error) {
       console.error('Mapbox Search Box retrieve error:', error);
@@ -190,6 +223,10 @@ export default function AddressAutocomplete({
       sessionTokenRef.current = newSessionToken();
     }
   };
+
+  const showSelectedDisplay = Boolean(
+    selectedDisplay && !isFocused && value.trim() === selectedDisplay.displayName
+  );
 
   return (
     <div className={`relative w-full ${wrapperClassName || ''}`} ref={containerRef}>
@@ -205,11 +242,27 @@ export default function AddressAutocomplete({
           placeholder={placeholder}
           value={value}
           onChange={handleInputChange}
-          onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-          className={className || ''}
+          onFocus={() => {
+            setIsFocused(true);
+            if (suggestions.length > 0) setShowSuggestions(true);
+          }}
+          onBlur={() => setIsFocused(false)}
+          className={`${className || ''} ${showSelectedDisplay ? 'text-transparent caret-slate-900' : ''}`}
           required={required}
           autoComplete="off"
         />
+        {showSelectedDisplay && selectedDisplay && (
+          <div className="pointer-events-none absolute inset-y-0 left-0 right-10 flex min-w-0 flex-col justify-center pl-14 pr-2 max-sm:pl-10">
+            <span className="truncate text-[1.05rem] font-bold leading-5 text-slate-950 max-sm:text-[0.95rem]">
+              {selectedDisplay.title}
+            </span>
+            {selectedDisplay.address && (
+              <span className="mt-1 truncate text-[0.85rem] font-medium leading-4 text-slate-500 max-sm:text-[0.78rem]">
+                {selectedDisplay.address}
+              </span>
+            )}
+          </div>
+        )}
         {loading && (
           <div className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full border-2 border-[#f3f3f3] border-t-[#ffc839] animate-autocomplete-spin" />
         )}
@@ -223,8 +276,10 @@ export default function AddressAutocomplete({
               onClick={() => handleSuggestionClick(suggestion)}
               className="cursor-pointer rounded-lg px-4 py-[0.85rem] transition-all duration-200 ease-out hover:translate-x-1 hover:bg-[rgba(255,200,57,0.9)]"
             >
-              <span className="block text-[0.95rem] font-semibold text-slate-800">{suggestion.name}</span>
-              <span className="mt-1 block text-[0.85rem] text-slate-500">{suggestion.address}</span>
+              <span className="block truncate text-[1rem] font-bold leading-5 text-slate-950">{suggestion.name}</span>
+              <span className="mt-1 block truncate text-[0.85rem] font-medium leading-4 text-slate-500">
+                {suggestion.address}
+              </span>
             </li>
           ))}
         </ul>

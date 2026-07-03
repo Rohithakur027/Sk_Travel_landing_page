@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { ChevronDown } from 'lucide-react';
 import { useToast } from '@/lib/context/ToastContext';
+import { apiUrl } from '@/lib/apiBase';
 import Pill from '@/components/ui/Pill';
 
 function getErrorMessage(error: unknown) {
@@ -44,7 +46,7 @@ export default function CONTACT() {
       const firstName = names[0] || '';
       const lastName = names.slice(1).join(' ') || '-';
 
-      const response = await fetch('/api/public/special-booking', {
+      const response = await fetch(apiUrl('/api/public/special-booking'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -130,31 +132,31 @@ export default function CONTACT() {
 
   return (
     <section className="pt-0">
-      <header className="flex min-h-[420px] items-start justify-center bg-[#2D3142] px-6 pb-16 pt-[calc(var(--navbar-height)+2rem)] text-center md:min-h-[550px] md:pt-[calc(var(--navbar-height)+4rem)]">
-        <div className="mx-auto w-full max-w-[1244px] px-4">
-          <div className="mb-2 flex justify-center">
+      <header className="flex min-h-[420px] items-start justify-center bg-[#2D3142] px-6 pb-14 pt-[calc(var(--navbar-height)+2rem)] text-center md:min-h-[560px] md:pt-[calc(var(--navbar-height)+2.4rem)]">
+        <div className="mx-auto w-full max-w-[980px] px-4">
+          <div className="mb-12 flex justify-center md:mb-12">
             <Pill>Get In Touch</Pill>
           </div>
 
-          <h1 className="mb-6 text-center font-heading font-black tracking-[-0.02em]">
-            <span className="block text-[2.7rem] leading-[1.1] text-white md:text-[4.5rem] md:leading-[1.3]">
+          <h1 className="mb-7 text-center font-heading font-black tracking-[-0.02em]">
+            <span className="block text-[2.7rem] leading-[1.1] text-white md:text-[4rem] md:leading-[1.05]">
               Let&apos;s Start Your
             </span>
-            <span className="mt-1 block bg-[linear-gradient(171.05deg,#FFD23F_5.73%,#FFA726_94.27%)] bg-clip-text text-[2.7rem] leading-[1.1] text-transparent md:text-[4.5rem] md:leading-[1.1]">
+            <span className="mt-4 block bg-[linear-gradient(171.05deg,#FFD23F_5.73%,#FFA726_94.27%)] bg-clip-text text-[2.25rem] leading-[1.1] text-transparent min-[390px]:text-[2.45rem] md:text-[4rem] md:leading-[1.05]">
               Transportation Journey
             </span>
           </h1>
 
-          <p className="mx-auto max-w-[48rem] text-sm leading-[1.5] text-white/50 md:text-[1.25rem] md:leading-[1.6]">
-            <span className="md:block">Ready to transform your corporate transportation?</span>
-            <span className="md:mr-1">Reach out to us and</span>
+          <p className="mx-auto max-w-[48rem] text-sm leading-[1.5] text-white/50 md:text-[1.25rem] md:leading-[1.7]">
+            <span>Ready to transform your corporate transportation? Reach out to us and</span>
+            <br className="hidden md:block" />
             <span className="md:block">let&apos;s discuss your needs</span>
           </p>
         </div>
       </header>
 
-      <div className="mx-auto w-full max-w-[1244px] px-4">
-        <div className="mx-auto my-10 grid w-full max-w-[890px] grid-cols-1 gap-8 lg:grid-cols-[minmax(0,494px)_minmax(0,360px)]">
+      <div className="relative z-10 -mt-16 mx-auto w-full max-w-[1244px] bg-white px-4 pt-1 md:mt-0 md:bg-transparent md:pt-0">
+        <div className="mx-auto my-6 grid w-full max-w-[890px] grid-cols-1 gap-8 md:my-10 lg:grid-cols-[minmax(0,494px)_minmax(0,360px)]">
           <form
             id="booking"
             className="flex w-full flex-col rounded-[32px] border-t border-t-black/5 bg-white p-7 shadow-[0_20px_60px_rgba(0,0,0,0.08)]"
@@ -319,10 +321,13 @@ export default function CONTACT() {
             ].map(([question, answer]) => (
               <details
                 key={question}
-                className="mb-3 rounded-xl bg-white px-[18px] py-[14px] shadow-[0_6px_20px_rgba(2,6,23,0.04)]"
+                className="group mb-3 rounded-xl bg-white px-[18px] py-[14px] shadow-[0_6px_20px_rgba(2,6,23,0.04)]"
               >
-                <summary className="cursor-pointer pr-10 text-[18px] font-bold leading-[27px] text-[#2D3142] marker:content-none">
-                  {question}
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[18px] font-bold leading-[27px] text-[#2D3142] marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span>{question}</span>
+                  <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[#fff7df] text-[#f59e0b] transition-transform duration-200 group-open:rotate-180">
+                    <ChevronDown size={20} strokeWidth={2.5} />
+                  </span>
                 </summary>
                 <p className="mt-2 text-base text-[#6b7280]">{answer}</p>
               </details>
