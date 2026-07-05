@@ -45,13 +45,13 @@ html {
   }
 }
 
-/* Mobile compatibility helpers (non-layout - safe to add) */
+/* mobile compatibility tweaks, doesn't touch layout */
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
 
-/* Prevent overflow from long words and improve wrapping on small screens */
+/* keep long words from overflowing on small screens */
 p, h1, h2, h3, h4, h5, h6 {
   word-break: break-word;
   overflow-wrap: break-word;
@@ -65,7 +65,7 @@ a, button, input, label {
   touch-action: manipulation;
 }
 
-/* Ensure media elements are responsive without changing layout spacing */
+/* keep media responsive without messing with layout spacing */
 img, picture, svg, video, canvas {
   max-width: 100%;
   height: auto;
@@ -271,7 +271,6 @@ section {
   background-color: var(--color-gray-50);
 }
 
-/* Section header */
 .section-header {
   text-align: center;
   max-width: 640px;

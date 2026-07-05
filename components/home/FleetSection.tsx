@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 const cardClassName =
@@ -60,9 +59,9 @@ export default function FleetSection() {
               <span className="mb-3 inline-block text-base font-extrabold uppercase tracking-[0.1em] text-amber-400">Featured</span>
               <h3 className="mb-2 text-[1.75rem] font-extrabold tracking-[-0.02em] lg:text-[1.8rem] 2xl:text-[2.2rem]">Executive Sedans</h3>
               <p className="text-base leading-[1.5] text-gray-200">Premium comfort for 1-4 passengers</p>
-              <Link href="/#contact" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[rgba(255,210,63,1)] px-6 py-3 text-base font-bold text-[#111827] transition-colors duration-200 hover:bg-amber-500">
+              <a href="#contact" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[rgba(255,210,63,1)] px-6 py-3 text-base font-bold text-[#111827] transition-colors duration-200 hover:bg-amber-500">
                 View Details <ArrowRight size={18} />
-              </Link>
+              </a>
             </div>
           </div>
         </div>

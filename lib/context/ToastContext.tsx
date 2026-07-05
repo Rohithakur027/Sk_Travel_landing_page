@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { CheckCircle, XCircle } from "lucide-react";
 
@@ -19,15 +19,21 @@ interface ToastContextType {
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
-// ─── Fully Inlined Styles ─────────────────────────────────────────────────────
-// Using 100% inline styles to guarantee positioning cannot be overridden by
-// any CSS cascade, specificity conflict, or CSS Module scoping issue.
+const subscribeToClient = (onStoreChange: () => void) => {
+  onStoreChange();
+  return () => {};
+};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
+
+// Styles are inlined on purpose - keeps the toast pinned in place no matter
+// what CSS module scoping or cascade rules are doing elsewhere on the page.
 
 const BASE_STYLE: React.CSSProperties = {
   position: "fixed",
   top: "1.5rem",
   right: "1.5rem",
-  zIndex: 2147483647, // Maximum possible z-index
+  zIndex: 2147483647, // max int32 - nothing should ever stack above this
   display: "flex",
   alignItems: "flex-start",
   gap: "0.75rem",
@@ -119,11 +125,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     type: "success",
     message: "",
   });
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(subscribeToClient, getClientSnapshot, getServerSnapshot);
 
   const hideToast = useCallback(() => {
     setToast((prev) => ({ ...prev, visible: false }));
@@ -155,10 +157,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             aria-live="polite"
             aria-atomic="true"
           >
-            {/* Accent bar */}
             <div style={accentBar} />
 
-            {/* Icon */}
             <span style={ICON_STYLE}>
               {toast.type === "success" ? (
                 <CheckCircle size={20} color="#16a34a" />
@@ -167,10 +167,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               )}
             </span>
 
-            {/* Message */}
             <span style={MESSAGE_STYLE}>{toast.message}</span>
 
-            {/* Close button */}
             <button
               style={CLOSE_BTN_STYLE}
               onClick={hideToast}

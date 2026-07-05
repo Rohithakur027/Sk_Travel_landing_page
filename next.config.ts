@@ -12,9 +12,8 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
-    // Other experimental features if any
+    // nothing enabled here right now
   },
-  // @ts-ignore - Next.js 16/15 Turbopack root config
   turbopack: {
     root: process.cwd(), 
   },

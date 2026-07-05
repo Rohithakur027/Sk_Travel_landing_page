@@ -4,7 +4,7 @@ import ContactForm from './ContactForm';
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="bg-[rgb(254,253,248)] px-0 py-10 max-[400px]:py-10 md:py-16 max-md:px-0 max-md:py-12">
+    <section id="contact" className="scroll-mt-28 bg-[rgb(254,253,248)] px-0 py-10 max-[400px]:py-10 md:py-16 max-md:px-0 max-md:py-12">
       <div className="mx-auto w-full max-w-[1480px] px-6 max-[400px]:px-3 max-md:px-6">
         <div className="mb-8 px-4 text-center md:mb-14 md:px-0">
           <h2 className="mb-4 font-sans text-[1.875rem] font-extrabold text-[#2D3142] max-[400px]:px-2 md:text-[3rem]">

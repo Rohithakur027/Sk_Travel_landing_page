@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useToast } from "@/lib/context/ToastContext";
-import { apiUrl } from "@/lib/apiBase";
+import { submitSpecialBooking } from "@/lib/api-client";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
@@ -54,24 +54,14 @@ export default function ContactForm() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch(apiUrl("/api/public/special-booking"), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          company_name: formData.company,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-        }),
+      await submitSpecialBooking({
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        company_name: formData.company,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
       });
-      const result = await response.json();
-      if (!result.success) {
-        throw new Error(result.errors?.[0] || "Submission failed");
-      }
       showToast("success", "Your enquiry has been submitted! We'll be in touch shortly.");
       setFormData(INITIAL);
     } catch (error) {

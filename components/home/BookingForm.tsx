@@ -26,7 +26,7 @@ import {
   Users,
 } from "lucide-react";
 import { useToast } from "@/lib/context/ToastContext";
-import { apiUrl } from "@/lib/apiBase";
+import { submitBookingEnquiry } from "@/lib/api-client";
 import AddressAutocomplete from "./AddressAutocomplete";
 
 function isValidEmail(v: string) {
@@ -325,20 +325,11 @@ export default function BookingForm() {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch(apiUrl("/api/public/booking-enquiry"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        showToast("success", "Your enquiry has been submitted! We'll be in touch shortly.");
-      } else {
-        showToast("error", data.message ?? "Something went wrong. Please try again.");
-      }
+      await submitBookingEnquiry(body);
+      showToast("success", "Your enquiry has been submitted! We'll be in touch shortly.");
     } catch (err) {
       console.error("[BookingForm] submit error:", err);
-      showToast("error", "Network error. Please check your connection and try again.");
+      showToast("error", err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

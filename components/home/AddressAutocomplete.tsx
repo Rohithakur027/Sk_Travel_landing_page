@@ -48,7 +48,7 @@ function newSessionToken(): string {
       return crypto.randomUUID();
     }
   } catch {
-    // Fall back when the runtime cannot generate a UUID.
+    // crypto.randomUUID isn't available everywhere, fall back below
   }
 
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -209,7 +209,7 @@ export default function AddressAutocomplete({
 
       onCoordinatesChange?.(coords ?? null);
 
-      // Prefer the fuller address from the retrieved feature when available.
+      // retrieve endpoint usually gives us a fuller address than suggest did
       const full = feature?.properties?.full_address;
       if (full) {
         onChange(full);

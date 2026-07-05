@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { BadgeCheck } from 'lucide-react';
 
 const FEATURES = [
@@ -58,9 +57,9 @@ export default function CorporateSection() {
             ))}
           </ul>
 
-          <Link href="/#contact" className="self-start rounded-xl border-2 border-[rgba(255,210,63,1)] bg-transparent px-8 py-[0.9rem] text-base font-bold text-[rgba(45,49,66,1)] transition-all duration-200 ease-out hover:bg-[rgba(255,210,63,0.2)]">
+          <a href="#contact" className="self-start rounded-xl border-2 border-[rgba(255,210,63,1)] bg-transparent px-8 py-[0.9rem] text-base font-bold text-[rgba(45,49,66,1)] transition-all duration-200 ease-out hover:bg-[rgba(255,210,63,0.2)]">
             Learn More About Us
-          </Link>
+          </a>
         </div>
       </div>
     </section>

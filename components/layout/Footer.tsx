@@ -22,7 +22,7 @@ export default function Footer() {
 
   const getListClassName = (section: string) =>
     [
-      'm-0 flex list-none flex-col gap-[0.85rem] overflow-hidden p-0 transition-all duration-300 ease-out md:max-h-none md:opacity-100',
+      'm-0 flex list-none flex-col gap-[0.85rem] overflow-hidden p-0 pt-5 transition-all duration-300 ease-out md:max-h-none md:pt-6 md:opacity-100',
       openSection === section ? 'mb-8 max-h-[500px] opacity-100' : 'mb-0 max-h-0 opacity-0 md:mb-0',
     ].join(' ');
 

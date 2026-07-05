@@ -22,10 +22,10 @@ const sectionTitleClassName = 'text-[30px] font-extrabold leading-[1.12] text-[#
 export default function FeaturesPage() {
   return (
     <section className="bg-white">
-      <div className="flex min-h-[480px] w-screen items-start justify-center bg-[#2d3142] px-4 pb-14 pt-[calc(var(--navbar-height)+2rem)] text-center max-md:min-h-0 max-md:px-6 md:min-h-[560px] md:pt-[calc(var(--navbar-height)+1.8rem)]">
+      <div className="flex min-h-[480px] w-screen items-start justify-center bg-[#2d3142] px-4 pb-14 pt-[calc(var(--navbar-height)+0.75rem)] text-center max-md:min-h-0 max-md:px-6 max-md:pt-[calc(var(--navbar-height)+0.25rem)] md:min-h-[560px] md:pt-[calc(var(--navbar-height)+0.5rem)]">
         <div className="mx-auto w-full max-w-[1040px]">
           <Pill className="mb-12">Platform Features</Pill>
-          <h1 className="m-0 font-heading text-[2.25rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.08]">
+          <h1 className="m-0 font-heading text-[2.7rem] font-black leading-[1.2] tracking-[-0.02em] text-white md:text-[4.5rem] md:leading-[1.08]">
             Advanced Features for
             <br />
             <span className="inline-block bg-[linear-gradient(171.05deg,#FFD23F_5.73%,#FFA726_94.27%)] bg-clip-text text-transparent">
@@ -79,7 +79,7 @@ export default function FeaturesPage() {
         </div>
       </div>
 
-      <div className="bg-[#fffbf0] px-0 pb-6 pt-14 max-md:pt-8 max-md:pb-3">
+      <div className="bg-[#fffbf0] px-0 pb-20 pt-16 max-md:pt-10 max-md:pb-12">
         <div className={containerClassName}>
           <div className="my-7 text-center max-md:mt-3">
             <h2 className={sectionTitleClassName}>Everything You Need</h2>

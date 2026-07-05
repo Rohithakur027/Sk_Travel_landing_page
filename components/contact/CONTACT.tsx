@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import { useToast } from '@/lib/context/ToastContext';
-import { apiUrl } from '@/lib/apiBase';
+import { submitSpecialBooking } from '@/lib/api-client';
 import Pill from '@/components/ui/Pill';
 
 function getErrorMessage(error: unknown) {
@@ -46,23 +46,14 @@ export default function CONTACT() {
       const firstName = names[0] || '';
       const lastName = names.slice(1).join(' ') || '-';
 
-      const response = await fetch(apiUrl('/api/public/special-booking'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          company_name: formData.company,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-        }),
+      await submitSpecialBooking({
+        first_name: firstName,
+        last_name: lastName,
+        company_name: formData.company,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
       });
-
-      const result = await response.json();
-      if (!result.success) {
-        throw new Error(result.errors?.[0] || 'Failed to send message');
-      }
 
       showToast("success", "Your enquiry has been submitted! We'll be in touch shortly.");
       setFormData({ fullName: '', company: '', email: '', phone: '', message: '' });
@@ -132,18 +123,19 @@ export default function CONTACT() {
 
   return (
     <section className="pt-0">
-      <header className="flex min-h-[420px] items-start justify-center bg-[#2D3142] px-6 pb-14 pt-[calc(var(--navbar-height)+2rem)] text-center md:min-h-[560px] md:pt-[calc(var(--navbar-height)+2.4rem)]">
+      <header className="flex min-h-[420px] items-start justify-center bg-[#2D3142] px-6 pb-24 pt-[calc(var(--navbar-height)+2rem)] text-center md:min-h-[560px] md:pb-16 md:pt-[calc(var(--navbar-height)+2.4rem)]">
         <div className="mx-auto w-full max-w-[980px] px-4">
           <div className="mb-12 flex justify-center md:mb-12">
             <Pill>Get In Touch</Pill>
           </div>
 
-          <h1 className="mb-7 text-center font-heading font-black tracking-[-0.02em]">
-            <span className="block text-[2.7rem] leading-[1.1] text-white md:text-[4rem] md:leading-[1.05]">
+          <h1 className="mb-7 text-center font-heading text-[2.7rem] font-black leading-[1.2] tracking-[-0.02em] md:text-[4.5rem] md:leading-[1.08]">
+            <span className="block text-white">
               Let&apos;s Start Your
             </span>
-            <span className="mt-4 block bg-[linear-gradient(171.05deg,#FFD23F_5.73%,#FFA726_94.27%)] bg-clip-text text-[2.25rem] leading-[1.1] text-transparent min-[390px]:text-[2.45rem] md:text-[4rem] md:leading-[1.05]">
-              Transportation Journey
+            <span className="mt-2 block bg-[linear-gradient(171.05deg,#FFD23F_5.73%,#FFA726_94.27%)] bg-clip-text text-transparent md:mt-4">
+              <span className="block whitespace-nowrap">Transportation</span>
+              <span className="block">Journey</span>
             </span>
           </h1>
 
@@ -280,17 +272,17 @@ export default function CONTACT() {
           </form>
 
           <aside className="flex flex-col gap-4">
-            <div className="flex flex-col rounded-[32px] bg-white px-10 pb-6 pt-9 shadow-[0_18px_40px_rgba(2,6,23,0.07)]">
-              <h3 className="mb-6 text-[32px] font-extrabold leading-tight text-[#111827] md:text-[34px]">Contact Information</h3>
+            <div className="flex flex-col rounded-[28px] bg-white px-8 pb-6 pt-8 shadow-[0_18px_40px_rgba(2,6,23,0.07)] md:px-10 md:pt-9">
+              <h3 className="mb-5 text-[1.85rem] font-extrabold leading-tight text-[#111827] md:text-[2rem]">Contact Information</h3>
 
               {contactItems.map((item) => (
-                <div key={item.key} className="flex items-start gap-5 py-6 last:pb-0">
-                  <div className="mt-1 flex h-[70px] w-[70px] flex-none items-center justify-center rounded-[20px] bg-[linear-gradient(180deg,rgba(255,210,63,0.16)_0%,rgba(255,210,63,0.08)_100%)] shadow-[0_10px_28px_rgba(2,6,23,0.06)]">
+                <div key={item.key} className="flex items-start gap-4 py-5 last:pb-0">
+                  <div className="mt-1 flex h-16 w-16 flex-none items-center justify-center rounded-[18px] bg-[linear-gradient(180deg,rgba(255,210,63,0.16)_0%,rgba(255,210,63,0.08)_100%)] shadow-[0_10px_28px_rgba(2,6,23,0.06)]">
                     {item.icon}
                   </div>
-                  <div className="flex min-h-[88px] flex-col justify-center">
-                    <div className="text-[16px] font-extrabold text-[#2D3142] md:text-[18px]">{item.label}</div>
-                    <div className="mt-2 text-[15px] leading-[1.55] text-[#64748b] md:text-[16px]">{item.text}</div>
+                  <div className="flex min-h-20 flex-col justify-center">
+                    <div className="text-[0.98rem] font-extrabold text-[#2D3142] md:text-[1.05rem]">{item.label}</div>
+                    <div className="mt-2 text-[0.92rem] leading-[1.55] text-[#64748b] md:text-[0.96rem]">{item.text}</div>
                   </div>
                 </div>
               ))}
