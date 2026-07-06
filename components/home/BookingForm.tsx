@@ -53,6 +53,10 @@ const iconClassName =
   "pointer-events-none absolute inset-y-0 left-0 z-[1] flex items-center pl-5 text-[rgba(255,200,57,1)] transition-all duration-200 ease-out group-focus-within:scale-105 max-sm:pl-[0.85rem]";
 const dropdownListClassName =
   "absolute left-0 right-0 top-full z-[1000] mt-2 max-h-[250px] overflow-y-auto rounded-xl border border-[rgba(226,232,240,0.8)] bg-[rgba(255,255,255,0.98)] p-[0.4rem] shadow-[0_12px_30px_rgba(0,0,0,0.08)] backdrop-blur-[8px] animate-dropdown-slide";
+const dropdownItemClassName =
+  "cursor-pointer rounded-lg px-4 py-3 text-[0.95rem] text-slate-700 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1 hover:bg-[rgba(249,115,22,0.08)] hover:font-medium hover:text-[var(--color-primary-dark)]";
+const dropdownItemSelectedClassName =
+  "bg-[rgba(249,115,22,0.12)] font-semibold text-[var(--color-primary-dark)]";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   leftIcon?: ReactNode;
@@ -80,9 +84,14 @@ const Input = ({ id, placeholder, leftIcon, error, ...props }: InputProps) => (
   </div>
 );
 
+interface SelectOption {
+  value: string;
+  label: string;
+}
+
 interface SelectProps {
   id: string;
-  options: { value: string; label: string }[];
+  options: SelectOption[];
   leftIcon?: ReactNode;
   value?: string;
   onChange?: (e: { target: { value: string; id: string } }) => void;
@@ -156,15 +165,161 @@ const Select = ({ id, options, leftIcon, value, onChange }: SelectProps) => {
   );
 };
 
-const vehicleOptions = [
-  { value: "", label: "Vehicle Type" },
+interface VehicleGroup {
+  label: string;
+  value?: string;
+  children?: SelectOption[];
+}
+
+const vehicleGroups: VehicleGroup[] = [
   { value: "Sedan", label: "Sedan" },
-  { value: "SUV", label: "SUV" },
-  { value: "Hatchback", label: "Hatchback" },
-  { value: "Innova", label: "Innova" },
-  { value: "Tempo", label: "Tempo Traveller" },
-  { value: "Mini", label: "Mini" },
+  {
+    label: "SUV",
+    children: [
+      { value: "Innova", label: "Innova" },
+      { value: "Ertiga", label: "Ertiga" },
+    ],
+  },
+  {
+    label: "LMV",
+    children: [
+      { value: "12 Seater", label: "12 Seater" },
+      { value: "16 Seater", label: "16 Seater" },
+    ],
+  },
+  {
+    label: "HMV",
+    children: [
+      { value: "26 Seater", label: "26 Seater" },
+      { value: "30 Seater", label: "30 Seater" },
+      { value: "40 Seater", label: "40 Seater" },
+    ],
+  },
 ];
+
+// Flat list used for label lookups and passenger validation.
+const vehicleOptions: SelectOption[] = [
+  { value: "", label: "Vehicle Type" },
+  ...vehicleGroups.flatMap((group) =>
+    group.children ? group.children : group.value ? [{ value: group.value, label: group.label }] : [],
+  ),
+];
+
+interface VehicleSelectProps {
+  id: string;
+  value?: string;
+  leftIcon?: ReactNode;
+  onChange?: (e: { target: { value: string; id: string } }) => void;
+}
+
+const VehicleSelect = ({ id, value, leftIcon, onChange }: VehicleSelectProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+        setExpanded(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selectedLabel = (value && vehicleOptions.find((o) => o.value === value)?.label) || "Vehicle Type";
+
+  const selectChild = (childValue: string) => {
+    onChange?.({ target: { value: childValue, id } });
+    setIsOpen(false);
+    setExpanded(null);
+  };
+
+  return (
+    <div className="flex w-full flex-col gap-1" ref={containerRef}>
+      <div className="group relative w-full">
+        <div
+          className={[
+            selectTriggerClassName,
+            leftIcon ? "pl-4" : "",
+            !value ? "text-slate-400" : "",
+            isOpen ? "border-[rgba(249,115,22,0.5)] bg-white shadow-[0_0_0_4px_rgba(249,115,22,0.12)]" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          onClick={() => setIsOpen((open) => !open)}
+        >
+          {leftIcon && <div className={iconClassName}>{leftIcon}</div>}
+          <span className={`flex-1 ${leftIcon ? "pl-9" : ""}`}>{selectedLabel}</span>
+          <div className={`flex items-center text-slate-400 transition-transform duration-300 ${isOpen ? "rotate-180 text-[rgba(255,200,57,1)]" : ""}`}>
+            <ChevronDown size={18} />
+          </div>
+        </div>
+
+        {isOpen && (
+          <div className={dropdownListClassName}>
+            {vehicleGroups.map((group) => {
+              if (!group.children) {
+                return (
+                  <div
+                    key={group.value}
+                    className={[dropdownItemClassName, group.value === value ? dropdownItemSelectedClassName : ""]
+                      .filter(Boolean)
+                      .join(" ")}
+                    onClick={() => selectChild(group.value as string)}
+                  >
+                    {group.label}
+                  </div>
+                );
+              }
+
+              const isExpanded = expanded === group.label;
+              const containsSelected = group.children.some((child) => child.value === value);
+
+              return (
+                <div key={group.label} onMouseEnter={() => setExpanded(group.label)}>
+                  <div
+                    className={[
+                      dropdownItemClassName,
+                      "flex items-center justify-between",
+                      containsSelected ? dropdownItemSelectedClassName : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    onClick={() => setExpanded(isExpanded ? null : group.label)}
+                  >
+                    <span>{group.label}</span>
+                    <ChevronDown
+                      size={16}
+                      className={`shrink-0 transition-transform duration-200 ${isExpanded ? "rotate-180" : "-rotate-90"}`}
+                    />
+                  </div>
+                  {isExpanded && (
+                    <div className="ml-3 mt-0.5 border-l border-slate-100 pl-2">
+                      {group.children.map((child) => (
+                        <div
+                          key={child.value}
+                          className={[dropdownItemClassName, child.value === value ? dropdownItemSelectedClassName : ""]
+                            .filter(Boolean)
+                            .join(" ")}
+                          onClick={() => selectChild(child.value)}
+                        >
+                          {child.label}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const serviceOptions = [
   { value: "", label: "Booking Type" },
@@ -174,12 +329,14 @@ const serviceOptions = [
 ];
 
 const vehiclePassengerLimits: Record<string, number> = {
-  Sedan: 3,
-  SUV: 5,
-  Hatchback: 3,
-  Innova: 5,
-  Tempo: 12,
-  Mini: 4,
+  Sedan: 4,
+  Innova: 7,
+  Ertiga: 6,
+  "12 Seater": 12,
+  "16 Seater": 16,
+  "26 Seater": 26,
+  "30 Seater": 30,
+  "40 Seater": 40,
 };
 
 function getMaxPassengers(vehicle: string): number {
@@ -465,9 +622,8 @@ export default function BookingForm() {
           </div>
 
           <div className={gridItemClassName}>
-            <Select
+            <VehicleSelect
               id="vehicleType"
-              options={vehicleOptions}
               leftIcon={<Car size={20} />}
               value={vehicleType}
               onChange={(e) => {
@@ -486,7 +642,6 @@ export default function BookingForm() {
                   setPassengerError("");
                 }
               }}
-              required
             />
           </div>
 
