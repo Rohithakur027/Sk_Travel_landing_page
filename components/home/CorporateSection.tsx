@@ -15,7 +15,7 @@ export default function CorporateSection() {
         <div className="relative">
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl">
             <Image
-              src="/images/cardriver.png"
+              src="/images/caranddriverfinal.png"
               alt="SK Voyages driver"
               fill
               className="object-cover"
