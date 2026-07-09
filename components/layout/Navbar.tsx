@@ -63,7 +63,7 @@ export default function Navbar() {
                 <span className="text-[#085E87]">VOYAGES</span>
               </span>
             </Link>
-          </div>
+          </div>tras
 
           <nav className="hidden items-center gap-2 lg:flex">
             {NAV_LINKS.map((link) => {

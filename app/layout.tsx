@@ -4,7 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'Travellink-Powered by SK Voyages',
+  title: 'SRI KALYANI VOYAGES',
   description: 'Your trusted voyages partner for premium transportation services.',
   icons: {
     icon: [
