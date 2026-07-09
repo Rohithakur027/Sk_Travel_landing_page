@@ -14,6 +14,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)"],
         heading: ["var(--font-heading)"],
+        brand: ['"Montenegrin Gothic One"', "var(--font-heading)", "sans-serif"],
       },
       keyframes: {
         "zoom-out": {

@@ -48,15 +48,20 @@ export default function Navbar() {
       <div className="relative mx-auto mt-3 flex h-[4.5rem] w-full max-w-[1480px] items-center justify-between rounded-[20px] border border-[rgba(241,243,245,0.6)] bg-white px-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] max-[360px]:mt-2 max-[360px]:h-[3.85rem] max-[360px]:rounded-[12px] max-[360px]:px-3 md:mt-4 md:h-[5.5rem]">
         <div className="flex items-center gap-[4.5rem]">
           <div className="flex items-center">
-            <Link href="/" className="shrink-0">
+            <Link href="/" className="flex shrink-0 items-center gap-2">
+
               <Image
-                src="/images/logofinal.png"
+                src="/mainlogo.png"
                 alt="SK Travel Logo"
                 width={500}
                 height={500}
                 className="h-11 w-auto max-[360px]:h-9 md:h-14 lg:h-16"
                 priority
               />
+              <span className="font-brand whitespace-nowrap text-lg font-bold leading-none max-[360px]:text-base md:text-xl">
+                <span className="text-[#f3b33d]">SRI KALYANI</span>{' '}
+                <span className="text-[#085E87]">VOYAGES</span>
+              </span>
             </Link>
           </div>
 
