@@ -27,7 +27,7 @@ export default function Footer() {
     ].join(' ');
 
   return (
-    <footer className="bg-[#2d303e] py-16 text-[#9ba3af]">
+    <footer className="rounded-t-[2.5rem] bg-[#2d303e] pb-16 pt-8 text-[#9ba3af]">
       <div className="mx-auto w-full max-w-[1480px] px-6">
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-[2.5fr_1fr_1fr_1fr] md:gap-8">
           <div className="flex flex-col">
