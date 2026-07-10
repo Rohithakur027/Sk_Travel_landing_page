@@ -31,10 +31,18 @@ export default function Footer() {
       <div className="mx-auto w-full max-w-[1480px] px-6">
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-[2.5fr_1fr_1fr_1fr] md:gap-8">
           <div className="flex flex-col">
-            <Link href="/" className="mb-6 flex items-center gap-3 leading-none">
-              <div className="flex items-center justify-center">
-                <Image src="/images/logofinal.png" alt="SK Voyages Logo" width={800} height={201} className="h-10 w-auto md:h-14" />
-              </div>
+            <Link href="/" className="mb-6 flex shrink-0 items-center gap-2 leading-none">
+              <Image
+                src="/mainlogo.png"
+                alt="Sri Kalyani Voyages Logo"
+                width={500}
+                height={500}
+                className="h-11 w-auto rounded-lg md:h-14"
+              />
+              <span className="font-brand whitespace-nowrap text-lg font-bold leading-none md:text-xl">
+                <span className="text-[#f3b33d]">SRI KALYANI</span>{' '}
+                <span className="text-white">VOYAGES</span>
+              </span>
             </Link>
             <p className="mb-8 text-[0.95rem] leading-[1.7] text-[#9ba3af]">
               Professional corporate
@@ -87,8 +95,8 @@ export default function Footer() {
             <ul className={getListClassName('support')}>
               <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/contact">Help Center</Link></li>
               <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/about">Safety</Link></li>
-              <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/">Terms of Service</Link></li>
-              <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/">Privacy Policy</Link></li>
+              <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/terms">Terms and Conditions</Link></li>
+              <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/privacy">Privacy Policy</Link></li>
               <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/contact">Contact Us</Link></li>
             </ul>
           </div>

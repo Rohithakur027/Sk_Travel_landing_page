@@ -6,6 +6,7 @@ import { ChevronDown } from 'lucide-react';
 import { useToast } from '@/lib/context/ToastContext';
 import { submitSpecialBooking } from '@/lib/api-client';
 import Pill from '@/components/ui/Pill';
+import { COMPANY_ADDRESS_LINES } from '@/lib/constants/company';
 
 function getErrorMessage(error: unknown) {
   if (error instanceof Error) {
@@ -105,11 +106,9 @@ export default function CONTACT() {
       label: 'Visit Us',
       text: (
         <>
-          H.No.57, Shop No. 7, PAI Layout
+          {COMPANY_ADDRESS_LINES[0]}
           <br />
-          6th Cross, Hulimavu Main Road, B.G. Road
-          <br />
-          Hulimavu, Bangalore - 560076
+          {COMPANY_ADDRESS_LINES[1]}
         </>
       ),
       icon: (

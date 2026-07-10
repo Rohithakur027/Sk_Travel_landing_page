@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import ContactForm from './ContactForm';
+import { COMPANY_ADDRESS_LINES } from '@/lib/constants/company';
 
 export default function ContactSection() {
   return (
@@ -65,8 +66,8 @@ export default function ContactSection() {
                 </div>
                 <div className="flex flex-col sm:items-start">
                   <p className="mb-1 text-sm font-semibold capitalize text-[#6B7280]">Visit Us</p>
-                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-[#2D3142] sm:text-xl">H.No.57, Shop No. 7, PAI Layout, 6th Cross</h4>
-                  <p className="text-sm text-gray-400">Hulimavu Main Road, B.G. Road, Hulimavu, Bangalore - 560076</p>
+                  <h4 className="mb-1 break-all font-sans text-base font-extrabold text-[#2D3142] sm:text-xl">{COMPANY_ADDRESS_LINES[0]}</h4>
+                  <p className="text-sm text-gray-400">{COMPANY_ADDRESS_LINES[1]}</p>
                 </div>
               </div>
             </div>
