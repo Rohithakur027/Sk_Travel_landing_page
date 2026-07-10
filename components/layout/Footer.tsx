@@ -31,17 +31,20 @@ export default function Footer() {
       <div className="mx-auto w-full max-w-[1480px] px-6">
         <div className="mb-16 grid grid-cols-1 gap-12 md:grid-cols-[2.5fr_1fr_1fr_1fr] md:gap-8">
           <div className="flex flex-col">
-            <Link href="/" className="mb-6 flex shrink-0 items-center gap-2 leading-none">
+            <Link
+              href="/"
+              className="mb-6 flex w-fit shrink-0 items-center gap-2 rounded-2xl bg-white px-3 py-2 leading-none"
+            >
               <Image
                 src="/mainlogo.png"
                 alt="Sri Kalyani Voyages Logo"
                 width={500}
                 height={500}
-                className="h-11 w-auto rounded-lg md:h-14"
+                className="h-11 w-auto md:h-14"
               />
               <span className="font-brand whitespace-nowrap text-lg font-bold leading-none md:text-xl">
                 <span className="text-[#f3b33d]">SRI KALYANI</span>{' '}
-                <span className="text-white">VOYAGES</span>
+                <span className="text-[#085E87]">VOYAGES</span>
               </span>
             </Link>
             <p className="mb-8 text-[0.95rem] leading-[1.7] text-[#9ba3af]">
