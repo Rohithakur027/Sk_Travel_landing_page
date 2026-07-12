@@ -20,7 +20,7 @@ const SECTIONS: LegalSection[] = [
     bullets: [
       <>
         <strong className="font-bold text-[#2D3142]">&ldquo;Company&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo; or &ldquo;our&rdquo;</strong> refers to {COMPANY_LEGAL_NAME}, including
-        its units Travellink and SK Voyages.
+        its units Namma Gadi and SK Voyages.
       </>,
       <>
         <strong className="font-bold text-[#2D3142]">&ldquo;Client&rdquo;, &ldquo;you&rdquo; or &ldquo;your&rdquo;</strong> refers to the individual or

@@ -98,8 +98,8 @@ export default function Footer() {
             <ul className={getListClassName('support')}>
               <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/contact">Help Center</Link></li>
               <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/about">Safety</Link></li>
-              <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/terms">Terms and Conditions</Link></li>
-              <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/privacy">Privacy Policy</Link></li>
+              <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/terms-and-conditions">Terms and Conditions</Link></li>
+              <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/privacy-policy">Privacy Policy</Link></li>
               <li><Link className="text-[0.95rem] transition-colors duration-200 hover:text-white" href="/contact">Contact Us</Link></li>
             </ul>
           </div>

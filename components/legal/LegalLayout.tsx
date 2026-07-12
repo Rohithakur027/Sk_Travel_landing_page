@@ -46,7 +46,7 @@ export default function LegalLayout({
       <div className="mx-auto w-full max-w-[1480px] px-6 py-16 md:py-20">
         <div className="rounded-[1.25rem] border-[1.5px] border-[rgba(255,210,63,0.3)] bg-[linear-gradient(135deg,rgba(255,210,63,0.15)_0%,rgba(255,210,63,0.08)_100%)] p-6 md:p-8">
           <p className="text-base font-extrabold leading-[1.6] text-[#2D3142] md:text-lg">
-            Travellink and SK Voyages are the units of {COMPANY_LEGAL_NAME}.
+            Namma Gadi and SK Voyages are the units of {COMPANY_LEGAL_NAME}.
           </p>
         </div>
 
