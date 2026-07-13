@@ -1,7 +1,6 @@
 import { apiUrl } from '@/lib/apiBase';
 
-const REQUEST_TIMEOUT_MS = 10_000;
-const NETWORK_RETRIES = 1;
+const REQUEST_TIMEOUT_MS = 30_000;
 
 interface ApiSuccessResponse {
   success: true;
@@ -93,11 +92,9 @@ async function parseJsonResponse(response: Response): Promise<ApiResponse | null
   }
 }
 
-async function postJson<TPayload>(
-  path: string,
-  payload: TPayload,
-  attempt = 0,
-): Promise<ApiSuccessResponse> {
+// These endpoints all create records, so a failed request is never safe to
+// replay: the server may have committed before the client gave up.
+async function postJson<TPayload>(path: string, payload: TPayload): Promise<ApiSuccessResponse> {
   const controller = new AbortController();
   const timeoutId = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
@@ -128,16 +125,14 @@ async function postJson<TPayload>(
       throw error;
     }
 
-    if (attempt < NETWORK_RETRIES) {
-      return postJson(path, payload, attempt + 1);
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new ApiClientError(
+        'The request timed out. Please check with us before submitting again.',
+        { status: 408 },
+      );
     }
 
-    const message =
-      error instanceof Error && error.name === 'AbortError'
-        ? 'The request timed out. Please try again.'
-        : 'Network error. Please check your connection and try again.';
-
-    throw new ApiClientError(message);
+    throw new ApiClientError('Network error. Please check your connection and try again.');
   } finally {
     window.clearTimeout(timeoutId);
   }

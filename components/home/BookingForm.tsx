@@ -380,6 +380,8 @@ export default function BookingForm() {
   const [fieldErrors, setFieldErrors] = useState({ email: "", phone: "" });
   const [passengerError, setPassengerError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // State lags a render behind, so two fast clicks can both pass an isSubmitting check.
+  const submittingRef = useRef(false);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -410,7 +412,7 @@ export default function BookingForm() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (isSubmitting) return;
+    if (submittingRef.current) return;
 
     const body = {
       type: bookingType,
@@ -480,6 +482,7 @@ export default function BookingForm() {
       }
     }
 
+    submittingRef.current = true;
     setIsSubmitting(true);
     try {
       await submitBookingEnquiry(body);
@@ -488,6 +491,7 @@ export default function BookingForm() {
       console.error("[BookingForm] submit error:", err);
       showToast("error", err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
+      submittingRef.current = false;
       setIsSubmitting(false);
     }
   };

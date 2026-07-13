@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { useToast } from "@/lib/context/ToastContext";
 import { submitSpecialBooking } from "@/lib/api-client";
@@ -42,6 +42,8 @@ function getErrorMessage(error: unknown) {
 export default function ContactForm() {
   const [formData, setFormData] = useState(INITIAL);
   const [isLoading, setIsLoading] = useState(false);
+  // State lags a render behind, so two fast clicks can both pass an isLoading check.
+  const submittingRef = useRef(false);
   const { showToast } = useToast();
 
   const handleChange = (
@@ -52,6 +54,9 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submittingRef.current) return;
+
+    submittingRef.current = true;
     setIsLoading(true);
     try {
       await submitSpecialBooking({
@@ -67,6 +72,7 @@ export default function ContactForm() {
     } catch (error) {
       showToast("error", getErrorMessage(error));
     } finally {
+      submittingRef.current = false;
       setIsLoading(false);
     }
   };

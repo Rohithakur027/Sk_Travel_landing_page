@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import { useToast } from '@/lib/context/ToastContext';
@@ -30,6 +30,8 @@ export default function CONTACT() {
     message: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+  // State lags a render behind, so two fast clicks can both pass an isLoading check.
+  const submittingRef = useRef(false);
   const { showToast } = useToast();
 
   const isFormIncomplete =
@@ -41,6 +43,9 @@ export default function CONTACT() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submittingRef.current) return;
+
+    submittingRef.current = true;
     setIsLoading(true);
     try {
       const names = formData.fullName.trim().split(' ');
@@ -61,6 +66,7 @@ export default function CONTACT() {
     } catch (error) {
       showToast("error", getErrorMessage(error));
     } finally {
+      submittingRef.current = false;
       setIsLoading(false);
     }
   };
