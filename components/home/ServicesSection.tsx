@@ -6,16 +6,22 @@ const SERVICES = [
     title: 'Airport Transfers',
     description:
       'Reliable pickup and drop-off services for all major airports. Track flights in real-time and meet your team on schedule.',
-    image: '/images/airpot.jpeg',
-    imagePosition: 'center',
+    image: '/images/airpot-cropped.jpeg',
+    imagePosition: '',
+    imageFit: 'contain',
+    imageZoom: 'scale-125',
+    imageOffset: 'translate-y-4',
     badge: 'Popular',
   },
   {
     title: 'Corporate Shuttles',
     description:
       'Daily commute solutions for your employees with scheduled routes, dedicated vehicles, and professional drivers.',
-    image: '/images/corporateshuttlefinal.png',
-    imagePosition: 'right center',
+    image: '/images/corporateshuttleupdated.png',
+    imagePosition: 'center',
+    imageFit: 'contain',
+    imageZoom: 'scale-125',
+    imageOffset: '',
     badge: 'Best Value',
   },
   {
@@ -24,6 +30,9 @@ const SERVICES = [
       'Premium transportation for corporate events, conferences, and special occasions with flexible group booking options.',
     image: '/images/premiumfleet.jpeg',
     imagePosition: 'center',
+    imageFit: 'cover',
+    imageZoom: '',
+    imageOffset: '',
     badge: 'Premium',
   },
 ];
@@ -51,15 +60,17 @@ export default function ServicesSection() {
               key={service.title}
               className="group overflow-hidden rounded-3xl border border-[var(--color-gray-100)] bg-white shadow-[var(--shadow-sm)] transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1.5 hover:shadow-[var(--shadow-lg)]"
             >
-              <div className="relative h-[240px] overflow-hidden rounded-t-3xl lg:h-[280px]">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  style={{ objectPosition: service.imagePosition }}
-                />
+              <div className="relative h-[240px] overflow-hidden rounded-t-3xl bg-white lg:h-[280px]">
+                <div className={`absolute inset-0 ${service.imageZoom} ${service.imageOffset}`}>
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className={`${service.imageFit === 'contain' ? 'object-contain' : 'object-cover'} transition-transform duration-[400ms] ease-out group-hover:scale-105`}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectPosition: service.imagePosition }}
+                  />
+                </div>
                 <span className="absolute right-[0.85rem] top-[0.85rem] z-[2] rounded-full bg-[rgba(255,210,63,1)] px-[0.85rem] py-[0.3rem] text-xs font-semibold tracking-[0.05em] text-[rgba(45,49,66,1)]">
                   {service.badge}
                 </span>
